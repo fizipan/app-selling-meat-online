@@ -1,3 +1,11 @@
+<?php 
+require_once 'config/config.php';
+
+if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
+  header("Location: login.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 

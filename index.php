@@ -1,3 +1,7 @@
+<?php 
+require_once 'config/config.php';
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,24 +40,27 @@
         <div class="collpase navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a href="/index.html" class="nav-link">Home</a>
+              <a href="index.php" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="/products.html" class="nav-link">All Products</a>
+              <a href="products.php" class="nav-link">All Products</a>
             </li>
             <li class="nav-item">
-              <a href="/about.html" class="nav-link">About</a>
+              <a href="" class="nav-link">About</a>
             </li>
-            <li class="nav-item">
-              <a href="/register.html" class="nav-link">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a
-                href="/login.html"
-                class="btn btn-success nav-link px-4 text-white"
-                >Sign In</a
-              >
-            </li>
+            <?php
+            if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) : ?>
+              <li class="nav-item">
+                <a href="register.php" class="nav-link">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="login.php"
+                  class="btn btn-success nav-link px-4 text-white"
+                  >Sign In</a
+                >
+              </li>
+            <?php endif;?>
           </ul>
         </div>
       </div>
@@ -66,7 +73,7 @@
         <div class="container">
           <div class="row align-items-center justify-content-between">
             <div class="col-md-5">
-              <img src="/assets/images/bg-landing.jpg" class="w-100" alt="" />
+              <img src="assets/images/bg-landing.jpg" class="w-100" alt="" />
             </div>
             <div class="col-md-6">
               <h1>Toko Daging Ayam Potong Segar Online</h1>

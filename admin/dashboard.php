@@ -1,3 +1,7 @@
+<?php 
+require_once '../config/config.php';
+
+?>
 <nav
   class="navbar navbar-expand-lg navbar-light navbar-store fixed-top"
   data-aos="fade-down"
@@ -83,8 +87,11 @@
         <div class="col-md-4">
           <div class="card mb-2">
             <div class="card-body">
+            <?php 
+              $customers = rows("SELECT * FROM users");
+            ?>
               <div class="dashboard-card-title">Customer</div>
-              <div class="dashboard-card-subtitle">15,209</div>
+              <div class="dashboard-card-subtitle"><?= $customers; ?></div>
             </div>
           </div>
         </div>

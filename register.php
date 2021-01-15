@@ -1,3 +1,21 @@
+<?php 
+require_once 'config/config.php';
+if (isset($_SESSION["login"]) && isset($_SESSION["user"])) {
+  header("Location: index.php");
+}
+
+if (isset($_POST["register"])) {
+  if (register($_POST) > 0) {
+    echo "<script>
+            alert('Data Anda Berhasil Terdaftar, Silahkan Login!');
+            document.location.href = 'login.php';
+          </script>";
+  } else {
+    $error = $_SESSION["error"];
+  }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,7 +40,7 @@
       data-aos="fade-down"
     >
       <div class="container">
-        <a href="index.html" class="navbar-brand" title="home">
+        <a href="index.php" class="navbar-brand" title="home">
           <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
         </a>
         <button
@@ -37,13 +55,13 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home</a>
+              <a class="nav-link" href="index.php">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="products.html">All Products</a>
+              <a class="nav-link" href="products.php">All Products</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
+              <a class="nav-link" href="about.php">About</a>
             </li>
           </ul>
         </div>
@@ -63,6 +81,11 @@
               </h2>
 
               <form action="" class="mt-3" method="POST">
+                  <?php if (isset($error)) : ?>
+                  <div class="alert alert-danger">
+                      <p class="font-weight-bold m-0"><?= $error; ?></p>
+                  </div>
+                  <?php endif;?>
                 <div class="form-group">
                   <label for="nama">Nama Lengkap</label>
                   <input

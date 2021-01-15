@@ -1,3 +1,16 @@
+<?php 
+require_once '../config/config.php';
+if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
+  header("Location: ../index.php");
+} else {
+  $id = $_SESSION["user"];
+  $result = query("SELECT * FROM users WHERE id_user = $id")[0];
+  if ($result['roles'] !== 'ADMIN') {
+    header("Location: ../index.php");
+  }
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -62,7 +75,7 @@
             </a>
             <a
               href="?page=users"
-              class="list-group-item list-group-item-action<?= $page == 'users' ? ' active' : ''; ?>"
+              class="list-group-item list-group-item-action<?= $page == 'users' ? ' active' : ''; ?> <?= $page == 'users-create' ? ' active' : ''; ?> <?= $page == 'users-details' ? ' active' : ''; ?>"
             >
               Users
             </a>
@@ -109,7 +122,13 @@
             } elseif ($page == 'transactions') {
               include 'transactions.php';
             } elseif ($page == 'users') {
-              include 'dashboard-users.php';
+              include 'users/dashboard-users.php';
+            } elseif ($page == 'users-create') {
+              include 'users/dashboard-users-create.php';
+            } elseif ($page == 'users-details') {
+              include 'users/dashboard-users-details.php';
+            } elseif ($page == 'users-delete') {
+              include 'users/dashboard-users-delete.php';
             } elseif ($page == 'logout') {
               include 'logout.php';
             } else {

@@ -1,4 +1,5 @@
 <?php 
+session_start();
 // Database
 $host = 'localhost';
 $user = 'root';
@@ -18,6 +19,15 @@ function query($query)
         $rows[] = $row;
     }
 
+    return $rows;
+}
+
+// Jumlaj Data
+function rows($query)
+{
+    global $conn;
+    $result = mysqli_query($conn, $query);
+    $rows = mysqli_num_rows($result);
     return $rows;
 }
 
@@ -172,6 +182,98 @@ function hapusCategories($id)
     global $conn;
 
     mysqli_query($conn, "DELETE FROM categories WHERE id = $id");
+    return mysqli_affected_rows($conn);
+}
+
+// Users
+
+function tambahUser($data)
+{
+    global $conn;
+    $name = $data["name"];
+    $email = stripslashes($data["email"]);
+    $phone_number = $data["phone_number"];
+    $password = password_hash($data["password"], PASSWORD_DEFAULT);
+    $alamat = $data["alamat"];
+    $point = null;
+    $roles = $data["roles"];
+
+    $query = "INSERT INTO users
+                VALUES
+                ('', '$name', '$email', '$password', '$alamat', '$phone_number', '$point', '$roles')
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+// Register
+
+function register($data)
+{
+    global $conn;
+
+    $nama = htmlspecialchars($data["nama"]);
+    $email = stripslashes($data["email"]);
+    $password = mysqli_real_escape_string($conn, $data["password"]);
+    $password2 = mysqli_real_escape_string($conn, $data["password2"]);
+    $number = $data["telpon"];
+
+    $result = mysqli_query($conn, "SELECT email FROM users WHERE email = '$email'");
+    if (mysqli_fetch_assoc($result)) {
+        $_SESSION["error"] = "Email Sudah Tersedia!";
+        return false;
+    }
+
+    if ($password !== $password2) {
+        $_SESSION["error"] = "Konfirmasi Password Tidak Sesuai";
+        return false;
+    }
+
+    $password = password_hash($password, PASSWORD_DEFAULT);
+
+    $query = "INSERT INTO users
+                VALUES
+                ('', '$nama', '$email', '$password', null, '$number', '', 'USER')
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function updateUser($data)
+{
+    global $conn;
+    $id = $data["id"];
+    $result = query("SELECT password FROM users WHERE id_user = $id")[0];
+    $name = $data["name"];
+    $phone_number = $data["phone_number"];
+    if (empty($data["password"])) {
+        $password = $result["password"];
+    } else {
+        $password = password_hash($data["password"], PASSWORD_DEFAULT);
+    }
+    $alamat = $data["alamat"];
+    $roles = $data["roles"];
+
+    $query = "UPDATE users SET
+                name = '$name',
+                password = '$password',
+                address = '$alamat',
+                phone_number = '$phone_number',
+                roles = '$roles'
+                WHERE id_user = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);   
+}
+
+function hapusUser($id)
+{
+    global $conn;
+
+    mysqli_query($conn, "DELETE FROM users WHERE id_user = $id");
     return mysqli_affected_rows($conn);
 }
 

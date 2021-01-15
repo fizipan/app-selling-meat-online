@@ -1,3 +1,30 @@
+<?php 
+require_once 'config/config.php';
+if (isset($_SESSION["login"]) && isset($_SESSION["user"])) {
+  header("Location: index.php");
+}
+
+if (isset($_POST["login"])) {
+  $email = $_POST["email"];
+  $password = $_POST["password"];
+
+  $result = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
+  if (mysqli_num_rows($result) === 1) {
+    
+    $row = mysqli_fetch_assoc($result);
+    if (password_verify($password, $row["password"])) {
+      $_SESSION["login"] = true;
+      $_SESSION["user"] = $row["id_user"];
+      header("Location: index.php");
+    }
+  }
+
+  $error = true;
+
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,7 +49,7 @@
       data-aos="fade-down"
     >
       <div class="container">
-        <a href="/index.html" class="navbar-brand" title="home">
+        <a href="index.php" class="navbar-brand" title="home">
           <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
         </a>
         <button
@@ -36,13 +63,13 @@
         <div class="collpase navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a href="/index.html" class="nav-link">Home</a>
+              <a href="index.php" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="/products.html" class="nav-link">All Products</a>
+              <a href="products.php" class="nav-link">All Products</a>
             </li>
             <li class="nav-item">
-              <a href="/about.html" class="nav-link">About</a>
+              <a href="about.php" class="nav-link">About</a>
             </li>
           </ul>
         </div>
@@ -64,7 +91,12 @@
             </div>
             <div class="col-lg-5">
               <h2 class="mb-4">Belanja daging ayam, menjadi lebih mudah</h2>
-              <form action="" class="mt-3">
+              <form action="" method="POST" class="mt-3">
+                  <?php if (isset($error)) : ?>
+                      <div class="alert alert-danger w-75">
+                          <p class="font-weight-bold m-0">Maaf, Email / Username salah</p>
+                      </div>
+                  <?php endif;?>
                 <div class="form-group">
                   <label for="email">Email Address</label>
                   <input
@@ -83,13 +115,13 @@
                     class="form-control w-75"
                   />
                 </div>
-                <a
-                  href="/dashboard.html"
+                <button
+                  type="submit"
+                  name="login"
                   class="btn btn-success btn-block w-75 mt-4"
-                  >Sign In to My Account</a
-                >
+                  >Sign In to My Account</button>
                 <a
-                  href="/register.html"
+                  href="register.php"
                   class="btn btn-login btn-block w-75 mt-2"
                   >Sign Up</a
                 >
