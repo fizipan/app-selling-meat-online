@@ -53,8 +53,8 @@ require '../config/config.php';
 <div class="section-content section-dashboard-home" data-aos="fade-up">
   <div class="container-fluid">
     <div class="dashboard-heading">
-      <h2 class="dashboard-title">My Products</h2>
-      <p class="dashboard-subtitle">Manage it well and get money</p>
+      <h2 class="dashboard-title">Categories</h2>
+      <p class="dashboard-subtitle">Manage Your Product Categories</p>
     </div>
     <div class="dashboard-content">
       <div class="row mt-4">
@@ -63,54 +63,41 @@ require '../config/config.php';
             <div class="card-body">
               <div class="row mb-4">
                 <div class="col-12">
-                <a href="?page=products-create" class="btn btn-success">
-                  + Add New Product
+                <a href="?page=categories-create" class="btn btn-success">
+                  + Add New Categories
                 </a>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
                   <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="table">
+                    <table class="table table-striped table-hover w-100" id="table">
                       <thead>
                         <tr>
                           <th scope="col">ID</th>
-                          <th scope="col">Nama</th>
-                          <th scope="col">Satuan</th>
-                          <th scope="col">Harga</th>
-                          <th scope="col">Kategori</th>
-                          <th scope="col">Stok</th>
-                          <th scope="col" class="text-center">Aksi</th>
+                          <th scope="col">Nama Category</th>
+                          <th scope="col">Slug</th>
+                          <th scope="col">Aksi</th>
                         </tr>
                       </thead>
                       <tbody>
                         <?php 
                           $no = 1;
-                          $query = "SELECT * FROM products LEFT JOIN units ON products.unit_id = units.id LEFT JOIN categories ON products.category_id = categories.id";
-                          $products = query($query);
+                          $categories = query("SELECT * FROM categories");
                         ?>
-                        <?php foreach ($products as $product) : ?>
+                        <?php foreach ($categories as $category) : ?>
                           <tr>
-                            <th scope="row"><?= $no; ?></th>
-                            <td><?= $product["product_name"]; ?></td>
-                            <td><?= $product["unit_name"]; ?></td>
-                            <td><?= number_format($product["price"]); ?></td>
-                            <td><?= $product["category_name"]; ?></td>
-                            <td>
-                              <?php if ($product["stock"] == 'STOCK') : ?>
-                                <span class="badge badge-pill badge-success"><?= $product["stock"]; ?></span>
-                              <?php else: ?>
-                                <span class="badge badge-pill badge-danger"><?= $product["stock"]; ?></span>
-                              <?php endif; ?>
-                            </td>
-                            <td style="width: 17%; text-align: center;">
+                            <th scope="row" style="width: 10%;"><?= $no; ?></th>
+                            <td><?= $category["category_name"]; ?></td>
+                            <td><?= $category["slug"]; ?></td>
+                            <td style="width: 20%;">
                               <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Aksi
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="?page=products-details&id=<?= $product["id_product"]; ?>">Edit</a>
-                                  <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus <?= $product['product_name'] ?> ?')" href="?page=products-delete&id=<?= $product["id_product"]; ?>">Delete</a>
+                                  <a class="dropdown-item" href="?page=categories-details&id=<?= $category["id"]; ?>">Edit</a>
+                                  <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus category Ini ?')" href="?page=categories-delete&id=<?= $category["id"]; ?>">Delete</button>
                                 </div>
                               </div>
                             </td>

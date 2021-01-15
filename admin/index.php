@@ -44,13 +44,13 @@
             </a>
             <a
               href="?page=galleries"
-              class="list-group-item list-group-item-action<?= $page == 'galleries' ? ' active' : ''; ?> <?= $page == 'galleries-create' ? ' active' : ''; ?>"
+              class="list-group-item list-group-item-action<?= $page == 'galleries' ? ' active' : ''; ?> <?= $page == 'galleries-create' ? ' active' : ''; ?> <?= $page == 'galleries-details' ? ' active' : ''; ?>"
             >
               Galleries
             </a>
             <a
               href="?page=categories"
-              class="list-group-item list-group-item-action<?= $page == 'categories' ? ' active' : ''; ?>"
+              class="list-group-item list-group-item-action<?= $page == 'categories' ? ' active' : ''; ?> <?= $page == 'categories-create' ? ' active' : ''; ?> <?= $page == 'categories-details' ? ' active' : ''; ?> <?= $page == 'categories-delete' ? ' active' : ''; ?>"
             >
               Categories
             </a>
@@ -94,8 +94,18 @@
               include 'dashboard-galleries.php';
             } elseif ($page == 'galleries-create') {
               include 'dashboard-galleries-create.php';
+            } elseif ($page == 'galleries-details') {
+              include 'dashboard-galleries-details.php';
+            } elseif ($page == 'galleries-delete') {
+              include 'dashboard-galleries-delete.php';
             } elseif ($page == 'categories') {
-              include 'dasboard-categories.php';
+              include 'dashboard-categories.php';
+            } elseif ($page == 'categories-create') {
+              include 'dashboard-categories-create.php';
+            } elseif ($page == 'categories-details') {
+              include 'dashboard-categories-details.php';
+            } elseif ($page == 'categories-delete') {
+              include 'dashboard-categories-delete.php';
             } elseif ($page == 'transactions') {
               include 'transactions.php';
             } elseif ($page == 'users') {
@@ -113,27 +123,7 @@
         </div>
       </div>
     </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Hapus Produk</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            Apakah anda yakin ingin menghapus <span class="text-danger font-weight-bold"><?= $product["product_name"]; ?></span> ?
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <a href="?page=products-delete&id=<?= $product["id"]; ?>" class="btn btn-danger">Ya, Hapus</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/vendor/jquery/jquery.slim.min.js"></script>

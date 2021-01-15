@@ -31,11 +31,11 @@ function tambahProduk($data)
     $unit = $data["unit"];
     $category = $data["category"];
     $stock = $data["stock"];
-    $description = $data["description"];
+    $descriptions = $data["descriptions"];
 
     $query = "INSERT INTO products
                 VALUES
-                ('', '$name', '$unit', '$price', '$description', '$category', '$stock')
+                ('', '$name', '$unit', '$price', '$descriptions', '$category', '$stock')
             ";
 
     mysqli_query($conn, $query);
@@ -61,7 +61,7 @@ function updateProduk($data)
                 descriptions = '$descriptions',
                 category_id = '$category',
                 stock = '$stock'
-                WHERE id = $id
+                WHERE id_product = $id
             ";
 
     mysqli_query($conn, $query);
@@ -72,7 +72,7 @@ function hapusProduk($id)
 {
     global $conn;
 
-    mysqli_query($conn, "DELETE FROM products WHERE id = $id");
+    mysqli_query($conn, "DELETE FROM products WHERE id_product = $id");
     return mysqli_affected_rows($conn);
 
 }
@@ -94,6 +94,84 @@ function tambahGaleri($data)
             ";
 
     mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function updateGaleri($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $name = $data["name"];
+    $photoLama = $data["photoLama"];
+    if ($_FILES['photo']['error'] === 4) {
+        $photo = $photoLama;
+    } else {
+        $photo = upload();
+        if (!$photo) {
+            return false;
+        }
+    }
+
+    $query = "UPDATE products_galleries SET
+                photos = '$photo',
+                product_id = '$name'
+                WHERE id_gallery = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function hapusGallery($id) 
+{
+    global $conn;
+
+    mysqli_query($conn, "DELETE FROM products_galleries WHERE id_gallery = $id");
+    return mysqli_affected_rows($conn);
+
+}
+
+// Category
+
+function tambahCategory($data)
+{
+    global $conn;
+    $name = $data["name"];
+    $slug = slug($name);
+
+    $query = "INSERT INTO categories
+                VALUES
+                ('', '$name', '$slug')
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function updateCategory($data)
+{
+    global $conn;
+
+    $id = $data["id"];
+    $name = $data["name"];
+    $slug = slug($name);
+
+    $query = "UPDATE categories SET
+                category_name = '$name',
+                slug = '$slug'
+                WHERE id = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function hapusCategories($id)
+{
+    global $conn;
+
+    mysqli_query($conn, "DELETE FROM categories WHERE id = $id");
     return mysqli_affected_rows($conn);
 }
 

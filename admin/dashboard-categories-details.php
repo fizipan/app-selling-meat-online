@@ -1,16 +1,19 @@
 <?php 
 require '../config/config.php';
 
-if (isset($_POST["tambahGaleri"])) {
-  if (tambahGaleri($_POST) > 0) {
+$id = $_GET["id"];
+$categories = query("SELECT * FROM categories WHERE id = $id")[0];
+
+if (isset($_POST["updateCategory"])) {
+  if (updateCategory($_POST) > 0) {
     echo "<script>
-            alert('Gallery Berhasil Ditambahkan');
-            document.location.href = '?page=galleries';
+            alert('Categories Berhasil Diubah');
+            document.location.href = '?page=categories';
           </script>";
   } else {
     echo "<script>
-            alert('Gallery Gagal Ditambahkan');
-            document.location.href = '?page=galleries';
+            alert('Categories Gagal Diubah');
+            document.location.href = '?page=categories';
           </script>";
   }
 }
@@ -94,8 +97,8 @@ if (isset($_POST["tambahGaleri"])) {
 >
   <div class="container-fluid">
     <div class="dashboard-heading">
-      <h2 class="dashboard-title">Create Gallery</h2>
-      <p class="dashboard-subtitle">Create your own Gallery</p>
+      <h2 class="dashboard-title"><?= $categories["category_name"]; ?></h2>
+      <p class="dashboard-subtitle">Category Details</p>
     </div>
     <div class="dashboard-content">
       <div class="row">
@@ -105,24 +108,10 @@ if (isset($_POST["tambahGaleri"])) {
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-12">
+                  <input type="hidden" name="id"value="<?= $categories["id"]; ?>">
                     <div class="form-group">
                       <label for="name">Nama Produk</label>
-                      <?php 
-                      
-                      $products = query("SELECT * FROM products");
-                      
-                      ?>
-                      <select name="name" id="name" class="form-control">
-                        <?php foreach ($products as $product) : ?>
-                          <option value="<?= $product["id_product"]; ?>"><?= $product["product_name"]; ?></option>
-                        <?php endforeach;?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="photo">Photo</label>
-                      <input type="file" name="photo" id="photo" class="form-control">
+                      <input type="text" id="name" class="form-control"  name="name" value="<?= $categories["category_name"]; ?>">
                     </div>
                   </div>
                 </div>
@@ -130,7 +119,7 @@ if (isset($_POST["tambahGaleri"])) {
                   <div class="col-12 text-right">
                     <button
                       type="submit"
-                      name="tambahGaleri"
+                      name="updateCategory"
                       class="btn btn-success px-4"
                     >
                       Save Now

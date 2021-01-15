@@ -3,7 +3,7 @@ require '../config/config.php';
 
 $id = $_GET["id"];
 
-$product = query("SELECT * FROM products WHERE id = $id")[0];
+$product = query("SELECT * FROM products WHERE id_product = $id")[0];
 
 if (isset($_POST["updateProduk"])) {
   if (updateProduk($_POST) > 0) {
@@ -108,7 +108,7 @@ if (isset($_POST["updateProduk"])) {
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
-                  <input type="hidden" value="<?= $product["id"]; ?>" name="id">
+                  <input type="hidden" value="<?= $product["id_product"]; ?>" name="id">
                     <div class="form-group">
                       <label for="name">Nama Produk</label>
                       <input

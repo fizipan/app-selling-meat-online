@@ -1,15 +1,18 @@
 <?php 
 require '../config/config.php';
 
-if (isset($_POST["tambahGaleri"])) {
-  if (tambahGaleri($_POST) > 0) {
+$id = $_GET["id"];
+$galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.id_gallery = $id")[0];
+
+if (isset($_POST["updateGaleri"])) {
+  if (updateGaleri($_POST) > 0) {
     echo "<script>
-            alert('Gallery Berhasil Ditambahkan');
+            alert('Gallery Berhasil Diubah');
             document.location.href = '?page=galleries';
           </script>";
   } else {
     echo "<script>
-            alert('Gallery Gagal Ditambahkan');
+            alert('Gallery Gagal Diubah');
             document.location.href = '?page=galleries';
           </script>";
   }
@@ -94,8 +97,8 @@ if (isset($_POST["tambahGaleri"])) {
 >
   <div class="container-fluid">
     <div class="dashboard-heading">
-      <h2 class="dashboard-title">Create Gallery</h2>
-      <p class="dashboard-subtitle">Create your own Gallery</p>
+      <h2 class="dashboard-title"><?= $galleries["product_name"]; ?></h2>
+      <p class="dashboard-subtitle">Galleries Details</p>
     </div>
     <div class="dashboard-content">
       <div class="row">
@@ -105,6 +108,8 @@ if (isset($_POST["tambahGaleri"])) {
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-12">
+                  <input type="hidden" name="id" value="<?= $galleries["id_gallery"]; ?>">
+                  <input type="hidden" name="photoLama" value="<?= $galleries["photos"]; ?>">
                     <div class="form-group">
                       <label for="name">Nama Produk</label>
                       <?php 
@@ -114,7 +119,7 @@ if (isset($_POST["tambahGaleri"])) {
                       ?>
                       <select name="name" id="name" class="form-control">
                         <?php foreach ($products as $product) : ?>
-                          <option value="<?= $product["id_product"]; ?>"><?= $product["product_name"]; ?></option>
+                          <option value="<?= $product["id_product"]; ?>" <?= $product["id_product"] == $galleries["product_id"] ? 'selected' : ''; ?>><?= $product["product_name"]; ?></option>
                         <?php endforeach;?>
                       </select>
                     </div>
@@ -130,7 +135,7 @@ if (isset($_POST["tambahGaleri"])) {
                   <div class="col-12 text-right">
                     <button
                       type="submit"
-                      name="tambahGaleri"
+                      name="updateGaleri"
                       class="btn btn-success px-4"
                     >
                       Save Now

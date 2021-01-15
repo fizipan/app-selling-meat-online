@@ -83,22 +83,21 @@ require '../config/config.php';
                       <tbody>
                         <?php 
                           $no = 1;
-                          $query = "SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id";
-                          $products = query($query);
+                          $galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product");
                         ?>
-                        <?php foreach ($products as $product) : ?>
+                        <?php foreach ($galleries as $gallery) : ?>
                           <tr>
-                            <th scope="row"><?= $no; ?></th>
-                            <td><?= $product["product_name"]; ?></td>
-                            <td><img src="../assets/images/<?= $product["photos"]; ?>" style="max-height: 60px;" alt=""></td>
-                            <td style="width: 15%;">
+                            <th scope="row" style="width: 10%;"><?= $no; ?></th>
+                            <td><?= $gallery["product_name"]; ?></td>
+                            <td><img src="../assets/images/<?= $gallery["photos"]; ?>" style="max-height: 60px;" alt=""></td>
+                            <td style="width: 20%;">
                               <div class="dropdown">
                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                   Aksi
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                  <a class="dropdown-item" href="?page=products-details&id=<?= $product["id"]; ?>">Edit</a>
-                                  <button type="button" class="dropdown-item" data-toggle="modal" data-target="#exampleModal">Delete</button>
+                                  <a class="dropdown-item" href="?page=galleries-details&id=<?= $gallery["id_gallery"]; ?>">Edit</a>
+                                  <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus Gallery Ini ?')" href="?page=galleries-delete&id=<?= $gallery["id_gallery"]; ?>">Delete</button>
                                 </div>
                               </div>
                             </td>

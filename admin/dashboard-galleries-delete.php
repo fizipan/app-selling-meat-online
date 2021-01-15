@@ -3,17 +3,16 @@ require '../config/config.php';
 
 $id = $_GET["id"];
 
-if (hapusProduk($id) > 0) {
+if (hapusGallery($id) > 0) {
     echo "<script>
             alert('Produk Berhasil Dihapus');
-            document.location.href = '?page=products';
+            document.location.href = '?page=galleries';
         </script>";
 } else {
     echo "<script>
             alert('Produk Gagal Dihapus');
-            document.location.href = '?page=products';
+            document.location.href = '?page=galleries';
         </script>";
-
 }
 
 ?>
