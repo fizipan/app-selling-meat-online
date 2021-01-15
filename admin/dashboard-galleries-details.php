@@ -1,5 +1,4 @@
 <?php 
-require '../config/config.php';
 
 $id = $_GET["id"];
 $galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.id_gallery = $id")[0];

@@ -1,5 +1,4 @@
-<?php 
-require '../config/config.php';
+<?php
 
 $id = $_GET["id"];
 $categories = query("SELECT * FROM categories WHERE id = $id")[0];

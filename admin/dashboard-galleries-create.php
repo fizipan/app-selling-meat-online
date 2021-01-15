@@ -1,5 +1,4 @@
-<?php 
-require '../config/config.php';
+<?php
 
 if (isset($_POST["tambahGaleri"])) {
   if (tambahGaleri($_POST) > 0) {

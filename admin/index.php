@@ -130,7 +130,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
             } elseif ($page == 'users-delete') {
               include 'users/dashboard-users-delete.php';
             } elseif ($page == 'logout') {
-              include 'logout.php';
+              include '../logout.php';
             } else {
               echo "Halaman Tidak Ditemukan";
             }

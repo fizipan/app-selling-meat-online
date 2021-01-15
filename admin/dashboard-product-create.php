@@ -1,5 +1,4 @@
-<?php 
-require '../config/config.php';
+<?php
 
 if (isset($_POST["tambahProduk"])) {
   if (tambahProduk($_POST) > 0) {

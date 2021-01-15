@@ -1,5 +1,4 @@
-<?php 
-require '../config/config.php';
+<?php
 
 if (isset($_POST["tambahUser"])) {
   if (tambahUser($_POST) > 0) {

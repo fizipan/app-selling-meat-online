@@ -1,5 +1,4 @@
-<?php 
-require '../config/config.php';
+<?php
 
 $id = $_GET["id"];
 

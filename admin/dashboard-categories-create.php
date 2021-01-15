@@ -1,5 +1,4 @@
 <?php 
-require '../config/config.php';
 
 if (isset($_POST["tambahCategory"])) {
   if (tambahCategory($_POST) > 0) {

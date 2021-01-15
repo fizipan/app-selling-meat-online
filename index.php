@@ -60,6 +60,46 @@ require_once 'config/config.php';
                   >Sign In</a
                 >
               </li>
+            <?php else: ?>
+              <li class="nav-item dropdown">
+                <?php 
+                  $id = $_SESSION["user"];
+                  $user = query("SELECT * FROM users WHERE id_user = $id")[0];
+                ?>
+                  <a
+                    href="#"
+                    class="nav-link font-weight-bold"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                  >
+                    <!-- <img
+                      src="../assets/images/user_pc.png"
+                      alt="profile"
+                      class="rounded-circle mr-2 profile-picture"
+                    /> -->
+                    Hi, <?= $user["name"]; ?>
+                  </a>
+                  <div class="dropdown-menu">
+                    <a href="/dashboard.html" class="dropdown-item"
+                      >Dashboard</a
+                    >
+                    <a href="/dashboard-account.html" class="dropdown-item"
+                      >Settings</a
+                    >
+                    <div class="dropdown-divider"></div>
+                    <a href="logout.php" class="dropdown-item">logout</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link d-inline-block">
+                  <img
+                    src="assets/images/shopping-cart-filled.svg"
+                    alt="cart-empty"
+                  />
+                  <div class="cart-badge">7</div>
+                </a>
+              </li>
             <?php endif;?>
           </ul>
         </div>

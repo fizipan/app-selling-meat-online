@@ -1,7 +1,3 @@
-<?php 
-require_once '../config/config.php';
-
-?>
 <nav
   class="navbar navbar-expand-lg navbar-light navbar-store fixed-top"
   data-aos="fade-down"

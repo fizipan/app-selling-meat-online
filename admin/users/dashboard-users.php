@@ -1,7 +1,3 @@
-<?php 
-require '../config/config.php';
-
-?>
 <nav class="navbar navbar-expand-lg navbar-light navbar-store fixed-top" data-aos="fade-down">
   <div class="container-fluid">
     <button class="btn btn-secondary d-md-none mr-auto mr-2" id="menu-toggle">
