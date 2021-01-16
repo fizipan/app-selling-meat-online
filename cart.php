@@ -23,61 +23,102 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
 
 <body>
   <!-- navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light navbar-store fixed-top navbar-fixed-top" data-aos="fade-down">
+  <nav
+      class="navbar navbar-expand-lg navbar-light navbar-store fixed-top navbar-fixed-top"
+      data-aos="fade-down"
+  >
     <div class="container">
-      <a href="/index.html" class="navbar-brand">
+      <a href="index.php" class="navbar-brand" title="home">
         <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
       </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarResponsive"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collpase navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="/index.html" class="nav-link">Home</a>
+            <a href="index.php" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
-            <a href="/products.html" class="nav-link">All Products</a>
+            <a href="products.php" class="nav-link">All Products</a>
           </li>
           <li class="nav-item">
-            <a href="/about" class="nav-link">About</a>
+            <a href="" class="nav-link">About</a>
           </li>
-        </ul>
-
-        <!-- dekstop menu -->
-        <ul class="navbar-nav d-none d-lg-flex">
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown">
-              <img src="assets/images/user_pc.png" alt="profile" class="rounded-circle mr-2 profile-picture">
-              Hi, Hafizh
-            </a>
-            <div class="dropdown-menu">
-              <a href="/dashboard.html" class="dropdown-item">Dashboard</a>
-              <a href="/dashboard-account.html" class="dropdown-item">Settings</a>
-              <div class="dropdown-divider"></div>
-              <a href="/" class="dropdown-item">logout</a>
-            </div>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link d-inline-bloc mt-2">
-              <img src="assets/images/shopping-cart-filled.svg" alt="cart-empty">
-              <div class="cart-badge">7</div>
-            </a>
-          </li>
-        </ul>
-
-        <!-- mobile app -->
-        <ul class="navbar-nav d-block d-lg-none">
-          <li class="nav-item">
-            <a href="" class="nav-link">
-              Hi, Hafizh
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link d-inline-block">
-              Cart
-            </a>
-          </li>
+          <?php
+          if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) : ?>
+            <li class="nav-item">
+              <a href="register.php" class="nav-link">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="login.php"
+                class="btn btn-success nav-link px-4 text-white"
+                >Sign In</a
+              >
+            </li>
+          <?php else: ?>
+            <li class="nav-item dropdown">
+              <?php 
+                $id = $_SESSION["user"];
+                $user = query("SELECT * FROM users WHERE id_user = $id")[0];
+              ?>
+                <a
+                  href="#"
+                  class="nav-link font-weight-bold"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                >
+                  <!-- <img
+                    src="../assets/images/user_pc.png"
+                    alt="profile"
+                    class="rounded-circle mr-2 profile-picture"
+                  /> -->
+                  Hi, <?= $user["name"]; ?>
+                </a>
+                <div class="dropdown-menu">
+                  <?php if ($user["roles"] == 'ADMIN') : ?>
+                      <a href="admin" class="dropdown-item">
+                        Dashboard
+                      </a>
+                  <?php else : ?>
+                      <a href="user" class="dropdown-item">
+                        Dashboard
+                      </a>
+                  <?php endif; ?>
+                  <div class="dropdown-divider"></div>
+                  <a href="logout.php" class="dropdown-item">logout</a>
+                </div>
+            </li>
+            <li class="nav-item">
+              <?php 
+                $id = $user["id_user"];
+                $carts = rows("SELECT * FROM carts WHERE user_id = $id");
+              ?>
+              <?php if ($carts >= 1) : ?>
+                <a href="cart.php" class="nav-link d-inline-block">
+                  <img
+                    src="assets/images/shopping-cart-filled.svg"
+                    alt="cart-empty"
+                  />
+                  <div class="cart-badge"><?= $carts; ?></div>
+                </a>
+              <?php else : ?>
+                <a href="cart.php" class="nav-link d-inline-block">
+                  <img
+                    src="assets/images/icon-cart-empty.svg"
+                    alt="cart-empty"
+                  />
+                </a>
+              <?php endif; ?>
+            </li>
+          <?php endif;?>
         </ul>
       </div>
     </div>
@@ -113,61 +154,96 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
                 <tr>
                   <th>Image</th>
                   <th>Name &amp; Seller</th>
+                  <th>Banyak</th>
                   <th>Price</th>
+                  <th>Total</th>
                   <th>Menu</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td style="width: 20%;">
-                    <img src="assets/images/1.jpg" alt="" class="cart-image">
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Kepala Ayam Jago</div>
-                    <div class="product-subtitle">1 Kg</div>
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Rp. 40.000</div>
-                    <div class="product-subtitle">IDR</div>
-                  </td>
-                  <td style="width: 20%;">
-                    <a href="" class="btn btn-remove text-white btn-block px-3">Remove</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width: 20%;">
-                    <img src="assets/images/2.jpg" alt="" class="cart-image">
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Paha Ayam Gede</div>
-                    <div class="product-subtitle">500 Gram</div>
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Rp. 20.000</div>
-                    <div class="product-subtitle">IDR</div>
-                  </td>
-                  <td style="width: 25%;">
-                    <a href="" class="btn btn-remove text-white btn-block px-3">Remove</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width: 20%;">
-                    <img src="assets/images/3.jpg" alt="" class="cart-image">
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Ceker Ayam Lunak</div>
-                    <div class="product-subtitle">1 Kg</div>
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Rp. 50.000</div>
-                    <div class="product-subtitle">IDR</div>
-                  </td>
-                  <td style="width: 25%;">
-                    <a href="" class="btn btn-remove text-white btn-block px-3">Remove</a>
-                  </td>
-                </tr>
+              <?php 
+                $id = $user["id_user"];
+                $carts = query("SELECT * FROM carts INNER JOIN users ON carts.user_id = users.id_user INNER JOIN products ON carts.product_id = products.id_product WHERE user_id = $id");
+                $banyak = 0;
+                $berat = 0;
+                $total = 0;
+                ?>
+                <?php foreach ($carts as $cart) : ?>
+                  <?php 
+                    $idProduct = $cart["id_product"];
+                    $product = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE products.id_product = $idProduct");
+                    $gallery = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct"); 
+                    $banyak += $cart["banyak"];
+                    $berat += $product[0]["unit"];
+                    $total += $cart["total"];
+                  ?>
+                  <tr>
+                    <td style="width: 20%;">
+                      <img src="assets/images/<?= $gallery[0]["photos"]; ?>" alt="" class="cart-image">
+                    </td>
+                    <td style="width: 20%;">
+                      <div class="product-title"><?= $cart["product_name"]; ?></div>
+                      <div class="product-subtitle"><?= $product[0]["unit_name"]; ?></div>
+                    </td>
+                    <td style="width: 10%;">
+                      <div class="product-title"><?= $cart["banyak"]; ?></div>
+                    </td>
+                    <td style="width: 20%;">
+                      <div class="product-title">Rp. <?= number_format($cart["price"]); ?></div>
+                      <div class="product-subtitle">IDR</div>
+                    </td>
+                    <td style="width: 20%;">
+                      <div class="product-title">Rp. <?= number_format($cart["total"]); ?></div>
+                      <div class="product-subtitle">IDR</div>
+                    </td>
+                    <td style="width: 10%;">
+                      <a href="" class="btn btn-remove text-white btn-block px-3">Remove</a>
+                    </td>
+                  </tr>
+                <?php endforeach;?>
               </tbody>
             </table>
+          </div>
+        </div>
+        <div class="row" data-aos="fade-up" data-aos-delay="150">
+          <div class="col-12">
+            <hr>
+          </div>
+          <div class="col-12">
+            <h2>
+              Shipping Details
+            </h2>
+          </div>
+        </div>
+        <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="city">Kota</label>
+              <select name="city" id="city" class="form-control">
+                <option value="JAKARTA">JAKARTA</option>
+                <option value="BOGOR">BOGOR</option>
+                <option value="TANGERANG">TANGERANG</option>
+                <option value="DEPOK">DEPOK</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="mobile">No HP / WA</label>
+              <input type="tel" name="mobile" id="mobile" class="form-control form-store">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="postal-code">Kode Pos</label>
+              <input type="number" name="postal-code" id="postal-code" class="form-control form-store">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="address">Addres</label>
+              <textarea name="address" id="editor"></textarea>
+            </div>
           </div>
         </div>
         <div class="row" data-aos="fade-up" data-aos-delay="150">
@@ -180,21 +256,17 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
             </h2>
           </div>
         </div>
-        <div class="row" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-4 col-md-2">
-            <div class="product-title">$10</div>
-            <div class="product-subtitle mb-3">Country Tax</div>
+        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-4 col-md-3">
+            <div class="product-title"><?= number_format($banyak); ?></div>
+            <div class="product-subtitle mb-3">Banyak Barang</div>
           </div>
           <div class="col-4 col-md-3">
-            <div class="product-title">$200</div>
-            <div class="product-subtitle">Product Insurance</div>
+            <div class="product-title"><?= number_format($berat); ?> Gram</div>
+            <div class="product-subtitle">Berat Barang</div>
           </div>
-          <div class="col-4 col-md-2">
-            <div class="product-title">$580</div>
-            <div class="product-subtitle">Ship to Jakarta</div>
-          </div>
-          <div class="col-4 col-md-2">
-            <div class="product-title text-success">$392,489</div>
+          <div class="col-4 col-md-3">
+            <div class="product-title text-success">Rp. <?= number_format($total); ?></div>
             <div class="product-subtitle">Total</div>
           </div>
           <div class="col-8 col-md-3">
@@ -225,6 +297,10 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
       AOS.init();
+    </script>
+    <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
+    <script>
+      CKEDITOR.replace("editor");
     </script>
     <script src="assets/js/navbar-scroll.js"></script>
 </body>

@@ -1,3 +1,16 @@
+<?php 
+
+require 'config/config.php';
+if (isset($_GET["sort"])) {
+  $category_id = $_GET["sort"];
+  $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE category_id = $category_id");
+} else {
+  $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id");
+}
+
+$categories = query("SELECT * FROM categories");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,8 +35,8 @@
       data-aos="fade-down"
     >
       <div class="container">
-        <a href="/index.html" class="navbar-brand">
-          <img src="/assets/images/logo.jpg" class="w-50" alt="logo" />
+        <a href="index.php" class="navbar-brand" title="home">
+          <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
         </a>
         <button
           class="navbar-toggler"
@@ -36,24 +49,83 @@
         <div class="collpase navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a href="/index.html" class="nav-link">Home</a>
+              <a href="index.php" class="nav-link">Home</a>
             </li>
             <li class="nav-item active">
-              <a href="/products.html" class="nav-link">All Products</a>
+              <a href="products.php" class="nav-link">All Products</a>
             </li>
             <li class="nav-item">
-              <a href="/about.html" class="nav-link">About</a>
+              <a href="" class="nav-link">About</a>
             </li>
-            <li class="nav-item">
-              <a href="/register.html" class="nav-link">Sign Up</a>
-            </li>
-            <li class="nav-item">
-              <a
-                href="/login.html"
-                class="btn btn-success nav-link px-4 text-white"
-                >Sign In</a
-              >
-            </li>
+            <?php
+            if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) : ?>
+              <li class="nav-item">
+                <a href="register.php" class="nav-link">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="login.php"
+                  class="btn btn-success nav-link px-4 text-white"
+                  >Sign In</a
+                >
+              </li>
+            <?php else: ?>
+              <li class="nav-item dropdown">
+                <?php 
+                  $id = $_SESSION["user"];
+                  $user = query("SELECT * FROM users WHERE id_user = $id")[0];
+                ?>
+                  <a
+                    href="#"
+                    class="nav-link font-weight-bold"
+                    id="navbarDropdown"
+                    role="button"
+                    data-toggle="dropdown"
+                  >
+                    <!-- <img
+                      src="../assets/images/user_pc.png"
+                      alt="profile"
+                      class="rounded-circle mr-2 profile-picture"
+                    /> -->
+                    Hi, <?= $user["name"]; ?>
+                  </a>
+                  <div class="dropdown-menu">
+                    <?php if ($user["roles"] == 'ADMIN') : ?>
+                        <a href="admin" class="dropdown-item">
+                          Dashboard
+                        </a>
+                    <?php else : ?>
+                        <a href="user" class="dropdown-item">
+                          Dashboard
+                        </a>
+                    <?php endif; ?>
+                    <div class="dropdown-divider"></div>
+                    <a href="logout.php" class="dropdown-item">logout</a>
+                  </div>
+              </li>
+              <li class="nav-item">
+                <?php 
+                  $id = $user["id_user"];
+                  $carts = rows("SELECT * FROM carts WHERE user_id = $id");
+                ?>
+                <?php if ($carts >= 1) : ?>
+                  <a href="cart.php" class="nav-link d-inline-block">
+                    <img
+                      src="assets/images/shopping-cart-filled.svg"
+                      alt="cart-empty"
+                    />
+                    <div class="cart-badge"><?= $carts; ?></div>
+                  </a>
+                <?php else : ?>
+                  <a href="cart.php" class="nav-link d-inline-block">
+                    <img
+                      src="assets/images/icon-cart-empty.svg"
+                      alt="cart-empty"
+                    />
+                  </a>
+                <?php endif; ?>
+              </li>
+            <?php endif;?>
           </ul>
         </div>
       </div>
@@ -62,19 +134,19 @@
 
     <!-- slider / banner -->
     <div class="page-content page-home" data-aos="zoom-in">
-      <section class="store-breadcrumb">
+      <section class="store-breadcrumb mb-4">
         <div class="container">
           <div class="row">
             <div class="col-lg-12">
               <nav class="breadcrumb bg-transparent p-0">
-                <a class="breadcrumb-item" href="index.html">Home</a>
+                <a class="breadcrumb-item" href="index.php">Home</a>
                 <div class="breadcrumb-item active">Product</div>
               </nav>
             </div>
           </div>
         </div>
       </section>
-      <section class="store-all-products">
+      <section class="store-all-products" id="product">
         <div class="container">
           <div class="row justify-content-between mb-2">
             <div class="col-lg-4" data-aos="fade-up">
@@ -82,205 +154,37 @@
               <p class="text-muted">Tersedia Daging Segar Pilihan</p>
             </div>
             <div class="col-lg-4">
+              <form action="" method="GET">
               <div class="form-group">
-                <select name="sort" id="sort" class="form-control">
-                  <option value="">Daging Baru</option>
-                  <option value="">Daging 1 Ekor</option>
-                  <option value="">Daging 1 Kg</option>
-                  <option value="">Daging 500 Gram</option>
-                </select>
-              </div>
+                    <select name="sort" id="sort" class="form-control" onchange="form.submit()">
+                    <option disabled selected>-- Select Category --</option>
+                    <?php foreach ($categories as $category) : ?>
+                      <option value="<?= $category["id"]; ?>"><?= $category["category_name"]; ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </div>
+              </form>
             </div>
           </div>
           <div class="row">
             <div
               class="col-6 col-md-4 col-lg-3"
               data-aos="fade-up"
-              data-aos-delay="100"
+              v-for="(product, index) in products"
+              :data-aos-delay="product.iteration"
             >
-              <a href="/details.html" class="component-products d-block">
+              <a :href="product.id" class="component-products d-block">
                 <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/1.jpg')"
-                  ></div>
+                  <img :src="product.url" class="d-block products-image" alt="">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
-                    <div class="products-text">Paha Ayam Segar</div>
+                    <div class="products-text">{{ product.name }}</div>
 
-                    <div class="products-price">Rp. 50,000</div>
+                    <div class="products-price">Rp. {{ product.price }}</div>
                   </div>
                   <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/2.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Kerongkongan Ayam</div>
-
-                    <div class="products-price">Rp. 20,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/3.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Kepala Ayam Batin</div>
-
-                    <div class="products-price">Rp. 80,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/4.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Sayap Ayam Tebel</div>
-
-                    <div class="products-price">Rp. 100,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/5.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Dada Ayam Besar</div>
-
-                    <div class="products-price">Rp. 150,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/6.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Ceker Ayam Wenak</div>
-
-                    <div class="products-price">Rp. 30,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/7.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Tanpa Tulang</div>
-
-                    <div class="products-price">Rp. 250,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/8.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Utuh</div>
-
-                    <div class="products-price">Rp. 350,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
+                    <div class="text-muted">{{ product.unit }}</div>
                   </div>
                 </div>
               </a>
@@ -312,6 +216,39 @@
     <script>
       AOS.init();
     </script>
+    <script src="assets/vendor/vue/vue.js"></script>
+    <script>
+      var product = new Vue({
+        el: "#product",
+        mounted() {
+          AOS.init();
+        },
+        data: {
+          products: [
+            <?php $iteration = 0 ?>
+            <?php foreach ($products as $product ) : ?>
+            <?php
+              $idProduct = $product["id_product"];
+              $gallery = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");
+            ?>
+            {
+              iteration: <?= $iteration += 100 ?>,
+              id: 'details.php?id=<?= $product["id_product"] ?>',
+              name: '<?= $product["product_name"] ?>',
+              url: "assets/images/<?= $gallery[0]["photos"] ?? '' ?>",
+              price: '<?= $product["price"] ?>',
+              unit: '<?= $product["unit_name"] ?>',
+            },
+            <?php endforeach; ?>
+          ],
+        },
+        methods: {
+          changeActive(id) {
+            this.activePhoto = id;
+          },
+        },
+      });
+    </script>
     <script src="assets/js/navbar-scroll.js"></script>
   </body>
-</html>
+</html>          

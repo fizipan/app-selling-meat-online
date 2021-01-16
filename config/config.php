@@ -22,7 +22,7 @@ function query($query)
     return $rows;
 }
 
-// Jumlaj Data
+// Jumlah Data
 function rows($query)
 {
     global $conn;
@@ -275,6 +275,28 @@ function hapusUser($id)
 
     mysqli_query($conn, "DELETE FROM users WHERE id_user = $id");
     return mysqli_affected_rows($conn);
+}
+
+// Add To cart
+function addToCart($data) 
+{
+    global $conn;
+    $product_id = $data["product_id"];
+    $user_id = $data["user_id"];
+    $banyak = $data["banyak"];
+
+    $product = query("SELECT * FROM products WHERE id_product = $product_id")[0];
+
+    $total = $banyak * $product["price"];
+
+    $query = "INSERT INTO carts
+                VALUES
+                ('', '$user_id', '$product_id', '$banyak', '$total')
+            ";
+    
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+
 }
 
 function upload()

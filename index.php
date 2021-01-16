@@ -26,7 +26,7 @@ require_once 'config/config.php';
       data-aos="fade-down"
     >
       <div class="container">
-        <a href="/index.html" class="navbar-brand" title="home">
+        <a href="index.php" class="navbar-brand" title="home">
           <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
         </a>
         <button
@@ -81,24 +81,40 @@ require_once 'config/config.php';
                     Hi, <?= $user["name"]; ?>
                   </a>
                   <div class="dropdown-menu">
-                    <a href="/dashboard.html" class="dropdown-item"
-                      >Dashboard</a
-                    >
-                    <a href="/dashboard-account.html" class="dropdown-item"
-                      >Settings</a
-                    >
+                    <?php if ($user["roles"] == 'ADMIN') : ?>
+                        <a href="admin" class="dropdown-item">
+                          Dashboard
+                        </a>
+                    <?php else : ?>
+                        <a href="user" class="dropdown-item">
+                          Dashboard
+                        </a>
+                    <?php endif; ?>
                     <div class="dropdown-divider"></div>
                     <a href="logout.php" class="dropdown-item">logout</a>
                   </div>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link d-inline-block">
-                  <img
-                    src="assets/images/shopping-cart-filled.svg"
-                    alt="cart-empty"
-                  />
-                  <div class="cart-badge">7</div>
-                </a>
+                <?php 
+                  $id = $user["id_user"];
+                  $carts = rows("SELECT * FROM carts WHERE user_id = $id");
+                ?>
+                <?php if ($carts >= 1) : ?>
+                  <a href="cart.php" class="nav-link d-inline-block">
+                    <img
+                      src="assets/images/shopping-cart-filled.svg"
+                      alt="cart-empty"
+                    />
+                    <div class="cart-badge"><?= $carts; ?></div>
+                  </a>
+                <?php else : ?>
+                  <a href="cart.php" class="nav-link d-inline-block">
+                    <img
+                      src="assets/images/icon-cart-empty.svg"
+                      alt="cart-empty"
+                    />
+                  </a>
+                <?php endif; ?>
               </li>
             <?php endif;?>
           </ul>
@@ -239,6 +255,7 @@ require_once 'config/config.php';
           <div class="row">
             <?php 
             $products1Kg = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 2 LIMIT 8");
+            $iteration = 0;
             ?>
 
             <?php foreach ($products1Kg as $product1Kg) : ?>
@@ -249,7 +266,7 @@ require_once 'config/config.php';
               <div
                 class="col-6 col-md-4 col-lg-3"
                 data-aos="fade-up"
-                data-aos-delay="100"
+                data-aos-delay="<?= $iteration += 100; ?>"
               >
                 <a href="details.php?id=<?= $idProduct; ?>" class="component-products d-block">
                   <div class="products-thumbnail">
@@ -293,7 +310,7 @@ require_once 'config/config.php';
               <div
                 class="col-6 col-md-4 col-lg-3"
                 data-aos="fade-up"
-                data-aos-delay="100"
+                data-aos-delay="<?= $iteration += 100; ?>"
               >
                 <a href="details.php?id=<?= $idProduct; ?>" class="component-products d-block">
                   <div class="products-thumbnail">
