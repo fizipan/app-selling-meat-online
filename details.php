@@ -1,3 +1,10 @@
+<?php 
+require_once 'config/config.php';
+$idProduct = $_GET["id"];
+$product = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE id_product = $idProduct")[0];
+$galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");    
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,7 +29,7 @@
       data-aos="fade-down"
     >
       <div class="container">
-        <a href="/index.html" class="navbar-brand">
+        <a href="index.php" class="navbar-brand">
           <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
         </a>
         <button
@@ -36,13 +43,13 @@
         <div class="collpase navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a href="/index.html" class="nav-link">Home</a>
+              <a href="index.php" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-              <a href="/products.html" class="nav-link">All Products</a>
+              <a href="products.php" class="nav-link">All Products</a>
             </li>
             <li class="nav-item">
-              <a href="/about.html" class="nav-link">About</a>
+              <a href="about.php" class="nav-link">About</a>
             </li>
           </ul>
 
@@ -156,9 +163,9 @@
           <div class="container">
             <div class="row">
               <div class="col-lg-8">
-                <h1>Kepala Ayam Segar</h1>
-                <div class="owner">500 Gram</div>
-                <div class="price">Rp. 150.000</div>
+                <h1><?= $product["product_name"]; ?></h1>
+                <div class="owner"><?= $product["unit_name"]; ?></div>
+                <div class="price">Rp. <?= number_format($product["price"]); ?></div>
               </div>
               <div class="col-lg-2" data-aos="zoom-in">
                 <a
@@ -176,18 +183,7 @@
             <div class="row">
               <div class="col-12 col-lg-8">
                 <p>
-                  The Nike Air Max 720 SE goes bigger than ever before with
-                  Nike's tallest Air unit yet for unimaginable, all-day comfort.
-                  There's super breathable fabrics on the upper, while colours
-                  add a modern edge.
-                </p>
-                <p>
-                  Bring the past into the future with the Nike Air Max 2090, a
-                  bold look inspired by the DNA of the iconic Air Max 90.
-                  Brand-new Nike Air cushioning underfoot adds unparalleled
-                  comfort while transparent mesh and vibrantly coloured details
-                  on the upper are blended with timeless OG features for an
-                  edgy, modernised look.
+                  <?= $product["descriptions"]; ?>
                 </p>
               </div>
             </div>
@@ -227,22 +223,12 @@
         data: {
           activePhoto: 1,
           photos: [
+            <?php foreach ($galleries as $gallery) : ?>
             {
-              id: 1,
-              url: "assets/images/1.jpg",
+              id: <?= $gallery["id_gallery"] ?>,
+              url: "assets/images/<?= $gallery["photos"] ?>",
             },
-            {
-              id: 2,
-              url: "assets/images/2.jpg",
-            },
-            {
-              id: 3,
-              url: "assets/images/3.jpg",
-            },
-            {
-              id: 4,
-              url: "assets/images/4.jpg",
-            },
+            <?php endforeach; ?>
           ],
         },
         methods: {

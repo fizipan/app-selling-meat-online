@@ -108,7 +108,7 @@ require_once 'config/config.php';
     <!-- akhir navbar -->
 
     <!-- page content -->
-    <div class="page-content page-home" style="" data-aos="zoom-in">
+    <div class="page-content page-home" data-aos="zoom-in">
       <section class="store-landing">
         <div class="container">
           <div class="row align-items-center justify-content-between">
@@ -116,8 +116,8 @@ require_once 'config/config.php';
               <img src="assets/images/bg-landing.jpg" class="w-100" alt="" />
             </div>
             <div class="col-md-6">
-              <h1>Toko Daging Ayam Potong Segar Online</h1>
-              <p class="store-subtitle-landing">
+              <h1 style="font-weight: bold; margin-bottom: 15px;">Toko Daging Ayam Potong Segar Online</h1>
+              <p class="store-subtitle-landing" style="line-height: 28px; color: rgb(146, 146, 146);">
                 Elza Mandiri adalah toko daging yang menjual daging Ayam segar,
                 daging olahan dan bumbu pelengkap resep makanan olahan dari
                 bahan baku daging segar
@@ -129,11 +129,11 @@ require_once 'config/config.php';
           </div>
         </div>
       </section>
-      <section class="store-adventeges" id="adventeges">
+      <section class="store-adventeges" style="margin-top: 100px;" id="adventeges">
         <div class="container">
           <div class="row">
             <div class="col-12">
-              <div class="title-adventeges">Kelebihan Belanja Disini</div>
+              <div class="title-adventeges" style="text-align: center; font-size: 24px; font-weight: 600; margin-bottom: 20px;">Kelebihan Belanja Disini</div>
             </div>
           </div>
           <div class="row">
@@ -229,409 +229,92 @@ require_once 'config/config.php';
           </div>
         </div>
       </section>
-      <section class="store-products-kilogram">
+      <section class="store-products-kilogram" style="margin-top: 100px;">
         <div class="container">
           <div class="row">
             <div class="col-12" data-aos="fade-up">
-              <h5>Daging Kemasan 1 Kilogram</h5>
+              <h5 style="font-weight: 600; margin-bottom: 15px;">Daging Kemasan 1 Kilogram</h5>
             </div>
           </div>
           <div class="row">
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/1.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Ayam Segar</div>
+            <?php 
+            $products1Kg = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 2 LIMIT 8");
+            ?>
 
-                    <div class="products-price">Rp. 50,000</div>
+            <?php foreach ($products1Kg as $product1Kg) : ?>
+            <?php 
+            $idProduct = $product1Kg["id_product"];
+            $galleries1Kg = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");    
+            ?>
+              <div
+                class="col-6 col-md-4 col-lg-3"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <a href="details.php?id=<?= $idProduct; ?>" class="component-products d-block">
+                  <div class="products-thumbnail">
+                    <div
+                      class="products-image"
+                      style="background-image: url('assets/images/<?= $galleries1Kg[0]["photos"] ?>')"
+                    ></div>
                   </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/2.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Kerongkongan Ayam</div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="products-text"><?= $product1Kg["product_name"]; ?></div>
 
-                    <div class="products-price">Rp. 20,000</div>
+                      <div class="products-price">Rp. <?= number_format($product1Kg["price"]); ?></div>
+                    </div>
+                    <div>
+                      <div class="text-muted"><?= $product1Kg["unit_name"]; ?></div>
+                    </div>
                   </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/3.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Kepala Ayam Batin</div>
-
-                    <div class="products-price">Rp. 80,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/4.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Sayap Ayam Tebel</div>
-
-                    <div class="products-price">Rp. 100,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/5.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Dada Ayam Besar</div>
-
-                    <div class="products-price">Rp. 150,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/6.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Ceker Ayam Wenak</div>
-
-                    <div class="products-price">Rp. 30,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/7.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Tanpa Tulang</div>
-
-                    <div class="products-price">Rp. 250,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/8.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Utuh</div>
-
-                    <div class="products-price">Rp. 350,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">1 Kilogram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
+                </a>
+              </div>
+            <?php endforeach;?>
           </div>
         </div>
       </section>
-      <section class="store-products-gram">
+      <section class="store-products-gram" style="margin-top: 100px;">
         <div class="container">
           <div class="row">
             <div class="col-12" data-aos="fade-up">
-              <h5>Daging Kemasan 500 Gram</h5>
+              <h5 style="font-weight: 600; margin-bottom: 15px;">Daging Kemasan 500 Gram</h5>
             </div>
           </div>
           <div class="row">
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/1.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Ayam Segar</div>
+          <?php 
+            $products500G = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 1 LIMIT 8");
+            ?>
+            <?php foreach ($products500G as $product500G ) : ?>
+            <?php 
+            $idProduct = $product500G["id_product"];
+            $galleries500G = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");  
+            ?>
+              <div
+                class="col-6 col-md-4 col-lg-3"
+                data-aos="fade-up"
+                data-aos-delay="100"
+              >
+                <a href="details.php?id=<?= $idProduct; ?>" class="component-products d-block">
+                  <div class="products-thumbnail">
+                    <div
+                      class="products-image"
+                      style="background-image: url('assets/images/<?= $galleries500G[0]["photos"] ?>')"
+                    ></div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <div class="products-text"><?= $product500G["product_name"]; ?></div>
 
-                    <div class="products-price">Rp. 50,000</div>
+                      <div class="products-price">Rp. <?= number_format($product500G["price"]) ?></div>
+                    </div>
+                    <div>
+                      <div class="text-muted"><?= $product500G["unit_name"]; ?></div>
+                    </div>
                   </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/2.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Kerongkongan Ayam</div>
-
-                    <div class="products-price">Rp. 20,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/3.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Kepala Ayam Jago</div>
-
-                    <div class="products-price">Rp. 80,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/4.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Sayap Ayam Tebel</div>
-
-                    <div class="products-price">Rp. 100,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/5.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Dada Ayam Besar</div>
-
-                    <div class="products-price">Rp. 150,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/6.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Ceker Ayam Wenak</div>
-
-                    <div class="products-price">Rp. 30,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/7.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Tanpa Tulang</div>
-
-                    <div class="products-price">Rp. 250,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
-            <div
-              class="col-6 col-md-4 col-lg-3"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                  <div
-                    class="products-image"
-                    style="background-image: url('assets/images/8.jpg')"
-                  ></div>
-                </div>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <div class="products-text">Paha Utuh</div>
-
-                    <div class="products-price">Rp. 350,000</div>
-                  </div>
-                  <div>
-                    <div class="products-unit m-0">500 Gram</div>
-                  </div>
-                </div>
-              </a>
-            </div>
+                </a>
+              </div>
+            <?php endforeach;?>
           </div>
         </div>
       </section>
