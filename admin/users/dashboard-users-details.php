@@ -159,6 +159,18 @@ if (isset($_POST["updateUser"])) {
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
+                        <label for="code">Kode Pos</label>
+                        <input
+                          type="text"
+                          name="code"
+                          id="code"
+                          class="form-control"
+                          value="<?= $users["postal_code"]; ?>"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
                         <label>Alamat</label>
                         <textarea name="alamat" id="editor" required><?= $users["address"]; ?></textarea>
                       </div>

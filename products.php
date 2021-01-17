@@ -1,11 +1,16 @@
 <?php 
 
 require 'config/config.php';
+$jumlahDataPerHalaman = 8;
+$jumlahData = count(query("SELECT * FROM products"));
+$jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);
+$halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
+$awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 if (isset($_GET["sort"])) {
   $category_id = $_GET["sort"];
   $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE category_id = $category_id");
 } else {
-  $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id");
+  $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id LIMIT $awalData, $jumlahDataPerHalaman");
 }
 
 $categories = query("SELECT * FROM categories");
@@ -150,7 +155,17 @@ $categories = query("SELECT * FROM categories");
         <div class="container">
           <div class="row justify-content-between mb-2">
             <div class="col-lg-4" data-aos="fade-up">
-              <h5 class="mb-1">All Products</h5>
+            <?php 
+            if (isset($_GET["sort"])) {
+              $category_id = $_GET["sort"];
+              $categoryLabel = query("SELECT * FROM categories WHERE id = $category_id")[0];
+            }
+            ?>
+              <?php if (isset($categoryLabel)) : ?>
+                <h5 class="mb-1"><?= $categoryLabel["category_name"]; ?></h5>
+              <?php else : ?>
+                <h5 class="mb-1">All Products</h5>
+              <?php endif;?>
               <p class="text-muted">Tersedia Daging Segar Pilihan</p>
             </div>
             <div class="col-lg-4">
@@ -188,6 +203,51 @@ $categories = query("SELECT * FROM categories");
                   </div>
                 </div>
               </a>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col-md-12 d-flex justify-content-center">
+              <nav aria-label="Page navigation">
+                <ul class="pagination">
+                  <?php if ($halamanAktif > 1) : ?>
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<?= $halamanAktif - 1; ?>" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                  <?php else : ?>
+                  <li class="page-item disabled">
+                    <a class="page-link" href="" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <?php endif;?>
+                  <?php for ($i=1; $i <= $jumlahHalaman ; $i++) : ?>
+                    <?php if ($i == $halamanAktif) : ?>
+                      <li class="page-item active"><a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a></li>
+                    <?php else: ?>
+                      <li class="page-item"><a class="page-link" href="?page=<?= $i; ?>"><?= $i; ?></a></li>
+                    <?php endif; ?>
+                  <?php endfor;?>
+                  <?php if ($halamanAktif < $jumlahHalaman) : ?>
+                    <li class="page-item">
+                      <a class="page-link" href="?page=<?= $halamanAktif + 1; ?>" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  <?php else :?>
+                    <li class="page-item disabled">
+                      <a class="page-link" href="" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  <?php endif; ?>
+                </ul>
+              </nav>
             </div>
           </div>
         </div>

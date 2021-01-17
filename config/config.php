@@ -195,15 +195,53 @@ function tambahUser($data)
     $phone_number = $data["phone_number"];
     $password = password_hash($data["password"], PASSWORD_DEFAULT);
     $alamat = $data["alamat"];
-    $point = null;
+    $code = $data["code"];
     $roles = $data["roles"];
 
     $query = "INSERT INTO users
                 VALUES
-                ('', '$name', '$email', '$password', '$alamat', '$phone_number', '$point', '$roles')
+                ('', '$name', '$email', '$password', '$alamat', '$phone_number', '$code', '$roles')
             ";
 
     mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function updateUser($data)
+{
+    global $conn;
+    $id = $data["id"];
+    $result = query("SELECT password FROM users WHERE id_user = $id")[0];
+    $name = $data["name"];
+    $phone_number = $data["phone_number"];
+    if (empty($data["password"])) {
+        $password = $result["password"];
+    } else {
+        $password = password_hash($data["password"], PASSWORD_DEFAULT);
+    }
+    $alamat = $data["alamat"];
+    $code = $data["code"];
+    $roles = $data["roles"];
+
+    $query = "UPDATE users SET
+                name = '$name',
+                password = '$password',
+                address = '$alamat',
+                phone_number = '$phone_number',
+                postal_code = '$code',
+                roles = '$roles'
+                WHERE id_user = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);   
+}
+
+function hapusUser($id)
+{
+    global $conn;
+
+    mysqli_query($conn, "DELETE FROM users WHERE id_user = $id");
     return mysqli_affected_rows($conn);
 }
 
@@ -241,42 +279,6 @@ function register($data)
     return mysqli_affected_rows($conn);
 }
 
-function updateUser($data)
-{
-    global $conn;
-    $id = $data["id"];
-    $result = query("SELECT password FROM users WHERE id_user = $id")[0];
-    $name = $data["name"];
-    $phone_number = $data["phone_number"];
-    if (empty($data["password"])) {
-        $password = $result["password"];
-    } else {
-        $password = password_hash($data["password"], PASSWORD_DEFAULT);
-    }
-    $alamat = $data["alamat"];
-    $roles = $data["roles"];
-
-    $query = "UPDATE users SET
-                name = '$name',
-                password = '$password',
-                address = '$alamat',
-                phone_number = '$phone_number',
-                roles = '$roles'
-                WHERE id_user = $id
-            ";
-
-    mysqli_query($conn, $query);
-    return mysqli_affected_rows($conn);   
-}
-
-function hapusUser($id)
-{
-    global $conn;
-
-    mysqli_query($conn, "DELETE FROM users WHERE id_user = $id");
-    return mysqli_affected_rows($conn);
-}
-
 // Add To cart
 function addToCart($data) 
 {
@@ -297,6 +299,17 @@ function addToCart($data)
     mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 
+}
+
+// Delete Product at cart
+
+function deleteProductAtCart($data)
+{
+    global $conn;
+    $idProduct = $data["deleteProduct"];
+
+    mysqli_query($conn, "DELETE FROM carts WHERE id_cart = $idProduct");
+    return mysqli_affected_rows($conn);
 }
 
 function upload()

@@ -5,6 +5,15 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
   header("Location: login.php");
 }
 
+if (isset($_POST["deleteCart"])) {
+  if (deleteProductAtCart($_POST) > 0) {
+    echo "<script>
+            alert('Product berhasil di hapus dari cart Anda');
+            document.location.href = 'cart.php';
+          </script>";
+  }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -197,7 +206,10 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
                       <div class="product-subtitle">IDR</div>
                     </td>
                     <td style="width: 10%;">
-                      <a href="" class="btn btn-remove text-white btn-block px-3">Remove</a>
+                    <form action="" method="POST">
+                      <input type="hidden" name="deleteProduct" value="<?= $cart["id_cart"]; ?>">
+                      <button type="submit" onclick="return confirm('Yakin Ingin Menghapus Product Ini dari cart ?')" name="deleteCart" class="btn btn-remove text-white btn-block px-3">Remove</button>
+                    </form>
                     </td>
                   </tr>
                 <?php endforeach;?>
@@ -230,21 +242,40 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
           <div class="col-md-4">
             <div class="form-group">
               <label for="mobile">No HP / WA</label>
-              <input type="tel" name="mobile" id="mobile" class="form-control form-store">
+              <input type="tel" name="mobile" id="mobile" class="form-control form-store" value="<?= $user["phone_number"] ?? ''; ?>">
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group">
               <label for="postal-code">Kode Pos</label>
-              <input type="number" name="postal-code" id="postal-code" class="form-control form-store">
+              <input type="number" name="postal-code" id="postal-code" value="<?= $user["postal_code"] ?? ''; ?>" class="form-control form-store">
             </div>
           </div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <label for="address">Addres</label>
-              <textarea name="address" id="editor"></textarea>
+          <?php if ($berat >= 2000) : ?>
+            <div class="col-md-12 text-center my-4" id="alert-berat">
+              <h5>Berat barang anda lebih dari <strong>2.000 gram</strong></h5>
+              <p class="text-muted">Apakah barang anda ingin di antar kami ?</p>
+              <button type="button" id="yes" class="btn btn-success px-4 mr-2">Ya, Antar</button>
+              <button type="button" id="no" class="btn btn-danger">Tidak, Gapapa</button>
             </div>
-          </div>
+            <?php else : ?>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for="address">Alamat</label>
+                <textarea name="address" id="editor"><?= $user["address"] ?? ''; ?></textarea>
+              </div>
+            </div>
+            <?php endif; ?>
+            <div class="col-md-12 mt-2" style="display: none;" id="alamat">
+              <div class="form-group">
+                <label for="address">Masukkan Alamat Anda :</label>
+                <textarea name="address" id="editor"><?= $cart["address"] ?? ''; ?></textarea>
+              </div>
+            </div>
+            <div class="col-md-12 text-center my-4" style="display: none;" id="bawa-sendiri">
+              <h5>Anda bisa mengambil barang anda di toko Kami</h5>
+              <!-- <p class="text-muted">Apakah barang anda ingin di antar kami ?</p> -->
+            </div>
         </div>
         <div class="row" data-aos="fade-up" data-aos-delay="150">
           <div class="col-12">
@@ -303,6 +334,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
       CKEDITOR.replace("editor");
     </script>
     <script src="assets/js/navbar-scroll.js"></script>
+    <script src="assets/js/button-antar.js"></script>
 </body>
 
 </html>

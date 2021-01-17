@@ -138,7 +138,7 @@ require_once 'config/config.php';
                 daging olahan dan bumbu pelengkap resep makanan olahan dari
                 bahan baku daging segar
               </p>
-              <a href="products.html" class="btn btn-success px-4 py-2 mt-4"
+              <a href="products.php" class="btn btn-success px-4 py-2 mt-4"
                 >Shop Now</a
               >
             </div>
@@ -254,7 +254,7 @@ require_once 'config/config.php';
           </div>
           <div class="row">
             <?php 
-            $products1Kg = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 2 LIMIT 8");
+            $products1Kg = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 2 LIMIT 4");
             $iteration = 0;
             ?>
 
@@ -300,7 +300,7 @@ require_once 'config/config.php';
           </div>
           <div class="row">
           <?php 
-            $products500G = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 1 LIMIT 8");
+            $products500G = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 1 LIMIT 4");
             ?>
             <?php foreach ($products500G as $product500G ) : ?>
             <?php 

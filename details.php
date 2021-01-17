@@ -205,6 +205,16 @@ if (isset($_POST["addToCart"])) {
                 </div>
                 <div class="price">Rp. <?= number_format($product["price"]); ?></div>
               </div>
+              <?php if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) : ?>
+              <div class="col-lg-2" data-aos="zoom-in">
+                  <a
+                    href="login.php"
+                    class="btn btn-success px-4 text-white btn-block mb-3 py-2"
+                  >
+                    Sign in to cart
+                  </a>
+              </div>
+              <?php else : ?>
               <div class="col-lg-2" data-aos="zoom-in">
                   <input type="hidden" name="user_id" value="<?= $id; ?>">
                   <input type="hidden" name="product_id" value="<?= $idProduct; ?>">
@@ -216,6 +226,7 @@ if (isset($_POST["addToCart"])) {
                     Add to cart
                   </button>
               </div>
+              <?php endif; ?>
             </div>
           </div>
         </section>
