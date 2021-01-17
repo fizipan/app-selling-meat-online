@@ -276,6 +276,9 @@ $categories = query("SELECT * FROM categories");
     <script>
       AOS.init();
     </script>
+    <script>
+      const NumberFormat = new Intl.NumberFormat();
+    </script>
     <script src="assets/vendor/vue/vue.js"></script>
     <script>
       var product = new Vue({
@@ -296,7 +299,7 @@ $categories = query("SELECT * FROM categories");
               id: 'details.php?id=<?= $product["id_product"] ?>',
               name: '<?= $product["product_name"] ?>',
               url: "assets/images/<?= $gallery[0]["photos"] ?? '' ?>",
-              price: '<?= $product["price"] ?>',
+              price: NumberFormat.format('<?= $product["price"] ?>'),
               unit: '<?= $product["unit_name"] ?>',
             },
             <?php endforeach; ?>
