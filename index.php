@@ -249,87 +249,64 @@ require_once 'config/config.php';
         <div class="container">
           <div class="row">
             <div class="col-12" data-aos="fade-up">
-              <h5 style="font-weight: 600; margin-bottom: 15px;">Daging Kemasan 1 Kilogram</h5>
+              <h5 style="font-weight: 600; margin-bottom: 15px;">New Products</h5>
             </div>
           </div>
           <div class="row">
             <?php 
-            $products1Kg = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 2 LIMIT 4");
+            $products = query("SELECT * FROM products LIMIT 8");
             $iteration = 0;
             ?>
 
-            <?php foreach ($products1Kg as $product1Kg) : ?>
+            <?php foreach ($products as $product) : ?>
             <?php 
-            $idProduct = $product1Kg["id_product"];
-            $galleries1Kg = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");    
+            $idProduct = $product["id_product"];
+            $galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");    
             ?>
               <div
                 class="col-6 col-md-4 col-lg-3"
                 data-aos="fade-up"
                 data-aos-delay="<?= $iteration += 100; ?>"
               >
+                <?php if ($product["stock"] > 0) : ?>
                 <a href="details.php?id=<?= $idProduct; ?>" class="component-products d-block">
                   <div class="products-thumbnail">
                     <div
                       class="products-image"
-                      style="background-image: url('assets/images/<?= $galleries1Kg[0]["photos"] ?>')"
-                    ></div>
+                      style="background-image: url('assets/images/<?= $galleries[0]["photos"] ?>')"
+                    >
+                    </div>
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
-                      <div class="products-text"><?= $product1Kg["product_name"]; ?></div>
+                      <div class="products-text"><?= $product["product_name"]; ?></div>
 
-                      <div class="products-price">Rp. <?= number_format($product1Kg["price"]); ?></div>
+                      <div class="products-price">Rp. <?= number_format($product["price"]); ?></div>
                     </div>
                     <div>
-                      <div class="text-muted"><?= $product1Kg["unit_name"]; ?></div>
+                      <div class="text-muted"><?= $product["unit"] / 1000; ?> Kilogram</div>
                     </div>
                   </div>
                 </a>
-              </div>
-            <?php endforeach;?>
-          </div>
-        </div>
-      </section>
-      <section class="store-products-gram" style="margin-top: 100px;">
-        <div class="container">
-          <div class="row">
-            <div class="col-12" data-aos="fade-up">
-              <h5 style="font-weight: 600; margin-bottom: 15px;">Daging Kemasan 500 Gram</h5>
-            </div>
-          </div>
-          <div class="row">
-          <?php 
-            $products500G = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE unit_id = 1 LIMIT 4");
-            ?>
-            <?php foreach ($products500G as $product500G ) : ?>
-            <?php 
-            $idProduct = $product500G["id_product"];
-            $galleries500G = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");  
-            ?>
-              <div
-                class="col-6 col-md-4 col-lg-3"
-                data-aos="fade-up"
-                data-aos-delay="<?= $iteration += 100; ?>"
-              >
-                <a href="details.php?id=<?= $idProduct; ?>" class="component-products d-block">
-                  <div class="products-thumbnail">
-                    <div
-                      class="products-image"
-                      style="background-image: url('assets/images/<?= $galleries500G[0]["photos"] ?>')"
-                    ></div>
+                <?php else : ?>
+                <div class="component-products d-block">
+                  <div class="products-thumbnail position-relative">
+                      <div class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center bg-dark" style="opacity: .7;">
+                          <div class="text-decoration-none font-weight-bold text-white" style="font-weight: 500;">SOLD OUT</div>
+                      </div>
                   </div>
                   <div class="d-flex justify-content-between align-items-center">
                     <div>
-                      <div class="products-text"><?= $product500G["product_name"]; ?></div>
+                      <div class="products-text"><?= $product["product_name"]; ?></div>
 
-                      <div class="products-price">Rp. <?= number_format($product500G["price"]) ?></div>
+                      <div class="products-price">Rp. <?= number_format($product["price"]); ?></div>
                     </div>
                     <div>
-                      <div class="text-muted"><?= $product500G["unit_name"]; ?></div>
+                      <div class="text-muted"><?= $product["unit"] / 1000; ?> Kilogram</div>
                     </div>
                   </div>
-                </a>
+                </div>
+                <?php endif;?>
               </div>
             <?php endforeach;?>
           </div>

@@ -180,7 +180,7 @@ if (isset($_POST["deleteCart"])) {
                 <?php foreach ($carts as $cart) : ?>
                   <?php 
                     $idProduct = $cart["id_product"];
-                    $product = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE products.id_product = $idProduct");
+                    $product = query("SELECT * FROM products WHERE products.id_product = $idProduct");
                     $gallery = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct"); 
                     $banyak += $cart["banyak"];
                     $berat += $product[0]["unit"];
@@ -192,7 +192,7 @@ if (isset($_POST["deleteCart"])) {
                     </td>
                     <td style="width: 20%;">
                       <div class="product-title"><?= $cart["product_name"]; ?></div>
-                      <div class="product-subtitle"><?= $product[0]["unit_name"]; ?></div>
+                      <div class="product-subtitle"><?= $cart["unit"] / 1000; ?> Kilogram</div>
                     </td>
                     <td style="width: 10%;">
                       <div class="product-title"><?= $cart["banyak"]; ?></div>

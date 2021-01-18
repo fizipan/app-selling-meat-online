@@ -38,7 +38,7 @@ function tambahProduk($data)
 
     $name = htmlspecialchars($data["name"]);
     $price = $data["price"];
-    $unit = $data["unit"];
+    $unit = 1000;
     $category = $data["category"];
     $stock = $data["stock"];
     $descriptions = $data["descriptions"];
@@ -59,14 +59,12 @@ function updateProduk($data)
     $id = $data["id"];
     $name = htmlspecialchars($data["name"]);
     $price = $data["price"];
-    $unit = $data["unit"];
     $category = $data["category"];
     $stock = $data["stock"];
     $descriptions = $data["descriptions"];
 
     $query = "UPDATE products SET
                 product_name = '$name',
-                unit_id = '$unit',
                 price = '$price',
                 descriptions = '$descriptions',
                 category_id = '$category',
@@ -291,12 +289,20 @@ function addToCart($data)
 
     $total = $banyak * $product["price"];
 
-    $query = "INSERT INTO carts
+    $queryCart = "INSERT INTO carts
                 VALUES
                 ('', '$user_id', '$product_id', '$banyak', '$total')
             ";
     
-    mysqli_query($conn, $query);
+    mysqli_query($conn, $queryCart);
+
+    $stockProduk = $product["stock"] - 1000;
+
+    $queryProduct = "UPDATE products SET
+                        stock = '$stockProduk'
+                    WHERE id_product = $product_id
+                    ";
+    mysqli_query($conn, $queryProduct);
     return mysqli_affected_rows($conn);
 
 }

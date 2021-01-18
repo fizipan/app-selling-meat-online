@@ -8,9 +8,9 @@ $halamanAktif = (isset($_GET["page"])) ? $_GET["page"] : 1;
 $awalData = ($jumlahDataPerHalaman * $halamanAktif) - $jumlahDataPerHalaman;
 if (isset($_GET["sort"])) {
   $category_id = $_GET["sort"];
-  $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE category_id = $category_id");
+  $products = query("SELECT * FROM products WHERE category_id = $category_id");
 } else {
-  $products = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id LIMIT $awalData, $jumlahDataPerHalaman");
+  $products = query("SELECT * FROM products LIMIT $awalData, $jumlahDataPerHalaman");
 }
 
 $categories = query("SELECT * FROM categories");
@@ -188,9 +188,9 @@ $categories = query("SELECT * FROM categories");
               v-for="(product, index) in products"
               :data-aos-delay="product.iteration"
             >
-              <a :href="product.id" class="component-products d-block">
+              <a :href="product.id" class="component-products d-block" v-if="product.stock > 0">
                 <div class="products-thumbnail">
-                  <img :src="product.url" class="d-block products-image" alt="">
+                  <img :src="product.url" class="products-image" alt="">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
@@ -203,6 +203,23 @@ $categories = query("SELECT * FROM categories");
                   </div>
                 </div>
               </a>
+              <div class="component-products d-block" v-else>
+                <div class="products-thumbnail position-relative">
+                  <div class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center bg-dark" style="opacity: .7;">
+                        <div class="text-decoration-none font-weight-bold text-white" style="font-weight: 500;">SOLD OUT</div>
+                  </div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="products-text">{{ product.name }}</div>
+
+                    <div class="products-price">Rp. {{ product.price }}</div>
+                  </div>
+                  <div>
+                    <div class="text-muted">{{ product.unit }}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="row mt-5">
@@ -300,7 +317,8 @@ $categories = query("SELECT * FROM categories");
               name: '<?= $product["product_name"] ?>',
               url: "assets/images/<?= $gallery[0]["photos"] ?? '' ?>",
               price: NumberFormat.format('<?= $product["price"] ?>'),
-              unit: '<?= $product["unit_name"] ?>',
+              unit: '<?= $product["unit"] / 1000 ?> Kilogram',
+              stock: '<?= $product["stock"]?>',
             },
             <?php endforeach; ?>
           ],

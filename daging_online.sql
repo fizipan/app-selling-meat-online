@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Jan 2021 pada 14.25
+-- Waktu pembuatan: 18 Jan 2021 pada 17.28
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -43,7 +43,13 @@ INSERT INTO `carts` (`id_cart`, `user_id`, `product_id`, `banyak`, `total`) VALU
 (1, 6, 2, 2, 160000),
 (2, 6, 1, 1, 50000),
 (4, 3, 3, 2, 200000),
-(5, 6, 7, 2, 40000);
+(5, 6, 7, 2, 40000),
+(7, 3, 5, 2, 40000),
+(8, 1, 2, 2, 160000),
+(9, 1, 1, 2, 100000),
+(10, 1, 5, 2, 40000),
+(12, 2, 1, 2, 100000),
+(13, 2, 3, 2, 200000);
 
 -- --------------------------------------------------------
 
@@ -66,7 +72,8 @@ INSERT INTO `categories` (`id`, `category_name`, `slug`) VALUES
 (2, 'Dada', 'dada'),
 (3, 'Kepala', 'kepala'),
 (4, 'Ceker', 'ceker'),
-(5, 'Ayam Utuh', 'ayam-utuh');
+(5, 'Ayam Utuh', 'ayam-utuh'),
+(6, 'Sayap', 'sayap');
 
 -- --------------------------------------------------------
 
@@ -77,7 +84,7 @@ INSERT INTO `categories` (`id`, `category_name`, `slug`) VALUES
 CREATE TABLE `products` (
   `id_product` int(11) NOT NULL,
   `product_name` varchar(255) NOT NULL,
-  `unit_id` int(11) NOT NULL,
+  `unit` int(11) NOT NULL,
   `price` varchar(255) NOT NULL,
   `descriptions` text NOT NULL,
   `category_id` int(11) NOT NULL,
@@ -88,15 +95,16 @@ CREATE TABLE `products` (
 -- Dumping data untuk tabel `products`
 --
 
-INSERT INTO `products` (`id_product`, `product_name`, `unit_id`, `price`, `descriptions`, `category_id`, `stock`) VALUES
-(1, 'Paha Atas ', 1, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, 'STOCK'),
-(2, 'Dada Besar', 2, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, 'STOCK'),
-(3, 'Kepala Ayam', 2, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, 'STOCK'),
-(4, 'Paha Boneless', 2, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, 'STOCK'),
-(5, 'Dada Bebek', 1, '20000', '<p>Dada bikin klepek</p>\r\n', 2, 'STOCK'),
-(6, 'Paha Maknyus', 1, '400000', '<p>Paha Buatan Mbak Yus</p>\r\n', 1, 'STOCK'),
-(7, 'Ceker Ayam', 1, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, 'STOCK'),
-(8, 'Ayam Utuh Kriuk', 2, '500000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, 'STOCK');
+INSERT INTO `products` (`id_product`, `product_name`, `unit`, `price`, `descriptions`, `category_id`, `stock`) VALUES
+(1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '4000'),
+(2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '0'),
+(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '0'),
+(4, 'Paha Boneless', 1000, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, '3000'),
+(5, 'Dada Bebek', 1000, '20000', '<p>Dada bikin klepek</p>\r\n', 2, '5000'),
+(6, 'Paha Maknyus', 1000, '400000', '<p>Paha Buatan Mbak Yus</p>\r\n', 1, '3000'),
+(7, 'Ceker Ayam', 1000, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '3000'),
+(8, 'Ayam Utuh Kriuk', 1000, '500000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, '3000'),
+(10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '10000');
 
 -- --------------------------------------------------------
 
@@ -128,27 +136,8 @@ INSERT INTO `products_galleries` (`id_gallery`, `photos`, `product_id`) VALUES
 (12, '6002cf749cccf.jpg', 7),
 (13, '600302d067410.png', 3),
 (14, '6003c040baec4.jpg', 8),
-(15, '6003c05a2df6e.jpg', 8);
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `units`
---
-
-CREATE TABLE `units` (
-  `id` int(11) NOT NULL,
-  `unit` varchar(255) NOT NULL,
-  `unit_name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `units`
---
-
-INSERT INTO `units` (`id`, `unit`, `unit_name`) VALUES
-(1, '500', '500 Gram'),
-(2, '1000', '1 Kg');
+(15, '6003c05a2df6e.jpg', 8),
+(16, '6005af4dabb7b.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -206,12 +195,6 @@ ALTER TABLE `products_galleries`
   ADD PRIMARY KEY (`id_gallery`);
 
 --
--- Indeks untuk tabel `units`
---
-ALTER TABLE `units`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
@@ -226,31 +209,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `products_galleries`
 --
 ALTER TABLE `products_galleries`
-  MODIFY `id_gallery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT untuk tabel `units`
---
-ALTER TABLE `units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_gallery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

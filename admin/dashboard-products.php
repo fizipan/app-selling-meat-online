@@ -72,7 +72,6 @@
                         <tr>
                           <th scope="col">ID</th>
                           <th scope="col">Nama</th>
-                          <th scope="col">Satuan</th>
                           <th scope="col">Harga</th>
                           <th scope="col">Kategori</th>
                           <th scope="col">Stok</th>
@@ -82,21 +81,20 @@
                       <tbody>
                         <?php 
                           $no = 1;
-                          $query = "SELECT * FROM products LEFT JOIN units ON products.unit_id = units.id LEFT JOIN categories ON products.category_id = categories.id";
+                          $query = "SELECT * FROM products INNER JOIN categories ON products.category_id = categories.id";
                           $products = query($query);
                         ?>
                         <?php foreach ($products as $product) : ?>
                           <tr>
                             <th scope="row"><?= $no; ?></th>
                             <td><?= $product["product_name"]; ?></td>
-                            <td><?= $product["unit_name"]; ?></td>
                             <td><?= number_format($product["price"]); ?></td>
                             <td><?= $product["category_name"]; ?></td>
                             <td>
-                              <?php if ($product["stock"] == 'STOCK') : ?>
-                                <span class="badge badge-pill badge-success"><?= $product["stock"]; ?></span>
+                              <?php if ($product["stock"] <= 0) : ?>
+                                <span class="badge badge-pill badge-danger">SOLD OUT</span>
                               <?php else: ?>
-                                <span class="badge badge-pill badge-danger"><?= $product["stock"]; ?></span>
+                                <span class="badge badge-pill badge-success">STOCK</span>
                               <?php endif; ?>
                             </td>
                             <td style="width: 17%; text-align: center;">

@@ -1,7 +1,7 @@
 <?php 
 require_once 'config/config.php';
 $idProduct = $_GET["id"];
-$product = query("SELECT * FROM products INNER JOIN units ON products.unit_id = units.id WHERE id_product = $idProduct")[0];
+$product = query("SELECT * FROM products WHERE id_product = $idProduct")[0];
 $galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct"); 
 
 if (isset($_POST["addToCart"])) {
@@ -197,13 +197,20 @@ if (isset($_POST["addToCart"])) {
         <section class="store-heading">
           <div class="container">
             <div class="row">
-              <div class="col-lg-8">
-                <h1><?= $product["product_name"]; ?></h1>
-                <div class="owner"><?= $product["unit_name"]; ?></div>
-                <div class="form-group d-flex align-items-center justify-content-between" style="width: 150px;">
-                  <input type="number" required name="banyak" id="banyak" class="form-control w-50"> Product
+              <div class="col-lg-8 d-flex justify-content-between">
+                <div>
+                  <h1><?= $product["product_name"]; ?></h1>
+                  <div class="owner"><?= $product["unit"] / 1000; ?> Kilogram</div>
+                  <div class="form-group d-flex align-items-center justify-content-between" style="width: 150px;">
+                    <input type="number" required name="banyak" id="banyak" class="form-control w-50" min="0"> Barang
+                  </div>
+                  <div class="price">Rp. <?= number_format($product["price"]); ?></div>                    
                 </div>
-                <div class="price">Rp. <?= number_format($product["price"]); ?></div>
+                <div>
+                  <p>
+                    Tersedia : <strong><?= $product["stock"] / 1000; ?> Kilogram</strong>
+                  </p>
+                </div>
               </div>
               <?php if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) : ?>
               <div class="col-lg-2" data-aos="zoom-in">

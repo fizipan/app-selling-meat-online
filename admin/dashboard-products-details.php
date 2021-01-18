@@ -127,28 +127,12 @@ if (isset($_POST["updateProduk"])) {
                         name="price"
                         id="price"
                         class="form-control"
+                        min="0"
                         value="<?= $product["price"]; ?>"
                       />
                     </div>
                   </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="unit">Satuan Produk</label>
-                      <?php 
-                        $units = query("SELECT * FROM units");
-                      ?>
-                      <select
-                        name="unit"
-                        id="unit"
-                        class="form-control"
-                      >
-                      <?php foreach ($units as $unit) : ?>
-                        <option value="<?= $unit["id"]; ?>" <?= $unit["id"] == $product["unit_id"] ? 'selected' : ''; ?>><?= $unit["unit_name"]; ?></option>
-                      <?php endforeach; ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="form-group">
                       <label for="category">Category</label>
                       <?php 
@@ -167,12 +151,15 @@ if (isset($_POST["updateProduk"])) {
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="stock">Stok Produk</label>
-                      <select name="stock" id="stock" class="form-control">
-                        <option value="<?= $product["stock"]; ?>" selected><?= $product["stock"]; ?></option>
-                        <option value="STOCK">STOCK</option>
-                        <option value="SOLD OUT">SOLD OUT</option>
-                      </select>
+                      <label for="stock">Stok Produk / Gram</label>
+                      <input
+                        type="number"
+                        name="stock"
+                        id="stock"
+                        class="form-control"
+                        min="0"
+                        value="<?= $product["stock"]; ?>"
+                      />
                     </div>
                   </div>
                   <div class="col-md-12">
