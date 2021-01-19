@@ -69,7 +69,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
             </a>
             <a
               href="?page=transactions"
-              class="list-group-item list-group-item-action<?= $page == 'transactions' ? ' active' : ''; ?>"
+              class="list-group-item list-group-item-action<?= $page == 'transactions' ? ' active' : ''; ?> <?= $page == 'transactions-transfer' ? ' active' : ''; ?> <?= $page == 'transactions-details' ? ' active' : ''; ?> <?= $page == 'transactions-delete' ? ' active' : ''; ?>"
             >
               Transactions
             </a>
@@ -120,7 +120,13 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
             } elseif ($page == 'categories-delete') {
               include 'dashboard-categories-delete.php';
             } elseif ($page == 'transactions') {
-              include 'transactions.php';
+              include 'transaction/dashboard-transactions.php';
+            } elseif ($page == 'transactions-details') {
+              include 'transaction/dashboard-transactions-details.php';
+            } elseif ($page == 'transactions-delete') {
+              include 'transaction/dashboard-transactions-delete.php';
+            } elseif ($page == 'transactions-transfer') {
+              include 'transaction/dashboard-transfer.php';
             } elseif ($page == 'users') {
               include 'users/dashboard-users.php';
             } elseif ($page == 'users-create') {

@@ -318,6 +318,106 @@ function deleteProductAtCart($data)
     return mysqli_affected_rows($conn);
 }
 
+// checkout
+
+function checkout($data)
+{
+    global $conn;
+
+    $code = "EZM-";
+    $user_id = $data['user_id'];
+    $total_price = $data["total_price"];
+    $city = $data["city"];
+    $address = $data["address"];
+    $phone_number = $data["phone_number"];
+    $zip_code = $data["zip_code"];
+    $rekening = $data["rekening"];
+    $status = "BELUM KONFIRMASI";
+    $weight = $data["weight"];
+    $photo = "";
+    $code .= mt_rand(00000, 99999);
+
+    $queryUser = "UPDATE users SET
+                    phone_number = '$phone_number',
+                    postal_code = '$zip_code',
+                    address = '$address'
+                    WHERE id_user = $user_id
+                ";
+    mysqli_query($conn, $queryUser);
+
+    $queryTransaction = "INSERT INTO transactions
+                            VALUES
+                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$photo', '$code', NOW())
+                        ";
+    mysqli_query($conn, $queryTransaction);
+    
+    $carts = query("SELECT * FROM carts INNER JOIN products ON carts.product_id = products.id_product WHERE user_id = $user_id");
+    $codeProduct = 'PRD-';
+    $dataIdTransaction = query("SELECT * FROM transactions");
+    $codeProduct .= mt_rand(00000,99999);
+    
+    foreach ($carts as $cart) {
+    foreach ($dataIdTransaction as $idTransaction) {
+        $transaction_id = $idTransaction["id_transaction"];
+    }
+    $id_product = $cart["product_id"];
+    $productPrice = $cart["price"];
+    $banyak = $cart["banyak"];
+    $queryTransactionDetails = "INSERT INTO transactions_details
+                            VALUES
+                        ('', '$transaction_id', '$id_product', '$productPrice', '$banyak', '$codeProduct')
+                        ";
+    mysqli_query($conn, $queryTransactionDetails);
+    }
+
+    mysqli_query($conn, "DELETE FROM carts WHERE user_id = $user_id");
+
+    return mysqli_affected_rows($conn);
+
+}
+
+function uploadTransfer($data)
+{
+    global $conn;
+
+    $id = $data["id_transaction"];
+    $photo = upload();
+    if (!$photo) {
+        return false;
+    }
+
+    $query = "UPDATE transactions SET
+                photo_transaction = '$photo'
+                WHERE id_transaction = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function konfirmasi($data)
+{
+    global $conn;
+
+    $id = $data["id_transaction"];
+    $status = "KONFIRMASI";
+
+    $query = "UPDATE transactions SET
+                transaction_status = '$status'
+                WHERE id_transaction = $id
+            ";
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function hapusTransaction($id)
+{
+    global $conn;
+
+    mysqli_query($conn, "DELETE FROM transactions WHERE id_transaction = $id");
+    return mysqli_affected_rows($conn);
+}
+
 function upload()
 {
     $namaFile = $_FILES['photo']["name"];

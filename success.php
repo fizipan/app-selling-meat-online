@@ -1,3 +1,14 @@
+<?php 
+require 'config/config.php';
+if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
+  header("Location: login.php");
+}
+
+$id = $_SESSION["user"];
+$user = query("SELECT * FROM users WHERE id_user = $id")[0];
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -24,14 +35,20 @@
               <img src="assets/images/icon-success.svg" alt="" />
               <h2 class="mt-3">Transaction Processed!</h2>
               <p>
-                Silahkan tunggu konfirmasi email dari kami dan kami akan
-                menginformasikan resi secept mungkin!
+                Silahkan foto bukti transaksi di dahsboard transaksi anda dan
+                Silahkan tunggu konfirmasi dari.
               </p>
               <div>
-                <a href="dashboard.html" class="btn btn-success w-50 mt-4">
+                <?php if ($user["roles"] == 'ADMIN') : ?>
+                <a href="admin" class="btn btn-success w-50 mt-4">
                   My Dashboard
                 </a>
-                <a href="index.html" class="btn btn-sign-up w-50 mt-2">
+                <?php else : ?>
+                <a href="user" class="btn btn-success w-50 mt-4">
+                  My Dashboard
+                </a>
+                <?php endif; ?>
+                <a href="index.php" class="btn btn-sign-up w-50 mt-2">
                   Go to Shopping
                 </a>
               </div>

@@ -5,6 +5,14 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
   header("Location: login.php");
 }
 
+if (isset($_POST["checkout"])) {
+  if (checkout($_POST) > 0) {
+    header("Location: success.php");
+  } else {
+    echo mysqli_error($conn);
+  }
+}
+
 if (isset($_POST["deleteCart"])) {
   if (deleteProductAtCart($_POST) > 0) {
     echo "<script>
@@ -217,95 +225,114 @@ if (isset($_POST["deleteCart"])) {
             </table>
           </div>
         </div>
-        <div class="row" data-aos="fade-up" data-aos-delay="150">
-          <div class="col-12">
-            <hr>
-          </div>
-          <div class="col-12">
-            <h2>
-              Shipping Details
-            </h2>
-          </div>
-        </div>
-        <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="city">Kota</label>
-              <select name="city" id="city" class="form-control">
-                <option value="JAKARTA">JAKARTA</option>
-                <option value="BOGOR">BOGOR</option>
-                <option value="TANGERANG">TANGERANG</option>
-                <option value="DEPOK">DEPOK</option>
-              </select>
+        <form action="" method="POST">
+          <div class="row" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-12">
+              <hr>
+            </div>
+            <div class="col-12">
+              <h2>
+                Shipping Details
+              </h2>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="mobile">No HP / WA</label>
-              <input type="tel" name="mobile" id="mobile" class="form-control form-store" value="<?= $user["phone_number"] ?? ''; ?>">
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label for="postal-code">Kode Pos</label>
-              <input type="number" name="postal-code" id="postal-code" value="<?= $user["postal_code"] ?? ''; ?>" class="form-control form-store">
-            </div>
-          </div>
-          <?php if ($berat >= 2000) : ?>
-            <div class="col-md-12 text-center my-4" id="alert-berat">
-              <h5>Berat barang anda lebih dari <strong>2.000 gram</strong></h5>
-              <p class="text-muted">Apakah barang anda ingin di antar kami ?</p>
-              <button type="button" id="yes" class="btn btn-success px-4 mr-2">Ya, Antar</button>
-              <button type="button" id="no" class="btn btn-danger">Tidak, Gapapa</button>
-            </div>
-            <?php else : ?>
-            <div class="col-md-12">
+          <div class="row mb-2" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="address">Alamat</label>
-                <textarea name="address" id="editor"><?= $user["address"] ?? ''; ?></textarea>
+                <label for="city">Kota</label>
+                <select name="city" id="city" class="form-control" required>
+                  <option value="JAKARTA">JAKARTA</option>
+                  <option value="BOGOR">BOGOR</option>
+                  <option value="TANGERANG">TANGERANG</option>
+                  <option value="DEPOK">DEPOK</option>
+                </select>
               </div>
             </div>
-            <?php endif; ?>
-            <div class="col-md-12 mt-2" style="display: none;" id="alamat">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="address">Masukkan Alamat Anda :</label>
-                <textarea name="address" id="editor"><?= $cart["address"] ?? ''; ?></textarea>
+                <label for="phone_number">No HP / WA</label>
+                <input type="tel" name="phone_number" id="phone_number" class="form-control form-store" value="<?= $user["phone_number"] ?? ''; ?>" required>
               </div>
             </div>
-            <div class="col-md-12 text-center my-4" style="display: none;" id="bawa-sendiri">
-              <h5>Anda bisa mengambil barang anda di toko Kami</h5>
-              <!-- <p class="text-muted">Apakah barang anda ingin di antar kami ?</p> -->
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="zip_code">Kode Pos</label>
+                <input type="number" name="zip_code" id="zip_code" required value="<?= $user["postal_code"] ?? ''; ?>" class="form-control form-store">
+              </div>
             </div>
-        </div>
-        <div class="row" data-aos="fade-up" data-aos-delay="150">
-          <div class="col-12">
-            <hr>
+            <div class="col-md-12 mt-2">
+              <div class="form-group">
+              <label for="rekening">Pilihan Pemabayaran</label>
+                  <?php 
+                    $rekening = query("SELECT * FROM rekening_numbers");
+                  ?>
+                  <select name="rekening" id="rekening" class="form-control">
+                    <?php foreach ($rekening as $r) : ?>
+                      <option value="<?= $r["id_rekening"]; ?>"><?= $r["bank_name"]; ?></option>
+                    <?php endforeach; ?>
+                  </select>
+              </div>
+            </div>
+            <?php if ($berat >= 2000) : ?>
+              <div class="col-md-12 text-center my-4" id="alert-berat">
+                <h5>Berat barang anda lebih dari <strong>2 Kilogram</strong></h5>
+                <p class="text-muted">Apakah barang anda ingin di antar kami ?</p>
+                <button type="button" id="yes" class="btn btn-success px-4 mr-2">Ya, Antar</button>
+                <button type="button" id="no" class="btn btn-danger">Tidak, Gapapa</button>
+              </div>
+              <?php else : ?>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="address">Alamat</label>
+                  <textarea name="address" required id="editor"><?= $user["address"] ?? ''; ?></textarea>
+                </div>
+              </div>
+              <?php endif; ?>
+              <div class="col-md-12 mt-2" style="display: none;" id="alamat">
+                <div class="form-group">
+                  <label for="address">Masukkan Alamat Anda :</label>
+                  <textarea name="address" id="editor"><?= $cart["address"] ?? ''; ?></textarea>
+                </div>
+              </div>
+              <div class="col-md-12 text-center my-4" style="display: none;" id="bawa-sendiri">
+                <h5 class="mb-2">Anda bisa mengambil barang anda di toko Kami</h5>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4716.654901073462!2d106.97228048105524!3d-6.234943196910656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698d1e6641a377%3A0xa736e953b5a40749!2sELZA%20MANDIRI!5e0!3m2!1sid!2sid!4v1611021244967!5m2!1sid!2sid" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+              </div>
           </div>
-          <div class="col-12">
-            <h2 class="mb-2">
-              Payment Information
-            </h2>
+          <div class="row" data-aos="fade-up" data-aos-delay="150">
+            <div class="col-12">
+              <hr>
+            </div>
+            <div class="col-12">
+              <h2 class="mb-2">
+                Payment Information
+              </h2>
+            </div>
           </div>
-        </div>
-        <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
-          <div class="col-4 col-md-3">
-            <div class="product-title"><?= number_format($banyak); ?></div>
-            <div class="product-subtitle mb-3">Banyak Barang</div>
+          <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-4 col-md-3">
+              <div class="product-title"><?= number_format($banyak); ?></div>
+              <div class="product-subtitle mb-3">Banyak Barang</div>
+            </div>
+            <div class="col-4 col-md-3">
+              <div class="product-title"><?= $berat / 1000; ?> Kilogram</div>
+              <div class="product-subtitle">Berat Barang</div>
+            </div>
+            <div class="col-4 col-md-3">
+              <div class="product-title text-success">Rp. <?= number_format($total); ?></div>
+              <div class="product-subtitle">Total</div>
+            </div>
+            <div class="col-8 col-md-3">
+              <input type="hidden" name="user_id" value="<?= $user["id_user"]; ?>">
+              <input type="hidden" name="weight" value="<?= $berat; ?>">
+              <input type="hidden" name="total_price" value="<?= $total; ?>">
+              <button type="submit" name="checkout" class="btn btn-success btn-block px-4 mt-1">Checkout Now</button>
+            </div>
           </div>
-          <div class="col-4 col-md-3">
-            <div class="product-title"><?= number_format($berat); ?> Gram</div>
-            <div class="product-subtitle">Berat Barang</div>
-          </div>
-          <div class="col-4 col-md-3">
-            <div class="product-title text-success">Rp. <?= number_format($total); ?></div>
-            <div class="product-subtitle">Total</div>
-          </div>
-          <div class="col-8 col-md-3">
-            <a href="/success.html" class="btn btn-success btn-block px-4 mt-1">Checkout Now</a>
-          </div>
-        </div>
+        </form>
       </div>
     </section>
+  </div>
 
 
 
