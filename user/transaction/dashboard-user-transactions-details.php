@@ -6,7 +6,62 @@ $idTransaction = $_GET["id"];
 $transaction_details = query("SELECT * FROM transactions_details INNER JOIN transactions ON transactions_details.transaction_id = transactions.id_transaction INNER JOIN products ON transactions_details.product_id = products.id_product WHERE transaction_id = $idTransaction");
 // var_dump($transaction_details);
 ?>
-  
+  <nav
+  class="navbar navbar-expand-lg navbar-light navbar-store fixed-top"
+  data-aos="fade-down"
+>
+  <div class="container-fluid">
+    <button
+      class="btn btn-secondary d-md-none mr-auto mr-2"
+      id="menu-toggle"
+    >
+      &laquo; Menu
+    </button>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collpase navbar-collapse" id="navbarResponsive">
+      <!-- dekstop menu -->
+      <ul class="navbar-nav d-none d-lg-flex ml-auto">
+        <li class="nav-item dropdown">
+          <a
+            href="#"
+            class="nav-link"
+            id="navbarDropdown"
+            role="button"
+            data-toggle="dropdown"
+          >
+            <img
+              src="../assets/images/logo.jpg"
+              alt="profile"
+              class="rounded-circle mr-2 profile-picture"
+            />
+            <?php 
+              $id_user = $_SESSION['user'];
+              $user = query("SELECT * FROM users WHERE id_user = $id_user")[0];
+            ?>
+            Hi, <?= $user["name"]; ?>
+          </a>
+          <div class="dropdown-menu">
+            <a href="../logout.php" class="dropdown-item">logout</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- mobile app -->
+      <ul class="navbar-nav d-block d-lg-none">
+        <li class="nav-item">
+          <a href="" class="nav-link"> Hi, Hafizh </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
   <div class="section-content section-dashboard-home" data-aos="fade-up">
     <div class="container-fluid">
       <div class="dashboard-heading">

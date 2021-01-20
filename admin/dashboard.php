@@ -29,31 +29,19 @@
             data-toggle="dropdown"
           >
             <img
-              src="../assets/images/user_pc.png"
+              src="../assets/images/logo.jpg"
               alt="profile"
               class="rounded-circle mr-2 profile-picture"
             />
-            Hi, Hafizh
+            <?php 
+              $id_user = $_SESSION['user'];
+              $user = query("SELECT * FROM users WHERE id_user = $id_user")[0];
+            ?>
+            Hi, <?= $user["name"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/dashboard.html" class="dropdown-item"
-              >Dashboard</a
-            >
-            <a href="/dashboard-account.html" class="dropdown-item"
-              >Settings</a
-            >
-            <div class="dropdown-divider"></div>
             <a href="/" class="dropdown-item">logout</a>
           </div>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link d-inline-bloc mt-2">
-            <img
-              src="../assets/images/shopping-cart-filled.svg"
-              alt="cart-empty"
-            />
-            <div class="cart-badge">7</div>
-          </a>
         </li>
       </ul>
 
@@ -61,9 +49,6 @@
       <ul class="navbar-nav d-block d-lg-none">
         <li class="nav-item">
           <a href="" class="nav-link"> Hi, Hafizh </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link d-inline-block"> Cart </a>
         </li>
       </ul>
     </div>
@@ -94,21 +79,39 @@
         <div class="col-md-4">
           <div class="card mb-2">
             <div class="card-body">
+            <?php 
+              $transactions = query("SELECT * FROM transactions");
+              $total_price = 0;
+              foreach ($transactions as $t ) {
+                $total_price += $t["total_price"];
+              }
+              
+              $total_price_product = 0;
+              $products = query("SELECT * FROM products");
+              foreach ($products as $p ) {
+                $total_price_product += $p["price"];
+              }
+
+              $revenue = $total_price_product - $total_price;
+            ?>
               <div class="dashboard-card-title">Revenue</div>
-              <div class="dashboard-card-subtitle">$931,290</div>
+              <div class="dashboard-card-subtitle">Rp. <?= number_format($revenue); ?></div>
             </div>
           </div>
         </div>
         <div class="col-md-4">
           <div class="card mb-2">
             <div class="card-body">
+            <?php 
+              $transactionCount = rows("SELECT * FROM transactions");
+            ?>
               <div class="dashboard-card-title">Transaction</div>
-              <div class="dashboard-card-subtitle">22,409,299</div>
+              <div class="dashboard-card-subtitle"><?= $transactionCount; ?></div>
             </div>
           </div>
         </div>
       </div>
-      <div class="row mt-3">
+      <!-- <div class="row mt-3">
         <div class="col-12 mt-2">
           <h5 class="mb-3">Recent Transactions</h5>
           <a
@@ -178,7 +181,7 @@
             </div>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

@@ -286,6 +286,16 @@ function addToCart($data)
     $banyak = $data["banyak"];
 
     $product = query("SELECT * FROM products WHERE id_product = $product_id")[0];
+    $stock = $product["stock"];
+    $unit = $product["unit"];
+    $sisaBarang = $stock - ($banyak * $unit);
+
+    if ($sisaBarang < 0) {
+        echo "<script>
+                alert('Stock Barang Tidak Cukup');
+            </script>";
+        return false;
+    }
 
     $total = $banyak * $product["price"];
 
@@ -296,7 +306,7 @@ function addToCart($data)
     
     mysqli_query($conn, $queryCart);
 
-    $stockProduk = $product["stock"] - 1000;
+    $stockProduk =  $product["stock"] - ($banyak * 1000);
 
     $queryProduct = "UPDATE products SET
                         stock = '$stockProduk'
@@ -334,6 +344,7 @@ function checkout($data)
     $rekening = $data["rekening"];
     $status = "BELUM KONFIRMASI";
     $weight = $data["weight"];
+    $delivered = $data["delivered"];
     $photo = "";
     $code .= mt_rand(00000, 99999);
 
@@ -347,7 +358,7 @@ function checkout($data)
 
     $queryTransaction = "INSERT INTO transactions
                             VALUES
-                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$photo', '$code', NOW())
+                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$delivered', '$photo', '$code', NOW())
                         ";
     mysqli_query($conn, $queryTransaction);
     

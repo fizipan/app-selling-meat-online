@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Jan 2021 pada 16.25
+-- Waktu pembuatan: 20 Jan 2021 pada 11.23
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -72,6 +72,19 @@ INSERT INTO `categories` (`id`, `category_name`, `slug`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `drivers`
+--
+
+CREATE TABLE `drivers` (
+  `id_driver` int(11) NOT NULL,
+  `name_drive` varchar(255) NOT NULL,
+  `phone_number` varchar(255) NOT NULL,
+  `no_pegawai` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `products`
 --
 
@@ -90,13 +103,13 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id_product`, `product_name`, `unit`, `price`, `descriptions`, `category_id`, `stock`) VALUES
-(1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '1000'),
-(2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '0'),
-(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '0'),
+(1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '0'),
+(2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '2000'),
+(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '5000'),
 (4, 'Paha Boneless', 1000, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, '0'),
 (5, 'Dada Bebek', 1000, '20000', '<p>Dada bikin klepek</p>\r\n', 2, '5000'),
 (6, 'Paha Maknyus', 1000, '400000', '<p>Paha Buatan Mbak Yus</p>\r\n', 1, '3000'),
-(7, 'Ceker Ayam', 1000, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '2000'),
+(7, 'Ceker Ayam', 1000, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '1000'),
 (8, 'Ayam Utuh Kriuk', 1000, '500000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, '1000'),
 (10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '10000');
 
@@ -169,6 +182,7 @@ CREATE TABLE `transactions` (
   `rekening_id` int(11) NOT NULL,
   `transaction_status` varchar(255) NOT NULL,
   `weight_total` int(11) NOT NULL,
+  `delivered` int(11) NOT NULL,
   `photo_transaction` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
@@ -178,8 +192,10 @@ CREATE TABLE `transactions` (
 -- Dumping data untuk tabel `transactions`
 --
 
-INSERT INTO `transactions` (`id_transaction`, `user_id`, `total_price`, `city`, `rekening_id`, `transaction_status`, `weight_total`, `photo_transaction`, `code`, `created_at`) VALUES
-(1, 6, 300000, 'JAKARTA', 1, 'KONFIRMASI', 1000, '6006f740f11d9.jpeg', 'EZM-39217', '2021-01-19 15:13:03');
+INSERT INTO `transactions` (`id_transaction`, `user_id`, `total_price`, `city`, `rekening_id`, `transaction_status`, `weight_total`, `delivered`, `photo_transaction`, `code`, `created_at`) VALUES
+(1, 6, 610000, 'JAKARTA', 1, 'BELUM KONFIRMASI', 7000, 1, '', 'EZM-86175', '2021-01-20 09:05:38'),
+(2, 3, 240000, 'JAKARTA', 1, 'BELUM KONFIRMASI', 3000, 0, '', 'EZM-59906', '2021-01-20 09:08:02'),
+(3, 6, 240000, 'JAKARTA', 1, 'BELUM KONFIRMASI', 3000, 0, '', 'EZM-49005', '2021-01-20 10:11:24');
 
 -- --------------------------------------------------------
 
@@ -201,7 +217,11 @@ CREATE TABLE `transactions_details` (
 --
 
 INSERT INTO `transactions_details` (`id_transaction_detail`, `transaction_id`, `product_id`, `price`, `banyak`, `code_product`) VALUES
-(1, 1, 4, 150000, 2, 'PRD-80296');
+(1, 1, 3, 100000, 4, 'PRD-13260'),
+(2, 1, 2, 80000, 2, 'PRD-13260'),
+(3, 1, 1, 50000, 1, 'PRD-13260'),
+(4, 2, 2, 80000, 3, 'PRD-67458'),
+(5, 3, 2, 80000, 3, 'PRD-4322');
 
 -- --------------------------------------------------------
 
@@ -245,6 +265,12 @@ ALTER TABLE `carts`
 --
 ALTER TABLE `categories`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `drivers`
+--
+ALTER TABLE `drivers`
+  ADD PRIMARY KEY (`id_driver`);
 
 --
 -- Indeks untuk tabel `products`
@@ -291,13 +317,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `drivers`
+--
+ALTER TABLE `drivers`
+  MODIFY `id_driver` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `products`
@@ -321,13 +353,13 @@ ALTER TABLE `rekening_numbers`
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `transactions_details`
 --
 ALTER TABLE `transactions_details`
-  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`

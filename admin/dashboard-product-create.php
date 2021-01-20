@@ -47,31 +47,19 @@ if (isset($_POST["tambahProduk"])) {
             data-toggle="dropdown"
           >
             <img
-              src="../assets/images/user_pc.png"
+              src="../assets/images/logo.jpg"
               alt="profile"
               class="rounded-circle mr-2 profile-picture"
             />
-            Hi, Hafizh
+            <?php 
+              $id_user = $_SESSION['user'];
+              $user = query("SELECT * FROM users WHERE id_user = $id_user")[0];
+            ?>
+            Hi, <?= $user["name"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/dashboard.html" class="dropdown-item"
-              >Dashboard</a
-            >
-            <a href="/dashboard-account.html" class="dropdown-item"
-              >Settings</a
-            >
-            <div class="dropdown-divider"></div>
             <a href="/" class="dropdown-item">logout</a>
           </div>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link d-inline-bloc mt-2">
-            <img
-              src="../assets/images/shopping-cart-filled.svg"
-              alt="cart-empty"
-            />
-            <div class="cart-badge">7</div>
-          </a>
         </li>
       </ul>
 
@@ -79,9 +67,6 @@ if (isset($_POST["tambahProduk"])) {
       <ul class="navbar-nav d-block d-lg-none">
         <li class="nav-item">
           <a href="" class="nav-link"> Hi, Hafizh </a>
-        </li>
-        <li class="nav-item">
-          <a href="" class="nav-link d-inline-block"> Cart </a>
         </li>
       </ul>
     </div>

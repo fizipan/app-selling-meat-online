@@ -191,7 +191,7 @@ if (isset($_POST["deleteCart"])) {
                     $product = query("SELECT * FROM products WHERE products.id_product = $idProduct");
                     $gallery = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct"); 
                     $banyak += $cart["banyak"];
-                    $berat += $product[0]["unit"];
+                    $berat += $product[0]["unit"] * $cart["banyak"];
                     $total += $cart["total"];
                   ?>
                   <tr>
@@ -273,12 +273,18 @@ if (isset($_POST["deleteCart"])) {
                   </select>
               </div>
             </div>
-            <?php if ($berat >= 2000) : ?>
+            <?php if ($berat >= 10000) : ?>
               <div class="col-md-12 text-center my-4" id="alert-berat">
-                <h5>Berat barang anda lebih dari <strong>2 Kilogram</strong></h5>
+                <h5>Berat barang anda lebih dari <strong>7 Kilogram</strong></h5>
                 <p class="text-muted">Apakah barang anda ingin di antar kami ?</p>
-                <button type="button" id="yes" class="btn btn-success px-4 mr-2">Ya, Antar</button>
-                <button type="button" id="no" class="btn btn-danger">Tidak, Gapapa</button>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="radioTrue" value="1" name="delivered" class="custom-control-input">
+                  <label class="custom-control-label" for="radioTrue">Ya, Antar</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="radioFalse" value="0" name="delivered" class="custom-control-input">
+                  <label class="custom-control-label" for="radioFalse">Tidak, Gausah</label>
+                </div>
               </div>
               <?php else : ?>
               <div class="col-md-12">
@@ -295,7 +301,7 @@ if (isset($_POST["deleteCart"])) {
                 </div>
               </div>
               <div class="col-md-12 text-center my-4" style="display: none;" id="bawa-sendiri">
-                <h5 class="mb-2">Anda bisa mengambil barang anda di toko Kami</h5>
+                <h5 class="mb-2">Alamat Toko Kami</h5>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4716.654901073462!2d106.97228048105524!3d-6.234943196910656!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e698d1e6641a377%3A0xa736e953b5a40749!2sELZA%20MANDIRI!5e0!3m2!1sid!2sid!4v1611021244967!5m2!1sid!2sid" width="400" height="250" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
               </div>
           </div>
@@ -311,7 +317,7 @@ if (isset($_POST["deleteCart"])) {
           </div>
           <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
             <div class="col-4 col-md-3">
-              <div class="product-title"><?= number_format($banyak); ?></div>
+              <div class="product-title"><?= number_format($banyak); ?> Barang</div>
               <div class="product-subtitle mb-3">Banyak Barang</div>
             </div>
             <div class="col-4 col-md-3">
@@ -342,7 +348,7 @@ if (isset($_POST["deleteCart"])) {
       <div class=" container">
         <div class="row">
           <div class="col-12">
-            <p class="pt-4 pb-2">&copy; 2021 Copyright by Elza Mandiri. All Rights Reserved.</p>
+            <p class="pt-4 pb-2">&copy; <?= date('Y'); ?> Copyright by Elza Mandiri. All Rights Reserved.</p>
           </div>
         </div>
       </div>
@@ -361,7 +367,7 @@ if (isset($_POST["deleteCart"])) {
       CKEDITOR.replace("editor");
     </script>
     <script src="assets/js/navbar-scroll.js"></script>
-    <script src="assets/js/button-antar.js"></script>
+    <script src="assets/js/delivered.js"></script>
 </body>
 
 </html>
