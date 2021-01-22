@@ -2,6 +2,8 @@
 require 'config/config.php';
 if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
   header("Location: login.php");
+} elseif (isset($_SESSION["driver"])) {
+  header("Location: driver/index.php");
 }
 
 $id = $_SESSION["user"];

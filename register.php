@@ -2,6 +2,8 @@
 require_once 'config/config.php';
 if (isset($_SESSION["login"]) && isset($_SESSION["user"])) {
   header("Location: index.php");
+} elseif (isset($_SESSION["driver"])) {
+  header("Location: driver/index.php");
 }
 
 if (isset($_POST["register"])) {

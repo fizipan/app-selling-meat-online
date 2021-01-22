@@ -339,6 +339,9 @@ function checkout($data)
     $total_price = $data["total_price"];
     $city = $data["city"];
     $address = $data["address"];
+    if ($address == '') {
+        $address = $data["alamat"];
+    }
     $phone_number = $data["phone_number"];
     $zip_code = $data["zip_code"];
     $rekening = $data["rekening"];
@@ -426,6 +429,94 @@ function hapusTransaction($id)
     global $conn;
 
     mysqli_query($conn, "DELETE FROM transactions WHERE id_transaction = $id");
+    return mysqli_affected_rows($conn);
+}
+
+// driver
+
+function tambahDriver($data)
+{
+    global $conn;
+    $name = $data["name"];
+    $email = stripslashes($data["email"]);
+    $password = password_hash($data["password"], PASSWORD_DEFAULT);
+    $phone_number = $data["phone_number"];
+    $noPegawai = $data["noPegawai"];
+
+    $query = "INSERT INTO drivers
+                VALUES
+                ('', '$name', '$email', '$password', '$phone_number', '$noPegawai')
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function updateDriver($data)
+{
+    global $conn;
+    $id = $data["id"];
+    $result = query("SELECT password FROM drivers WHERE id_driver = $id")[0];
+    $name = $data["name"];
+    $phone_number = $data["phone_number"];
+    if (empty($data["password"])) {
+        $password = $result["password"];
+    } else {
+        $password = password_hash($data["password"], PASSWORD_DEFAULT);
+    }
+    $noPegawai = $data["noPegawai"];
+
+    $query = "UPDATE drivers SET
+                name_driver = '$name',
+                password = '$password',
+                phone_number = '$phone_number',
+                no_pegawai = '$noPegawai'
+                WHERE id_driver = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function hapusDriver($id)
+{
+    global $conn;
+
+    mysqli_query($conn, "DELETE FROM drivers WHERE id_driver = $id");
+    return mysqli_affected_rows($conn);
+}
+
+function pickup($data)
+{
+    global $conn;
+
+    $id_transaction = $data["id_transaction"];
+    date_default_timezone_set('Asia/jakarta');
+    $tambah3Jam = time() + 60 * 60 * 3;
+    $arrive = date('Y-m-d H:i:s', $tambah3Jam);
+
+    $query = "UPDATE transactions SET
+                transaction_status = 'PICKUP',
+                time_arrived = '$arrive'
+                WHERE id_transaction = $id_transaction
+            ";
+    
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function terkirim($data)
+{
+    global $conn;
+
+    $id_transaction = $data["id_transaction"];
+
+    $query = "UPDATE transactions SET
+                transaction_status = 'TERKIRIM'
+                WHERE id_transaction = $id_transaction
+            ";
+    
+    mysqli_query($conn, $query);
     return mysqli_affected_rows($conn);
 }
 

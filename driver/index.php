@@ -1,20 +1,10 @@
 <?php 
 require_once '../config/config.php';
-if (isset($_SESSION["login"]) && isset($_SESSION["driver"])) {
-  header("Location: ../driver/index.php");
-}
-if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
+if (!isset($_SESSION["login"]) && !isset($_SESSION["driver"])) {
   header("Location: ../index.php");
-} else {
-  $id = $_SESSION["user"];
-  $result = query("SELECT * FROM users WHERE id_user = $id")[0];
-  if ($result['roles'] !== 'USER') {
-    header("Location: ../index.php");
-  }
+} elseif (empty($_SESSION["driver"])) {
+  header("Location: ../index.php");
 }
-
-
-
 
 ?>
 <!DOCTYPE html>
@@ -56,16 +46,10 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               Dashboard
             </a>
             <a
-              href="?page=transactions"
-              class="list-group-item list-group-item-action<?= $page == 'transactions' ? ' active' : ''; ?> <?= $page == 'transactions-details' ? ' active' : ''; ?> <?= $page == 'transfer' ? ' active' : ''; ?>"
+              href="?page=pickup"
+              class="list-group-item list-group-item-action<?= $page == 'pickup' ? ' active' : ''; ?> <?= $page == 'pickup-details' ? ' active' : ''; ?>"
             >
-              Transactions
-            </a>
-            <a
-              href="../index.php"
-              class="list-group-item list-group-item-action<?= $page == 'logout' ? ' active' : ''; ?>"
-            >
-              Back To Home
+              Pickup
             </a>
             <a
               href="?page=logout"
@@ -82,20 +66,18 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
 
           if (isset($page)) {
             if ($page == 'dashboard') {
-              include 'dashboard-user.php';
-            } elseif ($page == 'transactions') {
-              include 'transaction/dashboard-user-transactions.php';
-            } elseif ($page == 'transactions-details') {
-              include 'transaction/dashboard-user-transactions-details.php';
-            } elseif ($page == 'transfer') {
-              include 'transaction/dashboard-user-transfer.php';
+              include 'dashboard-drivers.php';
+            } elseif ($page == 'pickup') {
+              include 'pickup/dashboard-drivers-pickup.php';
+            } elseif ($page == 'pickup-details') {
+              include 'pickup/dashboard-drivers-pickup-details.php';
             } elseif ($page == 'logout') {
               include '../logout.php';
             } else {
               echo "Halaman Tidak Ditemukan";
             }
           } else {
-            include 'dashboard-user.php';
+            include 'dashboard-drivers.php';
           }
           
 

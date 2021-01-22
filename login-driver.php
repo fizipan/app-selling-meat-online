@@ -1,8 +1,6 @@
 <?php 
 require_once 'config/config.php';
-if (isset($_SESSION["login"]) && isset($_SESSION["user"])) {
-  header("Location: index.php");
-} elseif (isset($_SESSION["driver"])) {
+if (isset($_SESSION["login"]) && isset($_SESSION["driver"])) {
   header("Location: driver/index.php");
 }
 
@@ -10,14 +8,14 @@ if (isset($_POST["login"])) {
   $email = $_POST["email"];
   $password = $_POST["password"];
 
-  $result = mysqli_query($conn, "SELECT * FROM users WHERE email = '$email'");
+  $result = mysqli_query($conn, "SELECT * FROM drivers WHERE email = '$email'");
   if (mysqli_num_rows($result) === 1) {
     
     $row = mysqli_fetch_assoc($result);
     if (password_verify($password, $row["password"])) {
       $_SESSION["login"] = true;
-      $_SESSION["user"] = $row["id_user"];
-      header("Location: index.php");
+      $_SESSION["driver"] = $row["id_driver"];
+      header("Location: driver/index.php");
     }
   }
 
@@ -73,9 +71,6 @@ if (isset($_POST["login"])) {
             <li class="nav-item">
               <a href="about.php" class="nav-link">About</a>
             </li>
-            <li class="nav-item">
-              <a href="login-driver.php" class="nav-link">Login Driver</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -95,7 +90,7 @@ if (isset($_POST["login"])) {
               />
             </div>
             <div class="col-lg-5">
-              <h2 class="mb-4">Belanja daging ayam, menjadi lebih mudah</h2>
+              <h2 class="mb-4">Yuk antar pesanan pelanggan, Login driver</h2>
               <form action="" method="POST" class="mt-3">
                   <?php if (isset($error)) : ?>
                       <div class="alert alert-danger w-75">

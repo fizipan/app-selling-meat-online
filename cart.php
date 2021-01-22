@@ -3,6 +3,8 @@ require_once 'config/config.php';
 
 if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
   header("Location: login.php");
+} elseif (isset($_SESSION["driver"])) {
+  header("Location: driver/index.php");
 }
 
 if (isset($_POST["checkout"])) {
@@ -275,7 +277,7 @@ if (isset($_POST["deleteCart"])) {
             </div>
             <?php if ($berat >= 10000) : ?>
               <div class="col-md-12 text-center my-4" id="alert-berat">
-                <h5>Berat barang anda lebih dari <strong>7 Kilogram</strong></h5>
+                <h5>Berat barang anda lebih dari <strong>10 Kilogram</strong></h5>
                 <p class="text-muted">Apakah barang anda ingin di antar kami ?</p>
                 <div class="custom-control custom-radio custom-control-inline">
                   <input type="radio" id="radioTrue" value="1" name="delivered" class="custom-control-input">
@@ -289,15 +291,15 @@ if (isset($_POST["deleteCart"])) {
               <?php else : ?>
               <div class="col-md-12">
                 <div class="form-group">
-                  <label for="address">Alamat</label>
-                  <textarea name="address" required id="editor"><?= $user["address"] ?? ''; ?></textarea>
+                  <label for="alamat">Masukkan Alamat Anda :</label>
+                  <textarea name="alamat" id="editor"><?= $user["address"] ?? ''; ?></textarea>
                 </div>
               </div>
               <?php endif; ?>
               <div class="col-md-12 mt-2" style="display: none;" id="alamat">
                 <div class="form-group">
                   <label for="address">Masukkan Alamat Anda :</label>
-                  <textarea name="address" id="editor"><?= $cart["address"] ?? ''; ?></textarea>
+                  <textarea name="address" id="editor"><?= $user["address"] ?? ''; ?></textarea>
                 </div>
               </div>
               <div class="col-md-12 text-center my-4" style="display: none;" id="bawa-sendiri">

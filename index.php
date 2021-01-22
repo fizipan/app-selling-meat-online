@@ -1,6 +1,10 @@
 <?php 
 require_once 'config/config.php';
 
+if (isset($_SESSION["driver"])) {
+  header("Location: driver/index.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

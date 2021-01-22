@@ -34,13 +34,13 @@
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
-              $id_user = $_SESSION['user'];
-              $user = query("SELECT * FROM users WHERE id_user = $id_user")[0];
+              $id_driver = $_SESSION['driver'];
+              $driver = query("SELECT * FROM drivers WHERE id_driver = $id_driver")[0];
             ?>
-            Hi, <?= $user["name"]; ?>
+            Hi, <?= $driver["name_driver"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/" class="dropdown-item">logout</a>
+            <a href="../logout.php" class="dropdown-item">logout</a>
           </div>
         </li>
       </ul>
@@ -65,51 +65,36 @@
     </div>
     <div class="dashboard-content">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <div class="card mb-2">
             <div class="card-body">
-            <?php 
-              $customers = rows("SELECT * FROM users");
-            ?>
-              <div class="dashboard-card-title">Customer</div>
-              <div class="dashboard-card-subtitle"><?= $customers; ?></div>
+                <?php 
+                    $user = rows("SELECT * FROM users");
+                ?>
+              <div class="dashboard-card-title">Users</div>
+              <div class="dashboard-card-subtitle"><?= $user; ?> User</div>
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <!-- <div class="col-md-4">
           <div class="card mb-2">
             <div class="card-body">
-            <?php 
-              $transactions = query("SELECT * FROM transactions");
-              $total_price = 0;
-              foreach ($transactions as $t ) {
-                $total_price += $t["total_price"];
-              }
-              
-              $total_price_product = 0;
-              $products = query("SELECT * FROM products");
-              foreach ($products as $p ) {
-                $total_price_product += $p["price"];
-              }
-
-              $revenue = $total_price - $total_price_product;
-              if ($revenue < 0) {
-                $revenue = 0;
-              }
-            ?>
               <div class="dashboard-card-title">Revenue</div>
-              <div class="dashboard-card-subtitle">Rp. <?= number_format($revenue); ?></div>
+              <div class="dashboard-card-subtitle">$931,290</div>
             </div>
           </div>
-        </div>
-        <div class="col-md-4">
+        </div> -->
+        <div class="col-md-6">
           <div class="card mb-2">
             <div class="card-body">
             <?php 
-              $transactionCount = rows("SELECT * FROM transactions");
+                $driver = query("SELECT * FROM drivers WHERE id_driver = $id_driver")[0];
+                $jurusan = $driver["jurusan"];
+                $pickup = rows("SELECT * FROM transactions WHERE transaction_status = 'KONFIRMASI' AND delivered = 1 AND city = '$jurusan'");
+            
             ?>
-              <div class="dashboard-card-title">Transaction</div>
-              <div class="dashboard-card-subtitle"><?= $transactionCount; ?></div>
+              <div class="dashboard-card-title">Pick Up</div>
+              <div class="dashboard-card-subtitle"><?= number_format($pickup); ?> Pick Up</div>
             </div>
           </div>
         </div>

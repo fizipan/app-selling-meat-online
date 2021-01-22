@@ -1,5 +1,8 @@
 <?php 
 require_once '../config/config.php';
+if (isset($_SESSION["login"]) && isset($_SESSION["driver"])) {
+  header("Location: ../driver/index.php");
+}
 if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
   header("Location: ../index.php");
 } else {
@@ -74,10 +77,22 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               Transactions
             </a>
             <a
+              href="?page=drivers"
+              class="list-group-item list-group-item-action<?= $page == 'drivers' ? ' active' : ''; ?> <?= $page == 'drivers-create' ? ' active' : ''; ?> <?= $page == 'drivers-details' ? ' active' : ''; ?> <?= $page == 'drivers-delete' ? ' active' : ''; ?>"
+            >
+              Drivers
+            </a>
+            <a
               href="?page=users"
               class="list-group-item list-group-item-action<?= $page == 'users' ? ' active' : ''; ?> <?= $page == 'users-create' ? ' active' : ''; ?> <?= $page == 'users-details' ? ' active' : ''; ?>"
             >
               Users
+            </a>
+            <a
+              href="../index.php"
+              class="list-group-item list-group-item-action<?= $page == 'logout' ? ' active' : ''; ?>"
+            >
+              Back To Home
             </a>
             <a
               href="?page=logout"
@@ -127,6 +142,14 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               include 'transaction/dashboard-transactions-delete.php';
             } elseif ($page == 'transactions-transfer') {
               include 'transaction/dashboard-transfer.php';
+            } elseif ($page == 'drivers') {
+              include 'drivers/dashboard-drivers.php';
+            } elseif ($page == 'drivers-create') {
+              include 'drivers/dashboard-drivers-create.php';
+            } elseif ($page == 'drivers-details') {
+              include 'drivers/dashboard-drivers-details.php';
+            } elseif ($page == 'drivers-delete') {
+              include 'drivers/dashboard-drivers-delete.php';
             } elseif ($page == 'users') {
               include 'users/dashboard-users.php';
             } elseif ($page == 'users-create') {

@@ -1,6 +1,9 @@
 <?php 
 
 require 'config/config.php';
+if (isset($_SESSION["driver"])) {
+  header("Location: driver/index.php");
+} 
 $jumlahDataPerHalaman = 8;
 $jumlahData = count(query("SELECT * FROM products"));
 $jumlahHalaman = ceil($jumlahData / $jumlahDataPerHalaman);

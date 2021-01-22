@@ -1,5 +1,8 @@
 <?php 
 require_once 'config/config.php';
+if (isset($_SESSION["driver"])) {
+  header("Location: driver/index.php");
+}
 $idProduct = $_GET["id"];
 $product = query("SELECT * FROM products WHERE id_product = $idProduct")[0];
 $galleries = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct"); 
