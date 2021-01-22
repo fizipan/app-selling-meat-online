@@ -361,7 +361,7 @@ function checkout($data)
 
     $queryTransaction = "INSERT INTO transactions
                             VALUES
-                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$delivered', '$photo', '$code', NOW())
+                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$delivered', '$photo', '$code',NULL, NOW())
                         ";
     mysqli_query($conn, $queryTransaction);
     
