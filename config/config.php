@@ -338,9 +338,9 @@ function checkout($data)
     $user_id = $data['user_id'];
     $total_price = $data["total_price"];
     $city = $data["city"];
-    $address = $data["address"];
-    if ($address == '') {
-        $address = $data["alamat"];
+    $address = $data["alamat"];
+    if (empty($address)) {
+        $address = $data["address"];
     }
     $phone_number = $data["phone_number"];
     $zip_code = $data["zip_code"];
@@ -390,6 +390,7 @@ function checkout($data)
 
 }
 
+// transfer
 function uploadTransfer($data)
 {
     global $conn;
@@ -486,6 +487,7 @@ function hapusDriver($id)
     return mysqli_affected_rows($conn);
 }
 
+// pickup
 function pickup($data)
 {
     global $conn;

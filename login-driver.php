@@ -121,9 +121,9 @@ if (isset($_POST["login"])) {
                   class="btn btn-success btn-block w-75 mt-4"
                   >Sign In to My Account</button>
                 <a
-                  href="register.php"
+                  href="index.php"
                   class="btn btn-login btn-block w-75 mt-2"
-                  >Sign Up</a
+                  >Back To Home</a
                 >
               </form>
             </div>

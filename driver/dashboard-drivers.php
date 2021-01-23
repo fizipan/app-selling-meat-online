@@ -29,8 +29,9 @@
             data-toggle="dropdown"
           >
             <img
-              src="../assets/images/logo.jpg"
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
@@ -90,7 +91,7 @@
             <?php 
                 $driver = query("SELECT * FROM drivers WHERE id_driver = $id_driver")[0];
                 $jurusan = $driver["jurusan"];
-                $pickup = rows("SELECT * FROM transactions WHERE transaction_status = 'KONFIRMASI' AND delivered = 1 AND city = '$jurusan'");
+                $pickup = rows("SELECT * FROM transactions WHERE transaction_status = 'KONFIRMASI'  AND delivered = 1 AND city = '$jurusan' OR transaction_status = 'PICKUP'");
             
             ?>
               <div class="dashboard-card-title">Pick Up</div>

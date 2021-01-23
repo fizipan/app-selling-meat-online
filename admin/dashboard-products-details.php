@@ -50,8 +50,9 @@ if (isset($_POST["updateProduk"])) {
             data-toggle="dropdown"
           >
             <img
-              src="../assets/images/logo.jpg"
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
@@ -61,7 +62,9 @@ if (isset($_POST["updateProduk"])) {
             Hi, <?= $user["name"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/" class="dropdown-item">logout</a>
+            <a href="../index.php" class="dropdown-item">Back To Home</a>
+            <div class="dropdown-divider"></div>
+            <a href="../logout.php" class="dropdown-item">logout</a>
           </div>
         </li>
       </ul>

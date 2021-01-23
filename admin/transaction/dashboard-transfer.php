@@ -1,3 +1,12 @@
+<?php 
+
+if (isset($_POST["konfirmasi"])) {
+  if (konfirmasi($_POST) > 0) {
+    header("Location: ?page=transactions");
+  }
+}
+
+?>
 <nav
   class="navbar navbar-expand-lg navbar-light navbar-store fixed-top"
   data-aos="fade-down"
@@ -28,9 +37,10 @@
             role="button"
             data-toggle="dropdown"
           >
-            <img
-              src="../assets/images/logo.jpg"
+          <img
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
@@ -40,7 +50,9 @@
             Hi, <?= $user["name"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/" class="dropdown-item">logout</a>
+            <a href="../index.php" class="dropdown-item">Back To Home</a>
+            <div class="dropdown-divider"></div>
+            <a href="../logout.php" class="dropdown-item">logout</a>
           </div>
         </li>
       </ul>
@@ -86,10 +98,20 @@
                   <?php if ($transaction['photo_transaction'] == '') : ?>
                     <p class="text-muted">Belum ada foto</p>
                   <?php else : ?>
-                    <img src="../assets/images/<?= $transaction["photo_transaction"]; ?>" class="w-50" alt="">
+                    <img src="../assets/images/<?= $transaction["photo_transaction"]; ?>" class="w-75" alt="">
                   <?php endif; ?>
                 </div>
               </div>
+              <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI") : ?>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <form action="" method="POST">
+                      <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
+                      <button type="submit" onclick="return confirm('Apakah Ingin konfirmasi transaction ini ?')" name="konfirmasi" class="btn btn-success">Konfirmasi</button>
+                  </form>
+                </div>
+              </div>
+              <?php endif;?>
             </div>
           </div>
         </div>

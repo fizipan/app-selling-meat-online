@@ -21,6 +21,12 @@ if (isset($_SESSION["driver"])) {
 
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link href="assets/style/main.css" rel="stylesheet" />
+
+    <style>      .store-adventeges {
+        padding: 40px;
+        background-color: #F7F7E8;
+      }
+    </style>
   </head>
 
   <body>
@@ -133,7 +139,7 @@ if (isset($_SESSION["driver"])) {
         <div class="container">
           <div class="row align-items-center justify-content-between">
             <div class="col-md-5">
-              <img src="assets/images/bg-landing.jpg" class="w-100" alt="" />
+              <img src="assets/images/bg-landing-removebg-preview.png" class="w-100" alt="" />
             </div>
             <div class="col-md-6">
               <h1 style="font-weight: bold; margin-bottom: 15px;">Toko Daging Ayam Potong Segar Online</h1>
@@ -143,7 +149,9 @@ if (isset($_SESSION["driver"])) {
                 bahan baku daging segar
               </p>
               <a href="products.php" class="btn btn-success px-4 py-2 mt-4"
-                >Shop Now</a
+                ><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-cart-fill" viewBox="0 0 20 20">
+  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+</svg> Shop Now</a
               >
             </div>
           </div>

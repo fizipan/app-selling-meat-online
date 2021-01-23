@@ -33,9 +33,10 @@ $transaction_details = query("SELECT * FROM transactions_details INNER JOIN tran
             role="button"
             data-toggle="dropdown"
           >
-            <img
-              src="../assets/images/logo.jpg"
+          <img
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 

@@ -6,6 +6,12 @@ if (isset($_POST["konfirmasi"])) {
   }
 }
 
+if (isset($_POST["terkirim"])) {
+  if (terkirim($_POST) > 0) {
+    header("Location: ?page=transactions");
+  }
+}
+
 ?>
 <nav
   class="navbar navbar-expand-lg navbar-light navbar-store fixed-top"
@@ -37,9 +43,10 @@ if (isset($_POST["konfirmasi"])) {
             role="button"
             data-toggle="dropdown"
           >
-            <img
-              src="../assets/images/logo.jpg"
+          <img
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
@@ -49,7 +56,9 @@ if (isset($_POST["konfirmasi"])) {
             Hi, <?= $user["name"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/" class="dropdown-item">logout</a>
+            <a href="../index.php" class="dropdown-item">Back To Home</a>
+            <div class="dropdown-divider"></div>
+            <a href="../logout.php" class="dropdown-item">logout</a>
           </div>
         </li>
       </ul>
@@ -94,6 +103,7 @@ if (isset($_POST["konfirmasi"])) {
                         <tr>
                           <th scope="col">ID</th>
                           <th scope="col">Code</th>
+                          <th scope="col">Nama</th>
                           <th scope="col">Total</th>
                           <th scope="col">Pembayaran</th>
                           <th scope="col">Status</th>
@@ -112,13 +122,18 @@ if (isset($_POST["konfirmasi"])) {
                           <tr>
                             <th scope="row"><?= $no; ?></th>
                             <td>#<?= $transaction["code"]; ?></td>
+                            <td><?= $transaction["name"]; ?></td>
                             <td><?= number_format($transaction["total_price"]); ?></td>
                             <td><?= $transaction["bank_name"]; ?></td>
                             <td>
                               <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI") : ?>
-                                <span class="badge badge-pill badge-danger">BELUM KONFIRMASI</span>
+                                <span class="badge badge-pill badge-danger"><?= $transaction["transaction_status"]; ?></span>
+                              <?php elseif($transaction["transaction_status"] == "KONFIRMASI"): ?>
+                              <span class="badge badge-pill badge-warning"><?= $transaction["transaction_status"]; ?></span>
+                              <?php elseif($transaction["transaction_status"] == "PICKUP") : ?>
+                                <span class="badge badge-pill badge-primary"><?= $transaction["transaction_status"]; ?></span>
                               <?php else: ?>
-                                <span class="badge badge-pill badge-success">SUDAH KONFIRMASI</span>
+                                <span class="badge badge-pill badge-success"><?= $transaction["transaction_status"]; ?></span>
                               <?php endif; ?>
                             </td>
                             <?php 
@@ -135,11 +150,16 @@ if (isset($_POST["konfirmasi"])) {
                                   <?php if ($transaction["transaction_status"] == 'BELUM KONFIRMASI') : ?>
                                   <form action="" method="POST">
                                     <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
-                                    <button type="submit" name="konfirmasi" class="dropdown-item">Konfirmasi</button>
+                                    <button type="submit" onclick="return confirm('Apakah Ingin konfirmasi transaction ini ?')" name="konfirmasi" class="dropdown-item">Konfirmasi</button>
+                                  </form>
+                                  <?php elseif($transaction["transaction_status"] == "KONFIRMASI" && $transaction["delivered"] == 0): ?>
+                                  <form action="" method="POST">
+                                    <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
+                                    <button type="submit" onclick="return confirm('Apakah barang sudah terkirim ?')" name="terkirim" class="dropdown-item">Terkirim</button>
                                   </form>
                                   <?php endif; ?>
                                   <a class="dropdown-item" href="?page=transactions-transfer&id=<?= $transaction["id_transaction"]; ?>">Bukti Transfer</a>
-                                  <a class="dropdown-item" href="?page=transactions-delete&id=<?= $transaction["id_transaction"]; ?>">Delete</a>
+                                  <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus transaction ini ?')" href="?page=transactions-delete&id=<?= $transaction["id_transaction"]; ?>">Delete</a>
                                 </div>
                               </div>
                             </td>

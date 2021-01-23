@@ -43,8 +43,9 @@ if (isset($_POST["terkirim"])) {
             data-toggle="dropdown"
           >
             <img
-              src="../assets/images/logo.jpg"
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
@@ -100,7 +101,7 @@ if (isset($_POST["terkirim"])) {
                           $no = 1;
                           $driver = query("SELECT * FROM drivers WHERE id_driver = $id_driver")[0];
                           $jurusan = $driver["jurusan"];
-                          $pickup = query("SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user WHERE transaction_status = 'KONFIRMASI' || transaction_status = 'PICKUP' AND delivered = 1 AND city = '$jurusan'");
+                          $pickup = query("SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user WHERE transaction_status = 'KONFIRMASI'  AND delivered = 1 AND city = '$jurusan' OR transaction_status = 'PICKUP'");
                         ?>
                         <?php foreach ($pickup as $pc) : ?>
                           <tr>
@@ -141,12 +142,12 @@ if (isset($_POST["terkirim"])) {
                                   <?php if ($pc["transaction_status"] == "KONFIRMASI") : ?>
                                   <form action="" method="POST">
                                     <input type="hidden" name="id_transaction" value="<?= $pc["id_transaction"]; ?>">
-                                    <button type="submit" name="pickup" class="dropdown-item">Pickup</button>
+                                    <button type="submit" onclick="return confirm('Apakah Barang Ingin di Pickup ?')" name="pickup" class="dropdown-item">Pickup</button>
                                   </form>
                                   <?php elseif($pc["transaction_status"] == "PICKUP"): ?>
                                   <form action="" method="POST">
                                     <input type="hidden" name="id_transaction" value="<?= $pc["id_transaction"]; ?>">
-                                    <button type="submit" name="terkirim" class="dropdown-item">Terkirim</button>
+                                    <button type="submit" onclick="return confirm('Apakah barang sudah terkirim ?')" name="terkirim" class="dropdown-item">Terkirim</button>
                                   </form>
                                   <?php endif;?>
                                 </div>

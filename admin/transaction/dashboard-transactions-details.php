@@ -36,9 +36,10 @@ $transaction_details = query("SELECT * FROM transactions_details INNER JOIN tran
             role="button"
             data-toggle="dropdown"
           >
-            <img
-              src="../assets/images/logo.jpg"
+          <img
+              src="../assets/images/person-circle.svg"
               alt="profile"
+              height="40px"
               class="rounded-circle mr-2 profile-picture"
             />
             <?php 
@@ -48,7 +49,9 @@ $transaction_details = query("SELECT * FROM transactions_details INNER JOIN tran
             Hi, <?= $user["name"]; ?>
           </a>
           <div class="dropdown-menu">
-            <a href="/" class="dropdown-item">logout</a>
+            <a href="../index.php" class="dropdown-item">Back To Home</a>
+            <div class="dropdown-divider"></div>
+            <a href="../logout.php" class="dropdown-item">logout</a>
           </div>
         </li>
       </ul>
@@ -68,8 +71,8 @@ $transaction_details = query("SELECT * FROM transactions_details INNER JOIN tran
       <?php 
         $transactionMain = query("SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user WHERE id_transaction = $idTransaction")[0];
       ?>
-        <h2 class="dashboard-title">#<?= $transactionMain["code"]; ?></h2>
-        <p class="dashboard-subtitle">Transactions Details</p>
+        <h2 class="dashboard-title"><?= $transactionMain["name"]; ?></h2>
+        <p class="dashboard-subtitle">#<?= $transactionMain["code"]; ?></p>
       </div>
       <div class="dashboard-content store-cart">
         <div class="row" data-aos="fade-up" data-aos-delay="100">

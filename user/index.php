@@ -62,6 +62,12 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               Transactions
             </a>
             <a
+              href="?page=profile"
+              class="list-group-item list-group-item-action<?= $page == 'profile' ? ' active' : ''; ?> <?= $page == 'profile-details' ? ' active' : ''; ?> <?= $page == 'transfer' ? ' active' : ''; ?>"
+            >
+              profile
+            </a>
+            <a
               href="../index.php"
               class="list-group-item list-group-item-action<?= $page == 'logout' ? ' active' : ''; ?>"
             >
@@ -89,6 +95,8 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               include 'transaction/dashboard-user-transactions-details.php';
             } elseif ($page == 'transfer') {
               include 'transaction/dashboard-user-transfer.php';
+            } elseif ($page == 'profile') {
+              include 'profile/dashboard-user-profile.php';
             } elseif ($page == 'logout') {
               include '../logout.php';
             } else {
