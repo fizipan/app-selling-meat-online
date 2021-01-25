@@ -17,7 +17,13 @@ if (isset($_POST["login"])) {
     if (password_verify($password, $row["password"])) {
       $_SESSION["login"] = true;
       $_SESSION["user"] = $row["id_user"];
-      header("Location: index.php");
+      if ($row["roles"] == "USER") {
+        header("Location: index.php");
+      } elseif($row["roles"] == "ADMIN") {
+        header("Location: admin");
+      } else {
+        header("Location: owner");
+      }
     }
   }
 

@@ -361,7 +361,7 @@ function checkout($data)
 
     $queryTransaction = "INSERT INTO transactions
                             VALUES
-                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$delivered', '$photo', '$code',NULL, NOW())
+                            ('', '$user_id', '$total_price', '$city', '$rekening', '$status', '$weight', '$delivered', '$photo', '$code', '', NULL, NOW())
                         ";
     mysqli_query($conn, $queryTransaction);
     
@@ -512,9 +512,11 @@ function terkirim($data)
     global $conn;
 
     $id_transaction = $data["id_transaction"];
+    $penerima = $data["penerima"];
 
     $query = "UPDATE transactions SET
-                transaction_status = 'TERKIRIM'
+                transaction_status = 'TERKIRIM',
+                receiver = '$penerima'
                 WHERE id_transaction = $id_transaction
             ";
     

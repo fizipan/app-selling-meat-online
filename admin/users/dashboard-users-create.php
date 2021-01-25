@@ -161,6 +161,7 @@ if (isset($_POST["tambahUser"])) {
                     <div class="form-group">
                       <label for="roles">Roles</label>
                       <select name="roles" id="roles" class="form-control" required>
+                        <option value="OWNER">OWNER</option>
                         <option value="ADMIN">ADMIN</option>
                         <option value="USER">USER</option>
                       </select>

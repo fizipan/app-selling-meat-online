@@ -1,3 +1,12 @@
+<?php 
+
+if (isset($_POST["terkirim"])) {
+  if (terkirim($_POST) > 0) {
+    header("Location: ?page=transactions");
+  }
+}
+
+?>
 <nav
   class="navbar navbar-expand-lg navbar-light navbar-store fixed-top"
   data-aos="fade-down"
@@ -141,12 +150,44 @@
                                   <a class="dropdown-item" href="?page=transactions-details&id=<?= $transaction["id_transaction"]; ?>">Lihat</a>
                                   <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI" && $transaction["photo_transaction"] == '') : ?>
                                     <a class="dropdown-item" href="?page=transfer&id=<?= $transaction["id_transaction"]; ?>">Transfer</a>
+                                    <?php elseif($transaction["transaction_status"] == "PICKUP" && $transaction["delivered"] == 1): ?>
+                                      <button type="button" data-toggle="modal" class="dropdown-item" data-target="#terkirim">Terkirim</button>
                                   <?php endif; ?>
                                 </div>
                               </div>
                             </td>
                           </tr>
                           <?php $no++ ?>
+                          <!-- Modal -->
+                          <div class="modal fade" id="terkirim" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">Yakin sudah terkirim ?</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <form action="" method="POST">
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-12">
+                                        <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
+                                        <div class="form-group">
+                                          <label for="penerima">Nama Penerima</label>
+                                          <input type="text" name="penerima" id="penerima" class="form-control">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" name="terkirim" class="btn btn-primary">Save changes</button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         <?php endforeach;?>
                       </tbody>
                     </table>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 22 Jan 2021 pada 07.48
+-- Waktu pembuatan: 25 Jan 2021 pada 08.52
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -34,16 +34,6 @@ CREATE TABLE `carts` (
   `banyak` int(11) NOT NULL,
   `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `carts`
---
-
-INSERT INTO `carts` (`id_cart`, `user_id`, `product_id`, `banyak`, `total`) VALUES
-(8, 1, 2, 2, 160000),
-(9, 1, 1, 2, 100000),
-(10, 1, 5, 2, 40000),
-(14, 1, 1, 2, 100000);
 
 -- --------------------------------------------------------
 
@@ -114,15 +104,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id_product`, `product_name`, `unit`, `price`, `descriptions`, `category_id`, `stock`) VALUES
-(1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '5000'),
-(2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '0'),
-(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '4000'),
-(4, 'Paha Boneless', 1000, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, '0'),
-(5, 'Dada Bebek', 1000, '20000', '<p>Dada bikin klepek</p>\r\n', 2, '1000'),
-(6, 'Paha Maknyus', 1000, '400000', '<p>Paha Buatan Mbak Yus</p>\r\n', 1, '2000'),
+(1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '18000'),
+(2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '8000'),
+(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '1000'),
+(4, 'Paha Boneless', 1000, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, '40000'),
+(5, 'Dada Bebek', 1000, '20000', '<p>Dada bikin klepek</p>\r\n', 2, '10000'),
+(6, 'Paha Maknyus', 1000, '400000', '<p>Paha Buatan Mbak Yus</p>\r\n', 1, '0'),
 (7, 'Ceker Ayam', 1000, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '0'),
 (8, 'Ayam Utuh Kriuk', 1000, '500000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, '1000'),
-(10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '10000');
+(10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '6000');
 
 -- --------------------------------------------------------
 
@@ -197,6 +187,7 @@ CREATE TABLE `transactions` (
   `delivered` int(11) NOT NULL,
   `photo_transaction` varchar(255) NOT NULL,
   `code` varchar(255) NOT NULL,
+  `receiver` varchar(255) NOT NULL,
   `time_arrived` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -205,11 +196,10 @@ CREATE TABLE `transactions` (
 -- Dumping data untuk tabel `transactions`
 --
 
-INSERT INTO `transactions` (`id_transaction`, `user_id`, `total_price`, `city`, `rekening_id`, `transaction_status`, `weight_total`, `delivered`, `photo_transaction`, `code`, `time_arrived`, `created_at`) VALUES
-(1, 6, 120000, 'JAKARTA', 1, 'KONFIRMASI', 3000, 1, '600a385eb3d06.jpeg', 'EZM-58996', NULL, '2021-01-21 16:38:26'),
-(2, 6, 250000, 'JAKARTA', 1, 'BELUM KONFIRMASI', 5000, 1, '', 'EZM-7446', NULL, '2021-01-22 02:27:06'),
-(3, 9, 80000, 'JAKARTA', 2, 'BELUM KONFIRMASI', 1000, 0, '', 'EZM-65415', NULL, '2021-01-22 02:31:22'),
-(4, 9, 100000, 'JAKARTA', 1, 'BELUM KONFIRMASI', 1000, 0, '', 'EZM-88939', NULL, '2021-01-22 02:32:41');
+INSERT INTO `transactions` (`id_transaction`, `user_id`, `total_price`, `city`, `rekening_id`, `transaction_status`, `weight_total`, `delivered`, `photo_transaction`, `code`, `receiver`, `time_arrived`, `created_at`) VALUES
+(1, 3, 260000, 'JAKARTA', 3, 'TERKIRIM', 4000, 0, '600d9b95c0711.jpg', 'EZM-57924', '', NULL, '2021-01-24 16:08:32'),
+(2, 6, 200000, 'JAKARTA', 1, 'KONFIRMASI', 4000, 0, '600d9c6b4e0d8.jpg', 'EZM-9366', '', NULL, '2021-01-24 16:12:13'),
+(3, 9, 560000, 'JAKARTA', 1, 'KONFIRMASI', 3000, 0, '600e62cb73e61.png', 'EZM-86335', '', NULL, '2021-01-25 06:17:49');
 
 -- --------------------------------------------------------
 
@@ -231,11 +221,12 @@ CREATE TABLE `transactions_details` (
 --
 
 INSERT INTO `transactions_details` (`id_transaction_detail`, `transaction_id`, `product_id`, `price`, `banyak`, `code_product`) VALUES
-(1, 1, 2, 80000, 1, 'PRD-36373'),
-(2, 1, 5, 20000, 2, 'PRD-36373'),
-(3, 2, 1, 50000, 5, 'PRD-33815'),
-(4, 3, 2, 80000, 1, 'PRD-71960'),
-(5, 4, 3, 100000, 1, 'PRD-55786');
+(1, 1, 1, 50000, 2, 'PRD-12943'),
+(2, 1, 2, 80000, 2, 'PRD-12943'),
+(3, 2, 1, 50000, 2, 'PRD-13113'),
+(4, 2, 1, 50000, 2, 'PRD-13113'),
+(5, 3, 2, 80000, 2, 'PRD-40981'),
+(6, 3, 6, 400000, 1, 'PRD-40981');
 
 -- --------------------------------------------------------
 
@@ -260,10 +251,10 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `address`, `phone_number`, `postal_code`, `roles`) VALUES
 (1, 'Hafizh Maulana Y', 'hafizhmy26@gmail.com', '$2y$10$/v28V4a4hxcdc3KtkVc8huoop7Ir2NKDk2zA2DDFO9O0u7o9xG7Lq', '<p>Jln Gang Hamzah No 22</p>\r\n', '098987898765', '11111111', 'ADMIN'),
-(2, 'Syatya Athary', 'athar@gmail.com', '$2y$10$itD8adVKaHMPZaSVHf3eo.AUfUkNg/sMx8fhSiUe4KXwOXhAHoAFy', '<p>Jln Magang No 22</p>\r\n', '098987898767', '445667', 'USER'),
-(3, 'AMANDA PUTRI', 'manda@gmail.com', '$2y$10$2jrwSDZqHQgKlTUxPGnRau8ZD8Jgj9lNE4tBvRDsuNKNzVnEsbtxG', '<p>Jln Mahfud No 22</p>\r\n', '099998887776', '224455', 'USER'),
-(6, 'Vita Sundari', 'vita@gmail.com', '$2y$10$2s/dgjADHLW1D5Ha.1qdz.as3ShDVYB/2V8fHh/P81dqtlKK2V8nG', '<p>Jln Patriot No 24</p>\r\n', '999999999', '1234567', 'USER'),
-(9, 'riski', 'riski@gmail.com', '$2y$10$xrt0u8OUv5S7n7L94MMSfuKtykPNnpvnrRLp0LQuV1dD5lsgpeuLW', '<p>Jln Syatya Muhammad No 24</p>\r\n', '12345678', '10101010', 'USER');
+(3, 'AMANDA PUTRI', 'manda@gmail.com', '$2y$10$2jrwSDZqHQgKlTUxPGnRau8ZD8Jgj9lNE4tBvRDsuNKNzVnEsbtxG', '<p>Jln Kampung Gunung No 22</p>\r\n', '099998887776', '224455', 'USER'),
+(6, 'Vita Mahandari', 'vita@gmail.com', '$2y$10$2s/dgjADHLW1D5Ha.1qdz.as3ShDVYB/2V8fHh/P81dqtlKK2V8nG', '<p>Jln Rawa Belong No 54</p>\r\n', '098765432111', '445566', 'USER'),
+(9, 'riski', 'riski@gmail.com', '$2y$10$xrt0u8OUv5S7n7L94MMSfuKtykPNnpvnrRLp0LQuV1dD5lsgpeuLW', '<p>Jln MUzaffar Muhammad No 24</p>\r\n', '12345678', '10101010', 'USER'),
+(10, 'Syatya Athary', 'athar@gmail.com', '$2y$10$LGiCeFBz8fFfOTkL8hMJxO1P6e6qq2aW3Vcc2jcc0SbdGHrVPnXX.', '<p>Jln H sanusi Gang Hamzah No 28</p>\r\n', '098777776668', '12345', 'OWNER');
 
 --
 -- Indexes for dumped tables
@@ -333,7 +324,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
@@ -369,19 +360,19 @@ ALTER TABLE `rekening_numbers`
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `transactions_details`
 --
 ALTER TABLE `transactions_details`
-  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

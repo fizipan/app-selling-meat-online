@@ -1,6 +1,16 @@
 <?php 
 require_once 'config/config.php';
 
+if (isset($_SESSION["user"])) {
+  $id = $_SESSION["user"];
+  $result = query("SELECT * FROM users WHERE id_user = $id")[0];
+  if ($result['roles'] == 'ADMIN') {
+    header("Location: admin");
+  } elseif($result["roles"] == 'OWNER') {
+    header("Location: owner");
+  }
+}
+
 if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
   header("Location: login.php");
 } elseif (isset($_SESSION["driver"])) {

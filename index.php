@@ -1,9 +1,20 @@
 <?php 
 require_once 'config/config.php';
 
-if (isset($_SESSION["driver"])) {
-  header("Location: driver/index.php");
+if (isset($_SESSION["user"])) {
+  $id = $_SESSION["user"];
+  $result = query("SELECT * FROM users WHERE id_user = $id")[0];
+  if ($result['roles'] == 'ADMIN') {
+    header("Location: admin");
+  } elseif($result["roles"] == 'OWNER') {
+    header("Location: owner");
+  }
 }
+
+if (isset($_SESSION["driver"])) {
+  header("Location: driver");
+} 
+
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +33,8 @@ if (isset($_SESSION["driver"])) {
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
     <link href="assets/style/main.css" rel="stylesheet" />
 
-    <style>      .store-adventeges {
+    <style>      
+    .store-adventeges {
         padding: 40px;
         background-color: #F7F7E8;
       }

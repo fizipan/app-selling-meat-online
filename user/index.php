@@ -63,7 +63,7 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
             </a>
             <a
               href="?page=profile"
-              class="list-group-item list-group-item-action<?= $page == 'profile' ? ' active' : ''; ?> <?= $page == 'profile-details' ? ' active' : ''; ?> <?= $page == 'transfer' ? ' active' : ''; ?>"
+              class="list-group-item list-group-item-action<?= $page == 'profile' ? ' active' : ''; ?> <?= $page == 'profile-details' ? ' active' : ''; ?>"
             >
               profile
             </a>

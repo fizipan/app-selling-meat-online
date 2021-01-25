@@ -85,7 +85,38 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["driver"])) {
         </div>
       </div>
     </div>
-    
+
+    <!-- Modal -->
+    <div class="modal fade" id="terkirim" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Yakin sudah terkirim ?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form action="" method="POST">
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <input type="hidden" name="id_transaction" value="<?= $pc["id_transaction"]; ?>">
+                  <div class="form-group">
+                    <label for="penerima">Nama Penerima</label>
+                    <input type="text" name="penerima" id="penerima" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" name="terkirim" class="btn btn-primary">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      
 
     <!-- Bootstrap core JavaScript -->
     <script src="../assets/vendor/jquery/jquery.slim.min.js"></script>
