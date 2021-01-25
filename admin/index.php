@@ -88,6 +88,12 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               </div>
             </div>
             <a
+              href="?page=rekening"
+              class="list-group-item list-group-item-action<?= $page == 'rekening' ? ' active' : ''; ?> <?= $page == 'rekening-create' ? ' active' : ''; ?> <?= $page == 'rekening-details' ? ' active' : ''; ?>"
+            >
+              Rekening
+            </a>
+            <a
               href="?page=drivers"
               class="list-group-item list-group-item-action<?= $page == 'drivers' ? ' active' : ''; ?> <?= $page == 'drivers-create' ? ' active' : ''; ?> <?= $page == 'drivers-details' ? ' active' : ''; ?> <?= $page == 'drivers-delete' ? ' active' : ''; ?>"
             >
@@ -155,6 +161,14 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
               include 'transaction/dashboard-transactions-delete.php';
             } elseif ($page == 'transactions-transfer') {
               include 'transaction/dashboard-transfer.php';
+            } elseif ($page == 'rekening') {
+              include 'rekening/dashboard-rekening.php';
+            } elseif ($page == 'rekening-create') {
+              include 'rekening/dashboard-rekening-create.php';
+            } elseif ($page == 'rekening-details') {
+              include 'rekening/dashboard-rekening-details.php';
+            } elseif ($page == 'rekening-delete') {
+              include 'rekening/dashboard-rekening-delete.php';
             } elseif ($page == 'drivers') {
               include 'drivers/dashboard-drivers.php';
             } elseif ($page == 'drivers-create') {

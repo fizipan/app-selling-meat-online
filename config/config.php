@@ -524,6 +524,49 @@ function terkirim($data)
     return mysqli_affected_rows($conn);
 }
 
+// Rekening
+function tambahRekening($data)
+{
+    global $conn;
+    $bank_name = $data["bank_name"];
+    $no_rekening = stripslashes($data["no_rekening"]);
+    $pemilik = $data["pemilik"];
+
+    $query = "INSERT INTO rekening_numbers
+                VALUES
+                ('', '$bank_name', '$no_rekening', '$pemilik')
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn);
+}
+
+function updateRekening($data)
+{
+    global $conn;
+    $id = $data["id"];
+    $bank_name = $data["bank_name"];
+    $no_rekening = $data["no_rekening"];
+    $pemilik = $data["pemilik"];
+
+    $query = "UPDATE rekening_numbers SET
+                bank_name = '$bank_name',
+                number = '$no_rekening',
+                rekening_name = '$pemilik'
+                WHERE id_rekening = $id
+            ";
+
+    mysqli_query($conn, $query);
+    return mysqli_affected_rows($conn); 
+}
+
+function hapusRekening($id)
+{
+    global $conn;
+    mysqli_query($conn, "DELETE FROM rekening_numbers WHERE id_rekening = $id");
+    return mysqli_affected_rows($conn);
+}
+
 function upload()
 {
     $namaFile = $_FILES['photo']["name"];
