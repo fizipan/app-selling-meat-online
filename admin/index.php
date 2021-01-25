@@ -80,11 +80,11 @@ if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) {
                 Transactions
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item<?= $page == 'transactions' ? ' active' : ''; ?>" href="?page=transactions">All Transactions</a>
-                <a class="dropdown-item<?= $page == 'transactions-no-confirm' ? ' active' : ''; ?>" href="?page=transactions-no-confirm">Belum Konfirmasi</a>
-                <a class="dropdown-item<?= $page == 'transactions-confirm' ? ' active' : ''; ?>" href="?page=transactions-confirm">Konfirmasi</a>
-                <a class="dropdown-item<?= $page == 'transactions-pickup' ? ' active' : ''; ?>" href="?page=transactions-pickup">Pick Up</a>
-                <a class="dropdown-item<?= $page == 'transactions-sent' ? ' active' : ''; ?>" href="?page=transactions-sent">Terkirim</a>
+                <a class="dropdown-item" href="?page=transactions">All Transactions</a>
+                <a class="dropdown-item" href="?page=transactions-no-confirm">Belum Konfirmasi</a>
+                <a class="dropdown-item" href="?page=transactions-confirm">Konfirmasi</a>
+                <a class="dropdown-item" href="?page=transactions-pickup">Pick Up</a>
+                <a class="dropdown-item" href="?page=transactions-sent">Terkirim</a>
               </div>
             </div>
             <a
