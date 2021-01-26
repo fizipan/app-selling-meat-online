@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Jan 2021 pada 08.52
+-- Waktu pembuatan: 26 Jan 2021 pada 19.03
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -57,7 +57,9 @@ INSERT INTO `categories` (`id`, `category_name`, `slug`) VALUES
 (3, 'Kepala', 'kepala'),
 (4, 'Ceker', 'ceker'),
 (5, 'Ayam Utuh', 'ayam-utuh'),
-(6, 'Sayap', 'sayap');
+(6, 'Sayap', 'sayap'),
+(7, 'Usus', 'usus'),
+(8, 'Kerongkongan', 'kerongkongan');
 
 -- --------------------------------------------------------
 
@@ -106,13 +108,13 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id_product`, `product_name`, `unit`, `price`, `descriptions`, `category_id`, `stock`) VALUES
 (1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '18000'),
 (2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '8000'),
-(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '1000'),
+(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '0'),
 (4, 'Paha Boneless', 1000, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, '40000'),
-(5, 'Dada Bebek', 1000, '20000', '<p>Dada bikin klepek</p>\r\n', 2, '10000'),
-(6, 'Paha Maknyus', 1000, '400000', '<p>Paha Buatan Mbak Yus</p>\r\n', 1, '0'),
+(5, 'Usus Ayam', 1000, '20000', '<p>Usus Baik Untuk Usus</p>\r\n', 7, '8000'),
 (7, 'Ceker Ayam', 1000, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '0'),
 (8, 'Ayam Utuh Kriuk', 1000, '500000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, '1000'),
-(10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '6000');
+(10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '4000'),
+(12, 'Kerongkongan', 1000, '14000', '<p>Kerongkongan Ayam yang sangat <strong>enak dan lembut</strong></p>\r\n', 8, '8000');
 
 -- --------------------------------------------------------
 
@@ -136,17 +138,28 @@ INSERT INTO `products_galleries` (`id_gallery`, `photos`, `product_id`) VALUES
 (3, '600104f8a0997.jpg', 1),
 (4, '60026547d7f93.jpg', 3),
 (5, '6002656eba3d5.jpg', 4),
-(6, '6002710e7b77b.jpg', 2),
-(7, '60027262d9951.png', 5),
-(8, '6002778cab7a0.png', 5),
-(9, '60027e3a6172d.png', 6),
-(10, '600282d800bf6.png', 6),
+(6, '600ebe151ca22.png', 2),
 (12, '6002cf749cccf.jpg', 7),
-(13, '600302d067410.png', 3),
+(13, '600ebe570ffd0.jpg', 3),
 (14, '6003c040baec4.jpg', 8),
-(15, '6003c05a2df6e.jpg', 8),
-(16, '6005af4dabb7b.jpg', 1),
-(17, '600a368f4b692.jpg', 10);
+(15, '600ebfac95b8a.jpg', 8),
+(16, '600ebdfacc340.png', 1),
+(17, '600a368f4b692.jpg', 10),
+(18, '600ebe36ba537.png', 2),
+(19, '600ebe8184987.jpg', 3),
+(20, '600ebece57d8c.jpg', 4),
+(21, '600ebee07f7b5.jpg', 4),
+(22, '600ebf6d45187.jpg', 7),
+(23, '600ebf80c735f.png', 7),
+(24, '600ebfc6b23c5.jpg', 8),
+(25, '600ec04ed4350.jpg', 5),
+(26, '600ec064aa140.jpg', 5),
+(27, '600ec0719e06c.jpg', 5),
+(28, '600ec18142208.jpg', 10),
+(29, '600ec19130fe4.jpg', 10),
+(30, '600ec1e730307.jpg', 12),
+(31, '600ec1fd2b098.jpg', 12),
+(32, '600ec20b44b6d.jpg', 12);
 
 -- --------------------------------------------------------
 
@@ -167,7 +180,7 @@ CREATE TABLE `rekening_numbers` (
 
 INSERT INTO `rekening_numbers` (`id_rekening`, `bank_name`, `number`, `rekening_name`) VALUES
 (1, 'BCA', '0989878998787', 'Sayudi Cenah'),
-(2, 'Mandiri', '076543212123', 'Mimin Sarimin'),
+(2, 'Mandiri', '076543212123', 'Mimin'),
 (3, 'Syariah', '09999977656', 'Subardjoe');
 
 -- --------------------------------------------------------
@@ -198,8 +211,10 @@ CREATE TABLE `transactions` (
 
 INSERT INTO `transactions` (`id_transaction`, `user_id`, `total_price`, `city`, `rekening_id`, `transaction_status`, `weight_total`, `delivered`, `photo_transaction`, `code`, `receiver`, `time_arrived`, `created_at`) VALUES
 (1, 3, 260000, 'JAKARTA', 3, 'TERKIRIM', 4000, 0, '600d9b95c0711.jpg', 'EZM-57924', '', NULL, '2021-01-24 16:08:32'),
-(2, 6, 200000, 'JAKARTA', 1, 'KONFIRMASI', 4000, 0, '600d9c6b4e0d8.jpg', 'EZM-9366', '', NULL, '2021-01-24 16:12:13'),
-(3, 9, 560000, 'JAKARTA', 1, 'KONFIRMASI', 3000, 0, '600e62cb73e61.png', 'EZM-86335', '', NULL, '2021-01-25 06:17:49');
+(2, 6, 200000, 'JAKARTA', 1, 'TERKIRIM', 4000, 0, '600d9c6b4e0d8.jpg', 'EZM-9366', '', NULL, '2021-01-24 16:12:13'),
+(3, 9, 560000, 'JAKARTA', 1, 'KONFIRMASI', 3000, 0, '600e62cb73e61.png', 'EZM-86335', '', NULL, '2021-01-25 06:17:49'),
+(4, 6, 100000, 'JAKARTA', 2, 'KONFIRMASI', 1000, 0, '600eba552a23c.png', 'EZM-81471', '', NULL, '2021-01-25 12:31:43'),
+(5, 3, 218000, 'JAKARTA', 2, 'BELUM KONFIRMASI', 6000, 0, '', 'EZM-51571', '', NULL, '2021-01-25 13:06:50');
 
 -- --------------------------------------------------------
 
@@ -226,7 +241,11 @@ INSERT INTO `transactions_details` (`id_transaction_detail`, `transaction_id`, `
 (3, 2, 1, 50000, 2, 'PRD-13113'),
 (4, 2, 1, 50000, 2, 'PRD-13113'),
 (5, 3, 2, 80000, 2, 'PRD-40981'),
-(6, 3, 6, 400000, 1, 'PRD-40981');
+(6, 3, 6, 400000, 1, 'PRD-40981'),
+(7, 4, 3, 100000, 1, 'PRD-60879'),
+(8, 5, 5, 20000, 2, 'PRD-71011'),
+(9, 5, 10, 75000, 2, 'PRD-71011'),
+(10, 5, 12, 14000, 2, 'PRD-71011');
 
 -- --------------------------------------------------------
 
@@ -324,13 +343,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `drivers`
@@ -342,31 +361,31 @@ ALTER TABLE `drivers`
 -- AUTO_INCREMENT untuk tabel `products`
 --
 ALTER TABLE `products`
-  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_product` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT untuk tabel `products_galleries`
 --
 ALTER TABLE `products_galleries`
-  MODIFY `id_gallery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_gallery` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT untuk tabel `rekening_numbers`
 --
 ALTER TABLE `rekening_numbers`
-  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_rekening` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `transactions_details`
 --
 ALTER TABLE `transactions_details`
-  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
