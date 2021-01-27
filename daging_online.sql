@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 26 Jan 2021 pada 19.03
+-- Waktu pembuatan: 27 Jan 2021 pada 23.42
 -- Versi server: 10.4.17-MariaDB
 -- Versi PHP: 8.0.0
 
@@ -106,14 +106,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id_product`, `product_name`, `unit`, `price`, `descriptions`, `category_id`, `stock`) VALUES
-(1, 'Paha Atas ', 1000, '50000', '<p>Paha Atas <strong>Terenak di dunia</strong></p>\r\n', 1, '18000'),
-(2, 'Dada Besar', 1000, '80000', '<p>Bagian <strong>Dada terlembut</strong></p>\r\n', 2, '8000'),
-(3, 'Kepala Ayam', 1000, '100000', '<p>Kepala Paling Enak</p>\r\n', 3, '0'),
-(4, 'Paha Boneless', 1000, '150000', '<p>Paha tanpa tulang</p>\r\n', 1, '40000'),
-(5, 'Usus Ayam', 1000, '20000', '<p>Usus Baik Untuk Usus</p>\r\n', 7, '8000'),
-(7, 'Ceker Ayam', 1000, '20000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '0'),
-(8, 'Ayam Utuh Kriuk', 1000, '500000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, '1000'),
-(10, 'Sayap Ayam', 1000, '75000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '4000'),
+(1, 'Paha Atas ', 1000, '30000', '<p>Dalam 100 gram&nbsp;<strong>paha atas</strong>&nbsp;tanpa kulit dan tulang, terdapat sebanyak 26 gram protein.&nbsp;<strong>Paha atas</strong>&nbsp;ini juga mengandung 209 kalori dalam 100 gramnya. Dari kalori tersebut, 53 persen berasal dari protein, dan sisanya sekitar 47 persen berasal dari lemak.</p>\r\n', 1, '17000'),
+(2, 'Boneless Dada', 1000, '40000', '<p>Boneless Dada (Skinless) merupakan bagian dada tanpa tulang dan kulit dan memiliki kandungan lemak&nbsp;yang sangat rendah. Dimana kandungan kalori yang diperoleh dari lemak hanya 14, sedangkan lemak total sekitar 1,5 gram. Jumlah protein yang diperoleh adalah 24 gram protein</p>\r\n', 2, '4000'),
+(3, 'Kepala Ayam', 1000, '11000', '<p>Kepala Paling Enak</p>\r\n', 3, '0'),
+(4, 'Paha Boneless', 1000, '36000', '<p>Paha tanpa tulang</p>\r\n', 1, '35000'),
+(5, 'Usus Ayam', 1000, '16000', '<p>Usus Baik Untuk Usus</p>\r\n', 7, '8000'),
+(7, 'Ceker Ayam', 1000, '25000', '<p>Ceker Ayam Wenak</p>\r\n', 4, '0'),
+(8, 'Ayam Utuh Kriuk', 1000, '29000', '<p>Ayam Utuh Yang terkenal Kriuk dagingnya</p>\r\n', 5, '1000'),
+(10, 'Sayap Ayam', 1000, '30000', '<p>Sayap Ayam Terbang</p>\r\n', 6, '4000'),
 (12, 'Kerongkongan', 1000, '14000', '<p>Kerongkongan Ayam yang sangat <strong>enak dan lembut</strong></p>\r\n', 8, '8000');
 
 -- --------------------------------------------------------
@@ -214,7 +214,8 @@ INSERT INTO `transactions` (`id_transaction`, `user_id`, `total_price`, `city`, 
 (2, 6, 200000, 'JAKARTA', 1, 'TERKIRIM', 4000, 0, '600d9c6b4e0d8.jpg', 'EZM-9366', '', NULL, '2021-01-24 16:12:13'),
 (3, 9, 560000, 'JAKARTA', 1, 'KONFIRMASI', 3000, 0, '600e62cb73e61.png', 'EZM-86335', '', NULL, '2021-01-25 06:17:49'),
 (4, 6, 100000, 'JAKARTA', 2, 'KONFIRMASI', 1000, 0, '600eba552a23c.png', 'EZM-81471', '', NULL, '2021-01-25 12:31:43'),
-(5, 3, 218000, 'JAKARTA', 2, 'BELUM KONFIRMASI', 6000, 0, '', 'EZM-51571', '', NULL, '2021-01-25 13:06:50');
+(5, 3, 218000, 'JAKARTA', 2, 'BELUM KONFIRMASI', 6000, 0, '6010cc60e12da.png', 'EZM-51571', '', NULL, '2021-01-25 13:06:50'),
+(6, 9, 370000, 'JAKARTA', 1, 'TERKIRIM', 10000, 1, '6010ce5c5fc7f.png', 'EZM-98816', 'Mumun', '2021-01-27 05:26:45', '2021-01-27 02:21:26');
 
 -- --------------------------------------------------------
 
@@ -245,7 +246,10 @@ INSERT INTO `transactions_details` (`id_transaction_detail`, `transaction_id`, `
 (7, 4, 3, 100000, 1, 'PRD-60879'),
 (8, 5, 5, 20000, 2, 'PRD-71011'),
 (9, 5, 10, 75000, 2, 'PRD-71011'),
-(10, 5, 12, 14000, 2, 'PRD-71011');
+(10, 5, 12, 14000, 2, 'PRD-71011'),
+(11, 6, 4, 36000, 5, 'PRD-94186'),
+(12, 6, 1, 30000, 1, 'PRD-94186'),
+(13, 6, 2, 40000, 4, 'PRD-94186');
 
 -- --------------------------------------------------------
 
@@ -272,7 +276,7 @@ INSERT INTO `users` (`id_user`, `name`, `email`, `password`, `address`, `phone_n
 (1, 'Hafizh Maulana Y', 'hafizhmy26@gmail.com', '$2y$10$/v28V4a4hxcdc3KtkVc8huoop7Ir2NKDk2zA2DDFO9O0u7o9xG7Lq', '<p>Jln Gang Hamzah No 22</p>\r\n', '098987898765', '11111111', 'ADMIN'),
 (3, 'AMANDA PUTRI', 'manda@gmail.com', '$2y$10$2jrwSDZqHQgKlTUxPGnRau8ZD8Jgj9lNE4tBvRDsuNKNzVnEsbtxG', '<p>Jln Kampung Gunung No 22</p>\r\n', '099998887776', '224455', 'USER'),
 (6, 'Vita Mahandari', 'vita@gmail.com', '$2y$10$2s/dgjADHLW1D5Ha.1qdz.as3ShDVYB/2V8fHh/P81dqtlKK2V8nG', '<p>Jln Rawa Belong No 54</p>\r\n', '098765432111', '445566', 'USER'),
-(9, 'riski', 'riski@gmail.com', '$2y$10$xrt0u8OUv5S7n7L94MMSfuKtykPNnpvnrRLp0LQuV1dD5lsgpeuLW', '<p>Jln MUzaffar Muhammad No 24</p>\r\n', '12345678', '10101010', 'USER'),
+(9, 'riski', 'riski@gmail.com', '$2y$10$xrt0u8OUv5S7n7L94MMSfuKtykPNnpvnrRLp0LQuV1dD5lsgpeuLW', '<p>Jln Athar Muhammad No 24</p>\r\n', '12345678', '10101010', 'USER'),
 (10, 'Syatya Athary', 'athar@gmail.com', '$2y$10$LGiCeFBz8fFfOTkL8hMJxO1P6e6qq2aW3Vcc2jcc0SbdGHrVPnXX.', '<p>Jln H sanusi Gang Hamzah No 28</p>\r\n', '098777776668', '12345', 'OWNER');
 
 --
@@ -343,7 +347,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT untuk tabel `categories`
@@ -379,13 +383,13 @@ ALTER TABLE `rekening_numbers`
 -- AUTO_INCREMENT untuk tabel `transactions`
 --
 ALTER TABLE `transactions`
-  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_transaction` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `transactions_details`
 --
 ALTER TABLE `transactions_details`
-  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_transaction_detail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
