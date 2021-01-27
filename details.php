@@ -216,7 +216,7 @@ if (isset($_POST["addToCart"])) {
                   <h1><?= $product["product_name"]; ?></h1>
                   <div class="owner"><?= $product["unit"] / 1000; ?> Kilogram</div>
                   <div class="form-group d-flex align-items-center justify-content-between" style="width: 150px;">
-                    <input type="number" required name="banyak" id="banyak" class="form-control w-50" min="0"> Barang
+                    <input type="number" required name="banyak" id="banyak" class="form-control w-50" value="1" min="0"> Barang
                   </div>
                   <div class="price">Rp. <?= number_format($product["price"]); ?></div>                    
                 </div>

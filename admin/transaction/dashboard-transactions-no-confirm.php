@@ -107,6 +107,7 @@ if (isset($_POST["terkirim"])) {
                           <th scope="col">Total</th>
                           <th scope="col">Pembayaran</th>
                           <th scope="col">Status</th>
+                          <th scope="col">Penerima</th>
                           <th scope="col">Tanggal</th>
                           <th scope="col" class="text-center">Aksi</th>
                         </tr>
@@ -136,6 +137,9 @@ if (isset($_POST["terkirim"])) {
                                 <span class="badge badge-pill badge-success"><?= $transaction["transaction_status"]; ?></span>
                               <?php endif; ?>
                             </td>
+                            <?php if (isset($transaction["receiver"])) : ?>
+                              <td><?= $transaction["receiver"] ? $transaction["receiver"] : 'Belum Diterima';  ?></td>
+                            <?php endif;?>
                             <?php 
                               $tanggal = $transaction["created_at"];
                             ?>

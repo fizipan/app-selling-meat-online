@@ -184,7 +184,7 @@ if (isset($_POST["konfirmasi"])) {
               <?php else : ?>
                 <img src="../assets/images/<?= $transactionMain["photo_transaction"]; ?>" class="w-100" alt="">
               <?php endif; ?>
-              <?php if ($transactionMain["transaction_status"] == "BELUM KONFIRMASI") : ?>
+              <?php if ($transactionMain["transaction_status"] == "BELUM KONFIRMASI" && $transactionMain["photo_transaction"]) : ?>
                 <form action="" method="POST">
                     <input type="hidden" name="id_transaction" value="<?= $transactionMain["id_transaction"]; ?>">
                     <button type="submit" onclick="return confirm('Apakah Ingin konfirmasi transaction ini ?')" name="konfirmasi" class="btn btn-success mt-4">Konfirmasi</button>

@@ -42,8 +42,10 @@ $html .= '<div>
                 </tr>
             </thead>
             <tbody>';
+                $total = 0;
                 foreach ($transactions as $transaction) {
                     $tanggal = $transaction["created_at"];
+                    $total += $transaction["total_price"];
                     $html .= '<tr>
                                 <th>' . $no++ . '</th>
                                 <td>#'. $transaction["code"] .'</td>
@@ -54,9 +56,16 @@ $html .= '<div>
                                 <td>'. date('d, F Y', strtotime($tanggal)) .'</td>
                             </tr>';
                 }
+                    $html .= '</tbody>
+                        </table>
+                    
+                        <div style="margin-top: 20px;">Total</div>
+                        <h3>Rp. '. number_format($total) .'</h3>
+                        ';
+                    
+                
                                     
-$html .= '</tbody>
-        </table>
+$html .= '
     </body>
 </html>';                           
 
