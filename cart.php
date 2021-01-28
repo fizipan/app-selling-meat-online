@@ -77,7 +77,7 @@ if (isset($_POST["deleteCart"])) {
             <a href="products.php" class="nav-link">All Products</a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">About</a>
+            <a href="about.php" class="nav-link">About</a>
           </li>
           <?php
           if (!isset($_SESSION["login"]) && !isset($_SESSION["user"])) : ?>
