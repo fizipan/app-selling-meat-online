@@ -8,10 +8,8 @@ if (isset($_SESSION["login"]) && isset($_SESSION["user"])) {
 
 if (isset($_POST["register"])) {
   if (register($_POST) > 0) {
-    echo "<script>
-            alert('Data Anda Berhasil Terdaftar, Silahkan Login!');
-            document.location.href = 'login.php';
-          </script>";
+      $_SESSION['login_success'] = 'Registratsi Berhasil Silahkan Login';
+      header("Location: login.php");
   } else {
     $error = $_SESSION["error"];
   }

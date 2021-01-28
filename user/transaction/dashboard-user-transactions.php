@@ -86,6 +86,7 @@ if (isset($_POST["terkirim"])) {
                         <span aria-hidden="true">&times;</span>
                       </button>
                     </div>
+                    <?php unset($_SESSION["success"])?>
                   <?php endif;?>
                 </div>
               </div>

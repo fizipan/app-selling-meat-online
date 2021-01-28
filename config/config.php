@@ -337,6 +337,12 @@ function checkout($data)
     $code = "EZM-";
     $user_id = $data['user_id'];
     $total_price = $data["total_price"];
+    if ($total_price == 0) {
+        echo "<script>
+                alert('Pilih Produk Terlebih dahulu');
+            </script>";
+        return false;
+    }
     $city = $data["city"];
     $address = $data["alamat"];
     if (empty($address)) {
@@ -347,7 +353,7 @@ function checkout($data)
     $rekening = $data["rekening"];
     $status = "BELUM KONFIRMASI";
     $weight = $data["weight"];
-    $delivered = $data["delivered"];
+    $delivered = isset($data["delivered"] ) ? $data["delivered"] : 0;
     $photo = "";
     $code .= mt_rand(00000, 99999);
 
@@ -375,6 +381,7 @@ function checkout($data)
         $transaction_id = $idTransaction["id_transaction"];
     }
     $id_product = $cart["product_id"];
+    
     $productPrice = $cart["price"];
     $banyak = $cart["banyak"];
     $queryTransactionDetails = "INSERT INTO transactions_details

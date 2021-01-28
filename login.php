@@ -108,6 +108,12 @@ if (isset($_POST["login"])) {
                           <p class="font-weight-bold m-0">Maaf, Email / Username salah</p>
                       </div>
                   <?php endif;?>
+                  <?php if (isset($_SESSION['login_success'])) : ?>
+                      <div class="alert alert-success w-75">
+                          <p class="font-weight-bold m-0"><?= $_SESSION['login_success']; ?></p>
+                      </div>
+                  <?php unset($_SESSION["login_success"])?>
+                  <?php endif;?>
                 <div class="form-group">
                   <label for="email">Email Address</label>
                   <input
