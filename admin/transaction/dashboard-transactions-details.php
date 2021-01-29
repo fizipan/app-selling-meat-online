@@ -97,6 +97,7 @@ if (isset($_POST["konfirmasi"])) {
                 <tbody>
                 <?php 
                 $banyak = 0;
+                $total = 0;
                 ?>
                   <?php foreach ($transaction_details as $t) : ?>
                     <?php 
@@ -104,6 +105,7 @@ if (isset($_POST["konfirmasi"])) {
                       $product = query("SELECT * FROM products WHERE products.id_product = $idProduct");
                       $gallery = query("SELECT * FROM products_galleries INNER JOIN products ON products_galleries.product_id = products.id_product WHERE products_galleries.product_id = $idProduct");
                       $banyak += $t["banyak"];
+                      $total = $t["price"] * $t["banyak"];
                     ?>
                     <tr>
                       <td style="width: 10%;">
@@ -124,7 +126,7 @@ if (isset($_POST["konfirmasi"])) {
                         <div class="product-title">IDR</div>
                       </td>
                       <td style="width: 20%;">
-                        <div class="">Rp. <?= number_format($t["total_price"]); ?></div>
+                        <div class="">Rp. <?= number_format($total); ?></div>
                         <div class="product-title">IDR</div>
                       </td>
                     </tr>
