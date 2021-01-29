@@ -148,10 +148,7 @@ if (isset($_POST["terkirim"])) {
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <a class="dropdown-item" href="?page=transactions-details&id=<?= $transaction["id_transaction"]; ?>">Lihat</a>
                                   <?php if($transaction["transaction_status"] == "KONFIRMASI" && $transaction["delivered"] == 0): ?>
-                                  <form action="" method="POST">
-                                    <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
-                                    <button type="submit" onclick="return confirm('Apakah barang sudah terkirim ?')" name="terkirim" class="dropdown-item">Terkirim</button>
-                                  </form>
+                                    <button type="button" data-toggle="modal" class="dropdown-item" data-target="#terima">terima</button>
                                   <?php endif; ?>
                                   <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus transaction ini ?')" href="?page=transactions-delete&id=<?= $transaction["id_transaction"]; ?>">Delete</a>
                                 </div>
