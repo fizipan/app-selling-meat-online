@@ -139,8 +139,10 @@ if (isset($_POST["terkirim"])) {
                             <?php else : ?>
                               <td>Belum disetel</td>
                             <?php endif;?>
-                            <?php if (isset($transaction["receiver"])) : ?>
+                            <?php if (isset($transaction["receiver"]) && $transaction['delivered'] == 1) : ?>
                               <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diterima'; ?></td>
+                            <?php else: ?>
+                              <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diambil'; ?></td>
                             <?php endif;?>
                             <?php 
                               $tanggal = $transaction["created_at"];

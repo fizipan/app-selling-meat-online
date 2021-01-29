@@ -131,8 +131,10 @@ if (isset($_POST["terkirim"])) {
                                 <span class="badge badge-pill badge-success"><?= $transaction["transaction_status"]; ?></span>
                               <?php endif; ?>
                             </td>
-                            <?php if (isset($transaction["receiver"])) : ?>
-                              <td><?= $transaction["receiver"] ? $transaction["receiver"] : 'Belum Diterima';  ?></td>
+                            <?php if (isset($transaction["receiver"]) && $transaction['delivered'] == 1) : ?>
+                              <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diterima'; ?></td>
+                            <?php else: ?>
+                              <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diambil'; ?></td>
                             <?php endif;?>
                             <?php 
                               $tanggal = $transaction["created_at"];
