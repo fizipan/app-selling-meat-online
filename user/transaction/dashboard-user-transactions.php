@@ -139,10 +139,8 @@ if (isset($_POST["terkirim"])) {
                             <?php else : ?>
                               <td>Belum disetel</td>
                             <?php endif;?>
-                            <?php if (isset($transaction["receiver"]) && $transaction['delivered'] == 1) : ?>
+                            <?php if (isset($transaction["receiver"])) : ?>
                               <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diterima'; ?></td>
-                            <?php else: ?>
-                              <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diambil'; ?></td>
                             <?php endif;?>
                             <?php 
                               $tanggal = $transaction["created_at"];
@@ -157,8 +155,6 @@ if (isset($_POST["terkirim"])) {
                                   <a class="dropdown-item" href="?page=transactions-details&id=<?= $transaction["id_transaction"]; ?>">Lihat</a>
                                   <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI" && $transaction["photo_transaction"] == '') : ?>
                                     <a class="dropdown-item" href="?page=transfer&id=<?= $transaction["id_transaction"]; ?>">Transfer</a>
-                                    <?php elseif($transaction["transaction_status"] == "PICKUP" && $transaction["delivered"] == 1): ?>
-                                      <button type="button" data-toggle="modal" class="dropdown-item" data-target="#terkirim">Terkirim</button>
                                   <?php endif; ?>
                                 </div>
                               </div>

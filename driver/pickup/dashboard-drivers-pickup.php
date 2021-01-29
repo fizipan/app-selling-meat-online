@@ -145,7 +145,7 @@ if (isset($_POST["terkirim"])) {
                                     <button type="submit" onclick="return confirm('Apakah Barang Ingin di Pickup ?')" name="pickup" class="dropdown-item">Pickup</button>
                                   </form>
                                   <?php elseif($pc["transaction_status"] == "PICKUP"): ?>
-                                    <button type="button" data-toggle="modal" class="dropdown-item" data-target="#terkirim">Terkirim</button>
+                                    <a href="?page=pickup-receiver&id=<?= $pc["id_transaction"]; ?>" class="dropdown-item">terima</a>
                                   <?php endif;?>
                                 </div>
                               </div>

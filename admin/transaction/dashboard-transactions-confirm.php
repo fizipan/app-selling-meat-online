@@ -137,10 +137,8 @@ if (isset($_POST["terkirim"])) {
                                 <span class="badge badge-pill badge-success"><?= $transaction["transaction_status"]; ?></span>
                               <?php endif; ?>
                             </td>
-                            <?php if (isset($transaction["receiver"]) && $transaction['delivered'] == 1) : ?>
+                            <?php if (isset($transaction["receiver"])) : ?>
                               <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diterima'; ?></td>
-                            <?php else: ?>
-                              <td><?= $transaction["receiver"] ? $transaction['receiver'] : 'Belum Diambil'; ?></td>
                             <?php endif;?>
                             <?php 
                               $tanggal = $transaction["created_at"];
@@ -154,7 +152,7 @@ if (isset($_POST["terkirim"])) {
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <a class="dropdown-item" href="?page=transactions-details&id=<?= $transaction["id_transaction"]; ?>">Lihat</a>
                                   <?php if($transaction["transaction_status"] == "KONFIRMASI" && $transaction["delivered"] == 0): ?>
-                                    <button type="button" data-toggle="modal" class="dropdown-item" data-target="#terima">terima</button>
+                                    <a href="?page=transactions-receiver&id=<?= $transaction["id_transaction"]; ?>" class="dropdown-item">terima</a>
                                   <?php endif; ?>
                                   <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus transaction ini ?')" href="?page=transactions-delete&id=<?= $transaction["id_transaction"]; ?>">Delete</a>
                                 </div>

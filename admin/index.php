@@ -153,6 +153,8 @@ if (isset($_POST["terkirim"])) {
               include 'dashboard-categories-delete.php';
             } elseif ($page == 'transactions') {
               include 'transaction/dashboard-transactions.php';
+            } elseif ($page == 'transactions-receiver') {
+              include 'transaction/dashboard-transactions-receiver.php';
             } elseif ($page == 'transactions-no-confirm') {
               include 'transaction/dashboard-transactions-no-confirm.php';
             } elseif ($page == 'transactions-confirm') {
@@ -205,73 +207,6 @@ if (isset($_POST["terkirim"])) {
       </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="cetakPDF" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <form action="transaction/report-pdf.php" method="POST">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Cetak Laporan PDF</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="row" id="tanggal">
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="tanggalawal">Dari Tanggal :</label>
-                    <input type="date" name="tanggalawal" id="tanggalawal" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-12">
-                  <div class="form-group">
-                    <label for="tanggalakhir">Sampai Tanggal :</label>
-                    <input type="date" name="tanggalakhir" id="tanggalakhir" class="form-control">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" name="filter" class="btn btn-primary">Cetak PDF</button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-
-    <div class="modal fade" id="terima" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Yakin sudah Diterima ?</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <form action="" method="POST">
-            <div class="modal-body">
-              <div class="row">
-                <div class="col-md-12">
-                  <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
-                  <div class="form-group">
-                    <label for="penerima">Nama Penerima</label>
-                    <input type="text" name="penerima" id="penerima" class="form-control">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" name="terkirim" class="btn btn-primary">Save changes</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    
     
 
     <!-- Bootstrap core JavaScript -->
