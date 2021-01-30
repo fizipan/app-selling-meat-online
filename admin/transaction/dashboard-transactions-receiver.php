@@ -81,18 +81,28 @@ if (isset($_POST["terkirim"])) {
         <p class="dashboard-subtitle">#<?= $transactionMain["code"]; ?></p>
       </div>
       <div class="dashboard-content store-cart">
-      <form action="" method="POST">
-      <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-md-6">
-            <div class="form-group">
-              <label for="penerima">Penerima</label>
-              <input type="hidden" name="id_transaction" value="<?= $transactionMain["id_transaction"]; ?>">
-              <input type="text" name="penerima" id="penerima" class="form-control">
-              <button type="submit" name="terkirim" class="btn btn-success mt-2">Save</button>
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body pb-0">
+              <form action="" method="POST">
+                  <div class="row" data-aos="fade-up" data-aos-delay="100">
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label for="penerima">Nama Penerima</label>
+                          <input type="hidden" name="id_transaction" value="<?= $transactionMain["id_transaction"]; ?>">
+                          <input type="text" name="penerima" id="penerima" class="form-control">
+                          <div class="text-right">
+                            <button type="submit" name="terkirim" class="btn btn-success mt-4">Save Changes</button>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
         </div>
-      </form>
       </div>
     </div>
   </div>
