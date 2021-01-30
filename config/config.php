@@ -532,7 +532,8 @@ function terkirim($data)
 
     $query = "UPDATE transactions SET
                 transaction_status = 'TERKIRIM',
-                receiver = '$penerima'
+                receiver = '$penerima',
+                time_arrived = NOW()
                 WHERE id_transaction = $id_transaction
             ";
     

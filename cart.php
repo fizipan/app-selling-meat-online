@@ -295,7 +295,7 @@ if (isset($_POST["deleteCart"])) {
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
                   <input type="radio" id="radioFalse" value="0" name="delivered" class="custom-control-input">
-                  <label class="custom-control-label" for="radioFalse">Tidak, Gausah</label>
+                  <label class="custom-control-label" for="radioFalse">Tidak, Terimakasih</label>
                 </div>
               </div>
               <?php else : ?>

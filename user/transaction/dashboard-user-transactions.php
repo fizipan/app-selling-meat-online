@@ -101,7 +101,7 @@ if (isset($_POST["terkirim"])) {
                           <th scope="col">Total</th>
                           <th scope="col">Pembayaran</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Barang tiba</th>
+                          <th scope="col">Barang Terkirim</th>
                           <th scope="col">Penerima</th>
                           <th scope="col">Tanggal</th>
                           <th scope="col" class="text-center">Aksi</th>
