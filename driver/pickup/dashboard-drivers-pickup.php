@@ -101,7 +101,7 @@ if (isset($_POST["terkirim"])) {
                           $no = 1;
                           $driver = query("SELECT * FROM drivers WHERE id_driver = $id_driver")[0];
                           $jurusan = $driver["jurusan"];
-                          $pickup = query("SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user WHERE transaction_status = 'KONFIRMASI'  AND delivered = 1 AND city = '$jurusan' OR transaction_status = 'PICKUP'");
+                          $pickup = query("SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user WHERE transaction_status = 'TERKONFIRMASI'  AND delivered = 1 AND city = '$jurusan' OR transaction_status = 'PICKUP'");
                         ?>
                         <?php foreach ($pickup as $pc) : ?>
                           <tr>
@@ -112,7 +112,7 @@ if (isset($_POST["terkirim"])) {
                             <td>
                               <?php if ($pc["transaction_status"] == "BELUM KONFIRMASI") : ?>
                                 <span class="badge badge-pill badge-danger">BELUM KONFIRMASI</span>
-                              <?php elseif($pc["transaction_status"] == "KONFIRMASI"): ?>
+                              <?php elseif($pc["transaction_status"] == "TERKONFIRMASI"): ?>
                                 <span class="badge badge-pill badge-warning"><?= $pc["transaction_status"]; ?></span>
                               <?php elseif($pc["transaction_status"] == "PICKUP"): ?>
                               <span class="badge badge-pill badge-primary"><?= $pc["transaction_status"]; ?></span>
@@ -139,7 +139,7 @@ if (isset($_POST["terkirim"])) {
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <a class="dropdown-item" href="?page=pickup-details&id=<?= $pc["id_transaction"]; ?>">Lihat</a>
-                                  <?php if ($pc["transaction_status"] == "KONFIRMASI") : ?>
+                                  <?php if ($pc["transaction_status"] == "TERKONFIRMASI") : ?>
                                   <form action="" method="POST">
                                     <input type="hidden" name="id_transaction" value="<?= $pc["id_transaction"]; ?>">
                                     <button type="submit" onclick="return confirm('Apakah Barang Ingin di Pickup ?')" name="pickup" class="dropdown-item">Pickup</button>

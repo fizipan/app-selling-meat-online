@@ -123,7 +123,7 @@ if (isset($_POST["terkirim"])) {
                             <td>
                               <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI") : ?>
                                 <span class="badge badge-pill badge-danger"><?= $transaction["transaction_status"]; ?></span>
-                              <?php elseif($transaction["transaction_status"] == "KONFIRMASI"): ?>
+                              <?php elseif($transaction["transaction_status"] == "TERKONFIRMASI"): ?>
                               <span class="badge badge-pill badge-warning"><?= $transaction["transaction_status"]; ?></span>
                               <?php elseif($transaction["transaction_status"] == "PICKUP") : ?>
                                 <span class="badge badge-pill badge-primary"><?= $transaction["transaction_status"]; ?></span>

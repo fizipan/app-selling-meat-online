@@ -431,7 +431,7 @@ function konfirmasi($data)
     global $conn;
 
     $id = $data["id_transaction"];
-    $status = "KONFIRMASI";
+    $status = "TERKONFIRMASI";
 
     $query = "UPDATE transactions SET
                 transaction_status = '$status'

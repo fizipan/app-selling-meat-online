@@ -125,7 +125,7 @@ if (isset($_POST["terkirim"])) {
                         <?php 
                           $no = 1;
                           $user_id = $_SESSION["user"];
-                          $query = "SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user INNER JOIN rekening_numbers ON transactions.rekening_id = rekening_numbers.id_rekening WHERE transaction_status = 'KONFIRMASI'";
+                          $query = "SELECT * FROM transactions INNER JOIN users ON transactions.user_id = users.id_user INNER JOIN rekening_numbers ON transactions.rekening_id = rekening_numbers.id_rekening WHERE transaction_status = 'TERKONFIRMASI'";
                           $transactions = query($query);
                         ?>
                         <?php foreach ($transactions as $transaction) : ?>
@@ -138,7 +138,7 @@ if (isset($_POST["terkirim"])) {
                             <td>
                               <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI") : ?>
                                 <span class="badge badge-pill badge-danger"><?= $transaction["transaction_status"]; ?></span>
-                              <?php elseif($transaction["transaction_status"] == "KONFIRMASI"): ?>
+                              <?php elseif($transaction["transaction_status"] == "TERKONFIRMASI"): ?>
                               <span class="badge badge-pill badge-warning"><?= $transaction["transaction_status"]; ?></span>
                               <?php elseif($transaction["transaction_status"] == "PICKUP") : ?>
                                 <span class="badge badge-pill badge-primary"><?= $transaction["transaction_status"]; ?></span>
@@ -157,7 +157,7 @@ if (isset($_POST["terkirim"])) {
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <a class="dropdown-item" href="?page=transactions-details&id=<?= $transaction["id_transaction"]; ?>">Lihat</a>
-                                  <?php if($transaction["transaction_status"] == "KONFIRMASI" && $transaction["delivered"] == 0): ?>
+                                  <?php if($transaction["transaction_status"] == "TERKONFIRMASI" && $transaction["delivered"] == 0): ?>
                                   <form action="" method="POST">
                                     <input type="hidden" name="id_transaction" value="<?= $transaction["id_transaction"]; ?>">
                                     <button type="submit" onclick="return confirm('Apakah barang sudah terkirim ?')" name="terkirim" class="dropdown-item">Terkirim</button>

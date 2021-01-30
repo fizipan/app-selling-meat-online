@@ -123,7 +123,7 @@ if (isset($_POST["terkirim"])) {
                             <td>
                               <?php if ($transaction["transaction_status"] == "BELUM KONFIRMASI") : ?>
                                 <span class="badge badge-pill badge-danger"><?= $transaction["transaction_status"]; ?></span>
-                              <?php elseif($transaction["transaction_status"] == "KONFIRMASI"): ?>
+                              <?php elseif($transaction["transaction_status"] == "TERKONFIRMASI"): ?>
                               <span class="badge badge-pill badge-warning"><?= $transaction["transaction_status"]; ?></span>
                               <?php elseif($transaction["transaction_status"] == "PICKUP") : ?>
                                 <span class="badge badge-pill badge-primary"><?= $transaction["transaction_status"]; ?></span>
@@ -145,7 +145,7 @@ if (isset($_POST["terkirim"])) {
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                   <a class="dropdown-item" href="?page=transactions-details&id=<?= $transaction["id_transaction"]; ?>">Lihat</a>
-                                  <?php if($transaction["transaction_status"] == "KONFIRMASI" && $transaction["delivered"] == 0): ?>
+                                  <?php if($transaction["transaction_status"] == "TERKONFIRMASI" && $transaction["delivered"] == 0): ?>
                                     <a href="?page=transactions-receiver&id=<?= $transaction["id_transaction"]; ?>" class="dropdown-item">terima</a>
                                   <?php endif; ?>
                                   <a class="dropdown-item" onclick="return confirm('Apakah Ingin Menghapus transaction ini ?')" href="?page=transactions-delete&id=<?= $transaction["id_transaction"]; ?>">Delete</a>
