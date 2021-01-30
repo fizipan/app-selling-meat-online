@@ -344,10 +344,19 @@ function checkout($data)
         return false;
     }
     $city = $data["city"];
-    $address = $data["alamat"];
-    if (empty($address)) {
+    if (!isset($data["alamat"])) {
         $address = $data["address"];
+    }else {
+        $address = $data["alamat"];
     }
+
+    if (empty($address)) {
+        echo "<script>
+                alert('Masukkan Alamat Terlebih dahulu');
+            </script>";
+        return false;
+    }
+
     $phone_number = $data["phone_number"];
     $zip_code = $data["zip_code"];
     $rekening = $data["rekening"];

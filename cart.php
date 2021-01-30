@@ -376,7 +376,13 @@ if (isset($_POST["deleteCart"])) {
     </script>
     <script src="https://cdn.ckeditor.com/4.14.1/standard/ckeditor.js"></script>
     <script>
-      CKEDITOR.replace("editor");
+      const editor = CKEDITOR.replace("editor", {
+        extraPlugins: 'notification',
+      });
+      editor.on('required', function(evt) {
+          alert( 'Address is required.' );
+          evt.cancel();
+      } );
     </script>
     <script src="assets/js/navbar-scroll.js"></script>
     <script src="assets/js/delivered.js"></script>
