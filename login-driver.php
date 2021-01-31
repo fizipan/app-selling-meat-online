@@ -95,7 +95,7 @@ if (isset($_POST["login"])) {
           <div class="row align-items-center row-login">
             <div class="col-lg-6 text-center">
               <img
-                src="assets/images/login-placeholder.png"
+                src="assets/images/login-placeholder.jpg"
                 alt=""
                 class="w-50 mb-lg-none"
               />
