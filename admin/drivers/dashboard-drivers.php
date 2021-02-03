@@ -85,6 +85,7 @@
                           <th scope="col">Nama</th>
                           <th scope="col">Email</th>
                           <th scope="col">Phone Number</th>
+                          <th scope="col">Jurusan</th>
                           <th scope="col">No Pegawai</th>
                           <th scope="col" class="text-center">Aksi</th>
                         </tr>
@@ -102,6 +103,7 @@
                             <td><?= $driver["name_driver"]; ?></td>
                             <td><?= $driver["email"]; ?></td>
                             <td><?= $driver["phone_number"]; ?></td>
+                            <td><?= $driver["jurusan"]; ?></td>
                             <td><?= $driver["no_pegawai"]; ?></td>
                             <td style="width: 17%; text-align: center;">
                               <div class="dropdown">

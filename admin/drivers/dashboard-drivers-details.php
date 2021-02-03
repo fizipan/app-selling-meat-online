@@ -134,6 +134,18 @@ if (isset($_POST["updateDriver"])) {
                     </div>
                     <div class="col-md-12">
                       <div class="form-group">
+                        <label for="jurusan">Jurusan</label>
+                        <select name="jurusan" id="jurusan" class="form-control">
+                          <option value="<?= $drivers["jurusan"]; ?>"><?= $drivers["jurusan"]; ?></option>
+                          <option value="JAKARTA">JAKARTA</option>
+                          <option value="BOGOR">BOGOR</option>
+                          <option value="TANGERANG">TANGERANG</option>
+                          <option value="DEPOK">DEPOK</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
                         <label for="phone_number">No HP / WA</label>
                         <input
                           type="number"

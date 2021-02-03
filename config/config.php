@@ -1,10 +1,10 @@
 <?php 
 session_start();
 // Database
-$host = 'localhost';
-$user = 'root';
-$password = '';
-$dbname = 'daging_online';
+$host = 'ftpupload.net';
+$user = 'epiz_27842841';
+$password = 'V3XtbZ0vLKSGuC1';
+$dbname = 'epiz_27842841_daging_online';
 
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
@@ -459,10 +459,11 @@ function tambahDriver($data)
     $password = password_hash($data["password"], PASSWORD_DEFAULT);
     $phone_number = $data["phone_number"];
     $noPegawai = $data["noPegawai"];
+    $jurusan = $data["jurusan"];
 
     $query = "INSERT INTO drivers
                 VALUES
-                ('', '$name', '$email', '$password', '$phone_number', '$noPegawai')
+                ('', '$name', '$email', '$password', '$phone_number', '$jurusan', '$noPegawai')
             ";
 
     mysqli_query($conn, $query);
