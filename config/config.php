@@ -480,6 +480,7 @@ function updateDriver($data)
     $id = $data["id"];
     $result = query("SELECT password FROM drivers WHERE id_driver = $id")[0];
     $name = $data["name"];
+    $jurusan = $data["jurusan"];
     $phone_number = $data["phone_number"];
     if (empty($data["password"])) {
         $password = $result["password"];
@@ -492,6 +493,7 @@ function updateDriver($data)
                 name_driver = '$name',
                 password = '$password',
                 phone_number = '$phone_number',
+                jurusan = '$jurusan',
                 no_pegawai = '$noPegawai'
                 WHERE id_driver = $id
             ";
