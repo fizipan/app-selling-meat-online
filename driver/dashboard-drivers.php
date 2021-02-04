@@ -49,7 +49,7 @@
       <!-- mobile app -->
       <ul class="navbar-nav d-block d-lg-none">
         <li class="nav-item">
-          <a href="" class="nav-link"> Hi, Hafizh </a>
+          <a href="" class="nav-link"> Hi, <?= $driver["name_driver"]; ?></a>
         </li>
       </ul>
     </div>

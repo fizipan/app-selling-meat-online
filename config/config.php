@@ -1,10 +1,14 @@
 <?php 
 session_start();
 // Database
-$host = 'ftpupload.net';
-$user = 'epiz_27842841';
-$password = 'V3XtbZ0vLKSGuC1';
-$dbname = 'epiz_27842841_daging_online';
+// sql212.epizy.com
+// epiz_27842841
+// V3XtbZ0vLKSGuC1
+// epiz_27842841_daging_online
+$host = 'localhost';
+$user = 'root';
+$password = '';
+$dbname = 'daging_online';
 
 $conn = mysqli_connect($host, $user, $password, $dbname);
 

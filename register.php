@@ -130,7 +130,7 @@ if (isset($_POST["register"])) {
                 <div class="form-group">
                   <label for="telpon">Phone Number</label>
                   <input
-                    type="number"
+                    type="text"
                     name="telpon"
                     id="telpon"
                     class="form-control"
