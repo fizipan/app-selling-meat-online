@@ -71,7 +71,7 @@ if (isset($_POST["login"])) {
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collpase navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a href="index.php" class="nav-link">Home</a>

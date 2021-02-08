@@ -48,7 +48,7 @@ if (isset($_SESSION["driver"])) {
       data-aos="fade-down"
     >
       <div class="container">
-        <a href="index.php" class="navbar-brand" title="home">
+        <a href="index.php" class="navbar-brand">
           <img src="assets/images/logo.jpg" class="w-50" alt="logo" />
         </a>
         <button
@@ -56,10 +56,13 @@ if (isset($_SESSION["driver"])) {
           type="button"
           data-toggle="collapse"
           data-target="#navbarResponsive"
+          aria-controls="navbarResponsive" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collpase navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
               <a href="index.php" class="nav-link">Home</a>

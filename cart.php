@@ -68,7 +68,7 @@ if (isset($_POST["deleteCart"])) {
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collpase navbar-collapse" id="navbarResponsive">
+      <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a href="index.php" class="nav-link">Home</a>
@@ -269,7 +269,7 @@ if (isset($_POST["deleteCart"])) {
             <div class="col-md-4">
               <div class="form-group">
                 <label for="zip_code">Kode Pos</label>
-                <input type="number" name="zip_code" id="zip_code" required value="<?= $user["postal_code"] ?? ''; ?>" class="form-control form-store">
+                <input type="text" name="zip_code" id="zip_code" required value="<?= $user["postal_code"] ?? ''; ?>" class="form-control form-store">
               </div>
             </div>
             <div class="col-md-12 mt-2">

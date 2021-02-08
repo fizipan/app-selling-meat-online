@@ -517,12 +517,11 @@ function pickup($data)
 
     $id_transaction = $data["id_transaction"];
     date_default_timezone_set('Asia/jakarta');
-    $tambah3Jam = time() + 60 * 60 * 3;
-    $arrive = date('Y-m-d H:i:s', $tambah3Jam);
+    // $tambah3Jam = time() + 60 * 60 * 3;
+    // $arrive = date('Y-m-d H:i:s', $tambah3Jam);
 
     $query = "UPDATE transactions SET
-                transaction_status = 'PICKUP',
-                time_arrived = '$arrive'
+                transaction_status = 'PICKUP'
                 WHERE id_transaction = $id_transaction
             ";
     
