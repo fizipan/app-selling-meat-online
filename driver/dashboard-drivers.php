@@ -91,7 +91,7 @@
             <?php 
                 $driver = query("SELECT * FROM drivers WHERE id_driver = $id_driver")[0];
                 $jurusan = $driver["jurusan"];
-                $pickup = rows("SELECT * FROM transactions WHERE transaction_status = 'KONFIRMASI'  AND delivered = 1 AND city = '$jurusan' OR transaction_status = 'PICKUP'");
+                $pickup = rows("SELECT * FROM transactions WHERE transaction_status = 'TERKONFIRMASI'  AND delivered = 1 AND city = '$jurusan' OR transaction_status = 'PICKUP'");
             
             ?>
               <div class="dashboard-card-title">Pick Up</div>
